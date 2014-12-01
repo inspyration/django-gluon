@@ -8,7 +8,9 @@ psycopg2==2.5.4
 sqlparse==0.1.14
 django-debug-toolbar==1.2.2
 simplejson==3.6.5
+pygments==2.0.1
 django_chartit==0.1
 django-extensions==1.4.8
 django-bootstrap3==5.0.2
 django-datatables-view==1.12
+bpython==0.13
