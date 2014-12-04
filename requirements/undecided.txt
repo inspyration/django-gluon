@@ -1,0 +1,4 @@
+django-model-utils==2.2
+django-braces==1.4.0
+logutils==0.3.3
+South==1.0.1
