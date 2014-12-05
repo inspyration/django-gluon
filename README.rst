@@ -1,54 +1,54 @@
 What is it?
 ===========
 
-1. Mainly a Django framework with some tools to glue applications amongst themselves such as:
-    1. Some model mixins providing usefull common features usually needed
-    1. Some handy view mixins too
-    1. Webservice automation features
-    1. Rest features for all models
-    1. Import / Export automation features
-    1. Integration of Bootstrap3, JQuery, Datatables, Chartit, Dhmltx and a bunch of other frameworks
-1. A functionnal integrated architecture
-    1. Management of users, groups, profiles, applications, security, ...
-    1. Management of SAAS: add an customer account, select its applications and configure it.
-    1. Integration of all application into a single front-end
-    1. Back-office interfaces for administrator and SAAS Manager
+#) Mainly a Django framework with some tools to glue applications amongst themselves such as:
+    #) Some model mixins providing usefull common features usually needed
+    #) Some handy view mixins too
+    #) Webservice automation features
+    #) Rest features for all models
+    #) Import / Export automation features
+    #) Integration of Bootstrap3, JQuery, Datatables, Chartit, Dhmltx and a bunch of other frameworks
+#) A functionnal integrated architecture
+    #) Management of users, groups, profiles, applications, security, ...
+    #) Management of SAAS: add an customer account, select its applications and configure it.
+    #) Integration of all application into a single front-end
+    #) Back-office interfaces for administrator and SAAS Manager
 
 Based on PyDanny guidelines found in 2 scoops of "Django: Best practices for Django 1.6."
 
 Summary
 =======
 
-1. prerequisites
-1. create a virtual environment
-1. use the virtual environment
-1. install requirements
-1. Run the server
+#) prerequisites
+#) create a virtual environment
+#) use the virtual environment
+#) install requirements
+#) Run the server
 
 prerequisites
 =============
 
-This tutorial is based on python3.
+This project is based on Python 3 only and uses Django 1.7.1.
 
-    # aptitude install python3
+    # aptitude install python3 python3-pip
 
 You must install either virtualenv or virtualenvwrapper
 
 Install virtualenv
 ------------------
 
-- install virtualenv
+Using *pip*
 
-    # pip install virtualenv
+    # pip3 install virtualenv
 
 Install virtualenvwrapper
 -------------------------
 
-- install virtualenvwrapper
+Using *pip*
 
-    # pip install virtualenvwrapper
+    # pip3 install virtualenvwrapper
 
-- Add this 3 lines at the end of ~/.bashrc
+Then, you must add this 3 lines at the end of ~/.bashrc
 
     export WORKON_HOME = /.virtualenvs
     mkdir -p $WORKON_HOME
@@ -59,11 +59,11 @@ Create a virtual environment
 
 When using virtualenv, you may want to create a virtual environment for each project
 
-- with virtualenv
+Using *virtualenv*
 
     $ virtualenv -p python3 my_virtualenv_name
 
-- with virtualenvwrapper
+Using *virtualenvwrapper*
 
     $ mkvirtualenv -p python3 my_virtualenv_name
 
@@ -72,13 +72,17 @@ Using virtual environment
 
 Each time you want to use the project, you must use the virtual environment
 
-- with virtualenv
+Using *virtualenv*
 
     $ source my_virtualenv_name/bin/activate
 
-- with virtualenvwrapper
+Usingh *virtualenvwrapper*
 
     $ workon your_virtual_env_name
+
+You can check if the virtual environment is active with
+
+    $ which python
 
 Install requirements
 ====================
@@ -93,3 +97,4 @@ How to run the Server
 Now, run the server and enjoy it !
 
     $ ./manage.py runserver
+
