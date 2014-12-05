@@ -9,3 +9,4 @@ django-extensions==1.4.8
 django-bootstrap3==5.0.2
 django-datatables-view==1.12
 zope.component
+pillow==2.6.1
