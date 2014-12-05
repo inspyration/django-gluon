@@ -28,11 +28,17 @@ FRAMEWORK_APPS = (
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "django_extensions",
     "bootstrap3",
     "chartit",
 )
 
 LOCAL_APPS = (
+    "gluon",
+    "base",
+    "util",
+    "saas",
+    "contacts",
 )
 
 INSTALLED_APPS = FRAMEWORK_APPS + LOCAL_APPS
@@ -45,6 +51,7 @@ MIDDLEWARE_CLASSES = (
     "django.contrib.auth.middleware.SessionAuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    'gluon.middleware.GluonMiddleware',
 )
 
 ROOT_URLCONF = "gluon.urls"
@@ -61,7 +68,12 @@ USE_L10N = True
 USE_TZ = True
 
 
+MEDIA_ROOT = str(BASE_DIR / "media")
+
+MEDIA_URL = "/media/"
+
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.7/howto/static-files/
 
 STATIC_URL = "/static/"
+
