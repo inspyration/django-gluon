@@ -162,6 +162,7 @@ class BaseMixin(Model):
     # > automatically set
     created_on = DateTimeField(
         verbose_name=_("created on"),
+        help_text=_("Date of creation"),
         auto_now_add=True,
         blank=False,
         editable=False
@@ -173,6 +174,7 @@ class BaseMixin(Model):
     # > automatically set
     last_modified_on = DateTimeField(
         verbose_name=_("last modified on"),
+        help_text=_("Date of last modification"),
         auto_now=True,
         blank=False,
         editable=False
@@ -185,6 +187,7 @@ class BaseMixin(Model):
     # > automatically set
     deleted_on = DateTimeField(
         verbose_name=_("deleted on"),
+        help_text=_("Date of deletion"),
         blank=True,
         null=True,
         editable=False
@@ -197,6 +200,7 @@ class BaseMixin(Model):
     created_by = UserField(
         verbose_name=_("created by"),
         related_name="created_%(app_label)s_%(class)s_set",
+        help_text=_("The user who created this data"),
         blank=False,
         editable=False
     )
@@ -208,6 +212,7 @@ class BaseMixin(Model):
     last_modified_by = UserField(
         verbose_name=_("last modified by"),
         related_name="last_modified_%(app_label)s_%(class)s_set",
+        help_text=_("The user who last modified this data"),
         blank=False,
         editable=False
     )
@@ -219,6 +224,7 @@ class BaseMixin(Model):
     deleted_by = UserField(
         verbose_name=_("deleted by"),
         related_name="deleted_%(app_label)s_%(class)s_set",
+        help_text=_("The user who deleted this data"),
         null=True,
         editable=False
     )
@@ -234,6 +240,7 @@ class BaseMixin(Model):
     # > automatically set
     active = BooleanField(
         verbose_name=_("active"),
+        help_text=_("Is the data usable ?"),
         default=True,
         null=False,
         blank=False,
@@ -250,6 +257,7 @@ class BaseMixin(Model):
     # > must be filled out
     label = CharField(
         verbose_name=_("label"),
+        help_text=_("The way the data will be see from foreign objects"),
         max_length=32,
         blank=False,
         editable=True
@@ -261,6 +269,7 @@ class BaseMixin(Model):
     # > automatically set
     name = CharField(
         verbose_name=_("name"),
+        help_text=_("Unique name, used in imports/exports features"),
         max_length=255,
         unique=True,
         blank=False,

@@ -25,6 +25,7 @@ class Module(BaseMixin):
 
     application = BooleanField(
         verbose_name=_("Is this module a main application ?"),
+        help_text=_("Is this module an application ?"),
         blank=False,
         null=False,
         default=True,
@@ -32,6 +33,7 @@ class Module(BaseMixin):
 
     price = DecimalField(
         verbose_name=_("price"),
+        help_text=_("Module price"),
         max_digits=5,
         decimal_places=2,
     )
@@ -47,38 +49,44 @@ class Instance(BaseMixin):
     # Instance status (opened or not)
     opened = BooleanField(
         verbose_name=_("opened"),
+        help_text=_("Is the instance is open ?"),
         blank=False,
         null=False,
         default=True,
     )
 
     # Person who create instance on his behalf or on his company behalf
-    buyer = CharField(
-        verbose_name=_("buyer"),
+    owner = CharField(
+        verbose_name=_("owner"),
+        help_text=_("Owner"),
         max_length=127,
         blank=False,
     )
 
     address1 = CharField(
         verbose_name=_("address 1"),
+        help_text=_("Address 1 of the instance owner"),
         max_length=255,
         blank=False,
     )
 
     address2 = CharField(
         verbose_name=_("address 2"),
+        help_text=_("Address 2 of the instance owner"),
         max_length=255,
         blank=False,
     )
 
     zip = CharField(
         verbose_name=_("zip"),
+        help_text=_("Zip of the instance owner"),
         max_length=16,
         blank=False,
     )
 
     city = CharField(
         verbose_name=_("city"),
+        help_text=_("City of the instance owner"),
         max_length=255,
         blank=False,
     )
@@ -86,39 +94,46 @@ class Instance(BaseMixin):
     state = ForeignKey(
         verbose_name=_("state"),
         related_name="saas_instance_set",
+        help_text=_("State of the instance owner"),
         to=State,
     )
 
     country = ForeignKey(
         verbose_name=_("country"),
         related_name="saas_instance_set",
+        help_text=_("Country of the instance owner"),
         to=Country,
         blank=False,
     )
 
     website = CharField(
         verbose_name=_("website"),
+        help_text=_("Website URI"),
         max_length=64,
     )
 
     phone = CharField(
         verbose_name=_("phone"),
+        help_text=_("Phone number"),
         max_length=16,
         blank=False,
     )
 
     fax = CharField(
         verbose_name=_("fax"),
+        help_text=_("Fax number"),
         max_length=16,
     )
 
     tin = CharField(
         verbose_name=_("tin"),
+        help_text=_("Tax intra. number"),
         max_length=16,
     )
 
     modules = ManyToManyField(
         verbose_name=_("modules"),
+        help_text=_("List of module installed on the instance"),
         to=Module,
     )
 
@@ -132,6 +147,7 @@ class Instance(BaseMixin):
 
     logo = ImageField(
         verbose_name=_("logo"),
+        help_text=_("Logo of the instance owner"),
         max_length=64,
         upload_to="saas/logos/%Y/%m/%d",
         height_field=logo_height,
@@ -141,12 +157,14 @@ class Instance(BaseMixin):
     locale = ForeignKey(
         verbose_name=_("locale"),
         related_name="saas_instance_set",
+        help_text=_("Locale"),
         to=Locale,
     )
 
     timezone = ForeignKey(
         verbose_name=_("timezone"),
         related_name="saas_instance_set",
+        help_text=_("Timezone"),
         to=TimeZone,
     )
 
@@ -175,6 +193,7 @@ class AccessRole(BaseMixin):
 
     groups = ManyToManyField(
         verbose_name=_("groups"),
+        help_text=_("List of groups used by the role"),
         to=getattr(settings, 'AUTH_USER_GROUP', 'auth.Group'),
         blank=False,
     )
@@ -193,19 +212,22 @@ class AccessAccount(BaseMixin):
 
     user = ForeignKey(
         verbose_name=_("user"),
+        help_text=_("user who owns this account"),
         to=getattr(settings, 'AUTH_USER_MODEL', 'auth.User'),
         related_name="saas_access_account_set",
         blank=False,
     )
 
     instance = ForeignKey(
-        verbose_name=_("instances"),
+        verbose_name=_("instance"),
+        help_text=_("Role linked to this account"),
         to=Instance,
         blank=False,
     )
 
     role = ForeignKey(
         verbose_name=_("role"),
+        help_text=_("Role linked to this account"),
         to=AccessRole,
         related_name="saas_access_account_set",
         blank=False,
@@ -230,6 +252,7 @@ class Profile(BaseMixin):
 
     user = OneToOneField(
         verbose_name=_("user"),
+        help_text=_("User linked to this profile"),
         to=getattr(settings, 'AUTH_USER_MODEL', 'auth.User'),
         related_name="profile",
         blank=False,
@@ -237,12 +260,14 @@ class Profile(BaseMixin):
 
     first_name = CharField(
         verbose_name=_("first name"),
+        help_text=_("First name"),
         max_length=32,
         blank=False,
     )
 
     last_name = CharField(
         verbose_name=_("last name"),
+        help_text=_("Last name"),
         max_length=32,
         blank=False,
     )
@@ -257,6 +282,7 @@ class Profile(BaseMixin):
 
     avatar = ImageField(
         verbose_name=_("avatar"),
+        help_text=_("Avatar"),
         max_length=64,
         upload_to="saas/avatars/%Y/%m/%d",
         height_field=avatar_height,
@@ -265,6 +291,7 @@ class Profile(BaseMixin):
 
     locale = ForeignKey(
         verbose_name=_("locale"),
+        help_text=_("Locale"),
         related_name="user_set",
         to=Locale,
     )
@@ -272,6 +299,7 @@ class Profile(BaseMixin):
     timezone = ForeignKey(
         verbose_name=_("timezone"),
         related_name="user_set",
+        help_text=_("Timezone"),
         to=TimeZone,
     )
 

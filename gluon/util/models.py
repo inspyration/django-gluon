@@ -18,7 +18,11 @@ class Status(Model):
     # > not required
     # > default True
     # > editable
-    model = CharField(_("model"), max_length=16)
+    model = CharField(
+        verbose_name=_("model"),
+        help_text=_("Model related to the status"),
+        max_length=16,
+    )
 
     # Field that indicate whether the instance can be used by other models
     # > not required
@@ -26,6 +30,7 @@ class Status(Model):
     # > editable
     active = BooleanField(
         verbose_name=_("active"),
+        help_text=_("Is the status usable ?"),
         default=True,
         editable=True
     )
@@ -35,7 +40,8 @@ class Status(Model):
     # > default True
     # > editable
     deleted = BooleanField(
-        verbose_name=_("active"),
+        verbose_name=_("deleted"),
+        help_text=_("Is the status deleted"),
         default=False,
         editable=True
     )
@@ -44,13 +50,21 @@ class Status(Model):
     # > not required
     # > default True
     # > editable
-    name = CharField(_("status name"), max_length=16)
+    name = CharField(
+        verbose_name=_("status name"),
+        help_text=_("Name of the status"),
+        max_length=16,
+    )
 
     # Field that indicate if the status is the default one
     # > required
     # > default False
     # > editable
-    is_default = BooleanField(_("status name"), default=False)
+    is_default = BooleanField(
+        verbose_name=_("status name"),
+        help_text=_("Is the status is the default one for the model ?"),
+        default=False,
+    )
 
     class Meta:
         verbose_name = _("status")
@@ -62,12 +76,14 @@ class Country(BaseMixin):
 
     alpha2 = CharField(
         verbose_name=_("alpha2"),
+        help_text=_("Two letters code"),
         max_length=2,
         unique=True,
     )
 
     alpha3 = CharField(
         verbose_name=_("alpha3"),
+        help_text=_("Three letters code"),
         max_length=3,
         unique=True,
         blank=False,
@@ -75,12 +91,14 @@ class Country(BaseMixin):
 
     number = PositiveSmallIntegerField(
         verbose_name=_("number"),
+        help_text=_("Three digits number code"),
         unique=True,
         blank=False,
     )
 
     name_fr = CharField(
         verbose_name=_("french name"),
+        help_text=_("French common name of the country"),
         max_length=2,
         unique=True,
         blank=False,
@@ -88,6 +106,7 @@ class Country(BaseMixin):
 
     name_en = CharField(
         verbose_name=_("english name"),
+        help_text=_("English common name of the country"),
         max_length=3,
         unique=True,
         blank=False,
@@ -95,6 +114,7 @@ class Country(BaseMixin):
 
     usage = CharField(
         verbose_name=_("usage name"),
+        help_text=_("Usage name (localised)"),
         max_length=3,
         unique=True,
         blank=False,
@@ -110,6 +130,7 @@ class State(BaseMixin):
 
     code = CharField(
         verbose_name=_("code"),
+        help_text=_("Two letters code"),
         max_length=2,
         unique=True,
         blank=False,
@@ -117,6 +138,7 @@ class State(BaseMixin):
 
     country = ForeignKey(
         verbose_name=_("country"),
+        help_text=_("Related country"),
         to=Country,
         blank=False,
     )

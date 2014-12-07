@@ -14,31 +14,37 @@ class Address(InstanceAssignedMixin):
 
     address1 = CharField(
         verbose_name=_("address 1"),
+        help_text=_("Address line 1"),
         max_length=255,
     )
 
     address2 = CharField(
         verbose_name=_("address 2"),
+        help_text=_("Address line 2"),
         max_length=255,
     )
 
     zip = CharField(
         verbose_name=_("zip"),
+        help_text=_("Address zip code"),
         max_length=16,
     )
 
     city = CharField(
         verbose_name=_("city"),
+        help_text=_("Address city"),
         max_length=255,
     )
 
     state = ForeignKey(
         verbose_name=_("state"),
+        help_text=_("Address state"),
         to=State,
     )
 
     country = ForeignKey(
         verbose_name=_("country"),
+        help_text=_("Address country"),
         to=Country,
     )
 
@@ -52,6 +58,7 @@ class Profile(InstanceAssignedMixin):
 
     addresses = ManyToManyField(
         verbose_name=_("addresses"),
+        help_text=_("Profile addresses"),
         to=Address,
         blank=True,
         null=True,
@@ -59,26 +66,31 @@ class Profile(InstanceAssignedMixin):
 
     website = CharField(
         verbose_name=_("website"),
+        help_text=_("Profile main website"),
         max_length=64,
     )
 
     phone = CharField(
         verbose_name=_("phone"),
+        help_text=_("Profile phone"),
         max_length=16,
     )
 
     fax = CharField(
         verbose_name=_("fax"),
+        help_text=_("Profile Fax"),
         max_length=16,
     )
 
     locale = ForeignKey(
         verbose_name=_("locale"),
+        help_text=_("Profile Locale"),
         to=Locale,
     )
 
     timezone = ForeignKey(
-        verbose_name=_("timezone"),
+        verbose_name=_("Profile timezone"),
+        help_text=_("Timezone"),
         to=TimeZone,
     )
 
@@ -92,6 +104,7 @@ class Entity(Profile):
 
     tin = CharField(
         verbose_name=_("tin"),
+        help_text=_("Tax intra. number"),
         max_length=16,
     )
 
@@ -105,6 +118,7 @@ class Entity(Profile):
 
     logo = ImageField(
         verbose_name=_("logo"),
+        help_text=_("Entity logo"),
         max_length=64,
         upload_to="legal/entities/logos/%Y/%m/%d",
         height_field=logo_height,
@@ -120,13 +134,15 @@ class Person(Profile):
     """Persons specific properties"""
 
     first_name = CharField(
-        verbose_name=_("buyer"),
+        verbose_name=_("first_name"),
+        help_text=_("Person first name"),
         max_length=127,
         blank=False,
     )
 
     last_name = CharField(
-        verbose_name=_("buyer"),
+        verbose_name=_("last name"),
+        help_text=_("Person last name"),
         max_length=127,
         blank=False,
     )
@@ -141,6 +157,7 @@ class Person(Profile):
 
     avatar = ImageField(
         verbose_name=_("avatar"),
+        help_text=_("Avatar"),
         max_length=64,
         upload_to="legal/persons/avatars/%Y/%m/%d",
         height_field=avatar_height,
