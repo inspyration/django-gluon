@@ -3,10 +3,10 @@ from django.utils.functional import curry
 
 from .fields import UserField
 
-from . import registration
+from .registration import FieldRegistry
 
 
-class GluonMiddleware(object):  # TODO: Register classes and use hooks.
+class GluonBaseMiddleware(object):  # TODO: Register classes and use hooks.
     def process_request(self, request):
         if request.method in ("GET", "HEAD", "OPTION", "TRACE"):
             # this request shouldn't update anything
@@ -30,11 +30,12 @@ class GluonMiddleware(object):  # TODO: Register classes and use hooks.
 
     def process_response(self, request, response):
         signals.pre_save.disconnect(dispatch_uid=request)
+        signals.pre_delete.disconnect(dispatch_uid=request)
         return response
 
     def _update_base_mixin_fields(self, user, sender, instance, created, **kw):
         # update last_modified_by and created_by
-        registry = registration.FieldRegistry(UserField)
+        registry = FieldRegistry(UserField)
         if sender in registry:
             for field in registry.get_fields(sender):
                 if field.name == "last_modified_by":
@@ -44,7 +45,7 @@ class GluonMiddleware(object):  # TODO: Register classes and use hooks.
 
     def _delete_base_mixin_fields(self, user, sender, instance, **kw):
         # update last_modified_by and created_by
-        registry = registration.FieldRegistry(UserField)
+        registry = FieldRegistry(UserField)
         if sender in registry:
             for field in registry.get_fields(sender):
                 if field.name == "deleted_by":
