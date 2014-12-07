@@ -38,7 +38,7 @@ LOCAL_APPS = (
     "base",
     "util",
     "saas",
-    "contacts",
+    "legal",
 )
 
 INSTALLED_APPS = FRAMEWORK_APPS + LOCAL_APPS
