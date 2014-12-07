@@ -4,6 +4,8 @@ from base.mixins import BaseMixin
 
 from util.models import Country, State, Locale, TimeZone
 
+from django.contrib.auth.models import User
+
 from django.db.models import (
     BooleanField,
     CharField,
@@ -71,13 +73,21 @@ class Instance(BaseMixin):
         blank=False,
     )
 
+    city = CharField(
+        verbose_name=_("city"),
+        max_length=255,
+        blank=False,
+    )
+
     state = ForeignKey(
         verbose_name=_("state"),
+        related_name="saas_instance_set",
         to=State,
     )
 
     country = ForeignKey(
         verbose_name=_("country"),
+        related_name="saas_instance_set",
         to=Country,
         blank=False,
     )
@@ -126,11 +136,13 @@ class Instance(BaseMixin):
 
     locale = ForeignKey(
         verbose_name=_("locale"),
+        related_name="saas_instance_set",
         to=Locale,
     )
 
     timezone = ForeignKey(
         verbose_name=_("timezone"),
+        related_name="saas_instance_set",
         to=TimeZone,
     )
 
@@ -170,7 +182,7 @@ class AccessAccount(BaseMixin):
     user = ForeignKey(
         verbose_name=_("user"),
         to=getattr(settings, 'AUTH_USER_MODEL', 'auth.User'),
-        related_name="access_account_set",
+        related_name="saas_access_account_set",
         blank=False,
     )
 
@@ -183,7 +195,7 @@ class AccessAccount(BaseMixin):
     role = ForeignKey(
         verbose_name=_("role"),
         to=AccessRole,
-        related_name="account_set",
+        related_name="saas_access_account_set",
         blank=False,
     )
 
@@ -237,11 +249,13 @@ class Profile(BaseMixin):
 
     locale = ForeignKey(
         verbose_name=_("locale"),
+        related_name="user_set",
         to=Locale,
     )
 
     timezone = ForeignKey(
         verbose_name=_("timezone"),
+        related_name="user_set",
         to=TimeZone,
     )
 
