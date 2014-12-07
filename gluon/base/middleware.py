@@ -19,9 +19,9 @@ class GluonBaseMiddleware(object):  # TODO: Register classes and use hooks.
             user = None
 
         update_base_mixin_fields = curry(self._update_base_mixin_fields, user)
-        signals.pre_save.connect(update_base_mixin_fields,
-                                 dispatch_uid=request,
-                                 weak=False)
+        signals.post_save.connect(update_base_mixin_fields,
+                                  dispatch_uid=request,
+                                  weak=False)
 
         delete_base_mixin_fields = curry(self._delete_base_mixin_fields, user)
         signals.pre_delete.connect(delete_base_mixin_fields,
@@ -29,7 +29,7 @@ class GluonBaseMiddleware(object):  # TODO: Register classes and use hooks.
                                    weak=False)
 
     def process_response(self, request, response):
-        signals.pre_save.disconnect(dispatch_uid=request)
+        signals.post_save.disconnect(dispatch_uid=request)
         signals.pre_delete.disconnect(dispatch_uid=request)
         return response
 
