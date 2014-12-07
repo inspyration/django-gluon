@@ -51,8 +51,8 @@ MIDDLEWARE_CLASSES = (
     "django.contrib.auth.middleware.SessionAuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-    "gluon.middleware.GluonBaseMiddleware",
-    "gluon.middleware.GluonSaasMiddleware",
+    "base.middleware.GluonBaseMiddleware",
+    "saas.middleware.GluonSaasMiddleware",
 )
 
 ROOT_URLCONF = "gluon.urls"

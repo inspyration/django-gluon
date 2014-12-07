@@ -6,7 +6,7 @@ from base.fields import UserField
 from base.registration import FieldRegistry
 
 
-class GluonSassMiddleware(object):
+class GluonSaasMiddleware(object):
     def process_request(self, request):
         if request.method in ("GET", "HEAD", "OPTION", "TRACE"):
             # this request shouldn't update anything
