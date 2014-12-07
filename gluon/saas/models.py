@@ -36,6 +36,10 @@ class Module(BaseMixin):
         decimal_places=2,
     )
 
+    class Meta:
+        verbose_name = _("module")
+        verbose_name_plural = _("modules")
+
 
 class Instance(BaseMixin):
     """An instance is linked to a customer. It contains only his data"""
@@ -161,6 +165,10 @@ class Instance(BaseMixin):
         self.open = False
         self.save(compute=False)
 
+    class Meta:
+        verbose_name = _("instance")
+        verbose_name_plural = _("instances")
+
 
 class AccessRole(BaseMixin):
     """A role, that comes with permissions through group management"""
@@ -174,6 +182,10 @@ class AccessRole(BaseMixin):
     @staticmethod
     def get_related_fields():
         return BaseMixin.get_related_fields() + ("groups",)
+
+    class Meta:
+        verbose_name = _("access role")
+        verbose_name_plural = _("access roles")
 
 
 class AccessAccount(BaseMixin):
@@ -208,6 +220,10 @@ class AccessAccount(BaseMixin):
     @staticmethod
     def get_related_fields():
         return BaseMixin.get_related_fields() + ("user", "role", "role__groups")
+
+    class Meta:
+        verbose_name = _("access account")
+        verbose_name_plural = _("access accounts")
 
 
 class Profile(BaseMixin):
@@ -265,3 +281,7 @@ class Profile(BaseMixin):
 
     def compute_label(self):
         return " ".join((self.first_name, self.last_name))
+
+    class Meta:
+        verbose_name = _("profile")
+        verbose_name_plural = _("profiles")

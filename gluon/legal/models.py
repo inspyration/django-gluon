@@ -43,6 +43,7 @@ class Address(InstanceAssignedMixin):
     )
 
     class Meta:
+        verbose_name = _("address")
         verbose_name_plural = "addresses"
 
 
@@ -81,6 +82,10 @@ class Profile(InstanceAssignedMixin):
         to=TimeZone,
     )
 
+    class Meta:
+        verbose_name = _("profile")
+        verbose_name_plural = _("profiles")
+
 
 class Entity(Profile):
     """Entities specific properties"""
@@ -107,6 +112,7 @@ class Entity(Profile):
     )
 
     class Meta:
+        verbose_name = _("entity")
         verbose_name_plural = "entities"
 
 
@@ -142,3 +148,7 @@ class Person(Profile):
     )
 
     LABEL_FORMAT = "{self.first_name} {self.last_name}"
+
+    class Meta:
+        verbose_name = _("person")
+        verbose_name_plural = _("persons")

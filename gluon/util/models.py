@@ -52,6 +52,10 @@ class Status(Model):
     # > editable
     is_default = BooleanField(_("status name"), default=False)
 
+    class Meta:
+        verbose_name = _("status")
+        verbose_name_plural = _("statuses")
+
 
 class Country(BaseMixin):
     """Country"""
@@ -97,7 +101,8 @@ class Country(BaseMixin):
     )
 
     class Meta:
-        verbose_name_plural = "countries"
+        verbose_name = _("country")
+        verbose_name_plural = _("countries")
 
 
 class State(BaseMixin):
@@ -120,10 +125,28 @@ class State(BaseMixin):
         """The logical model path to get the current object in a unique way"""
         return self.country, self
 
+    class Meta:
+        verbose_name = _("state")
+        verbose_name_plural = _("states")
+
 
 class Locale(BaseMixin):
-    """Locale"""
+    """Locale:
+    label contains language code such as fr-fr
+    name contains locale name such as fr_FR"""
+
+    def compute_name(self):
+        language, country = self.label.split("-")
+        return "_".join((language, country.upper()))
+
+    class Meta:
+        verbose_name = _("locale")
+        verbose_name_plural = _("locales")
 
 
 class TimeZone(BaseMixin):
     """TimeZone"""
+
+    class Meta:
+        verbose_name = _("timezone")
+        verbose_name_plural = _("timezones")
