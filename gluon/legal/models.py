@@ -42,6 +42,9 @@ class Address(InstanceAssignedMixin):
         to=Country,
     )
 
+    class Meta:
+        verbose_name_plural = "addresses"
+
 
 class Profile(InstanceAssignedMixin):
     """Profiles are common to both entities and persons"""

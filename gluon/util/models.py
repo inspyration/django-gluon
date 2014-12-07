@@ -96,6 +96,9 @@ class Country(BaseMixin):
         blank=False,
     )
 
+    class Meta:
+        verbose_name_plural = "countries"
+
 
 class State(BaseMixin):
     """State"""
