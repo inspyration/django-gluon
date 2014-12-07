@@ -52,6 +52,7 @@ MIDDLEWARE_CLASSES = (
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "gluon.middleware.GluonBaseMiddleware",
+    "gluon.middleware.GluonSaasMiddleware",
 )
 
 ROOT_URLCONF = "gluon.urls"
