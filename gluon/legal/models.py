@@ -120,7 +120,7 @@ class Entity(Profile):
         verbose_name=_("logo"),
         help_text=_("Entity logo"),
         max_length=64,
-        upload_to="legal/entities/logos/%Y/%m/%d",
+        upload_to="media/legal/entities/logos/%Y/%m/%d",
         height_field=logo_height,
         width_field=logo_width,
     )
@@ -159,7 +159,7 @@ class Person(Profile):
         verbose_name=_("avatar"),
         help_text=_("Avatar"),
         max_length=64,
-        upload_to="legal/persons/avatars/%Y/%m/%d",
+        upload_to="media/legal/persons/avatars/%Y/%m/%d",
         height_field=avatar_height,
         width_field=avatar_width,
     )

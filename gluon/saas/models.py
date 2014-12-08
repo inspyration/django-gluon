@@ -4,8 +4,6 @@ from base.mixins import BaseMixin
 
 from util.models import Country, State, Locale, TimeZone
 
-from django.contrib.auth.models import User
-
 from django.db.models import (
     BooleanField,
     CharField,
@@ -149,7 +147,7 @@ class Instance(BaseMixin):
         verbose_name=_("logo"),
         help_text=_("Logo of the instance owner"),
         max_length=64,
-        upload_to="saas/logos/%Y/%m/%d",
+        upload_to="media/saas/logos/%Y/%m/%d",
         height_field=logo_height,
         width_field=logo_width,
     )
@@ -284,7 +282,7 @@ class Profile(BaseMixin):
         verbose_name=_("avatar"),
         help_text=_("Avatar"),
         max_length=64,
-        upload_to="saas/avatars/%Y/%m/%d",
+        upload_to="media/saas/avatars/%Y/%m/%d",
         height_field=avatar_height,
         width_field=avatar_width,
     )

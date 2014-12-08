@@ -62,7 +62,7 @@ class Migration(migrations.Migration):
                 ('last_name', models.CharField(verbose_name='last name', help_text='Person last name', max_length=127)),
                 ('avatar_height', models.PositiveSmallIntegerField(verbose_name='avatar height')),
                 ('avatar_width', models.PositiveSmallIntegerField(verbose_name='avatar width')),
-                ('avatar', models.ImageField(upload_to='legal/persons/avatars/%Y/%m/%d', help_text='Avatar', max_length=64, width_field=models.PositiveSmallIntegerField(verbose_name='avatar width'), height_field=models.PositiveSmallIntegerField(verbose_name='avatar height'), verbose_name='avatar')),
+                ('avatar', models.ImageField(upload_to='media/legal/persons/avatars/%Y/%m/%d', help_text='Avatar', max_length=64, width_field=models.PositiveSmallIntegerField(verbose_name='avatar width'), height_field=models.PositiveSmallIntegerField(verbose_name='avatar height'), verbose_name='avatar')),
             ],
             options={
                 'verbose_name': 'person',
@@ -77,7 +77,7 @@ class Migration(migrations.Migration):
                 ('tin', models.CharField(verbose_name='tin', help_text='Tax intra. number', max_length=16)),
                 ('logo_height', models.PositiveSmallIntegerField(verbose_name='logo height')),
                 ('logo_width', models.PositiveSmallIntegerField(verbose_name='logo width')),
-                ('logo', models.ImageField(upload_to='legal/entities/logos/%Y/%m/%d', help_text='Entity logo', max_length=64, width_field=models.PositiveSmallIntegerField(verbose_name='logo width'), height_field=models.PositiveSmallIntegerField(verbose_name='logo height'), verbose_name='logo')),
+                ('logo', models.ImageField(upload_to='media/legal/entities/logos/%Y/%m/%d', help_text='Entity logo', max_length=64, width_field=models.PositiveSmallIntegerField(verbose_name='logo width'), height_field=models.PositiveSmallIntegerField(verbose_name='logo height'), verbose_name='logo')),
             ],
             options={
                 'verbose_name': 'entity',
