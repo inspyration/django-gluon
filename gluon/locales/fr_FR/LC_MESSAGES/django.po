@@ -1,0 +1,577 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2014-12-08 10:50+0100\n"
+"PO-Revision-Date: 2014-12-07 17:16+0100\n"
+"Last-Translator: Sébastien CHAZALLET <s.chazallet@gmail.com>\n"
+"Language-Team: Sébastien CHAZALLET <s.chazallet@gmail.com>\n"
+"Language: French\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: base/apps.py:8
+msgid "Gluon - 00 - Gluon Base module"
+msgstr "Gluon - 00 - Module de base de Gluon"
+
+#: base/mixins.py:164
+msgid "created on"
+msgstr "créé le"
+
+#: base/mixins.py:165
+msgid "Date of creation"
+msgstr "date de création"
+
+#: base/mixins.py:176
+msgid "last modified on"
+msgstr "modifié pour la dernière fois le"
+
+#: base/mixins.py:177
+msgid "Date of last modification"
+msgstr "Date de modification"
+
+#: base/mixins.py:189 util/mixins.py:70
+msgid "deleted on"
+msgstr "supprimé le"
+
+#: base/mixins.py:190
+msgid "Date of deletion"
+msgstr "Date de suppression"
+
+#: base/mixins.py:201 util/mixins.py:81
+msgid "created by"
+msgstr "créé par"
+
+#: base/mixins.py:203
+msgid "The user who created this data"
+msgstr "L'utilisateur qui a créé cette donnée"
+
+#: base/mixins.py:213
+msgid "last modified by"
+msgstr "modifié pour la dernière fois le"
+
+#: base/mixins.py:215
+msgid "The user who last modified this data"
+msgstr "L'utilisateur qui a modifié pour la dernière fois cette donnée"
+
+#: base/mixins.py:225
+msgid "deleted by"
+msgstr "supprimé par"
+
+#: base/mixins.py:227
+msgid "The user who deleted this data"
+msgstr "L'utilisateur qui a supprimé cette donnée"
+
+#: base/mixins.py:242 util/models.py:32 util/models_todo.py:20
+#: util/models_todo.py:30
+msgid "active"
+msgstr "actif"
+
+#: base/mixins.py:243
+msgid "Is the data usable ?"
+msgstr "La donnée est-elle utilisable ?"
+
+#: base/mixins.py:259
+msgid "label"
+msgstr "label"
+
+#: base/mixins.py:260
+msgid "The way the data will be see from foreign objects"
+msgstr "La manière dont la donnée sera vue par les objets étrangers"
+
+#: base/mixins.py:271
+msgid "name"
+msgstr "nom"
+
+#: base/mixins.py:272
+msgid "Unique name, used in imports/exports features"
+msgstr "Nom unique, utilisé par les fonctionnalités d'import/export"
+
+#: gluon/settings/base.py:91
+msgid "French"
+msgstr "Français"
+
+#: gluon/settings/base.py:92
+msgid "English"
+msgstr "Anglais"
+
+#: legal/apps.py:8
+msgid "Gluon - 03 - Legal related module"
+msgstr "Gluon - 03 - Module relatif au juridique"
+
+#: legal/models.py:16 saas/models.py:65
+msgid "address 1"
+msgstr "adresse 1"
+
+#: legal/models.py:17
+msgid "Address line 1"
+msgstr "Adresse"
+
+#: legal/models.py:22 saas/models.py:72
+msgid "address 2"
+msgstr "adresse 2"
+
+#: legal/models.py:23
+msgid "Address line 2"
+msgstr "Complément d'adresse"
+
+#: legal/models.py:28 saas/models.py:79
+msgid "zip"
+msgstr "code postal"
+
+#: legal/models.py:29
+msgid "Address zip code"
+msgstr "Code postal associé à l'adresse"
+
+#: legal/models.py:34 saas/models.py:86
+msgid "city"
+msgstr "Ville"
+
+#: legal/models.py:35
+msgid "Address city"
+msgstr "Ville associé à l'adresse"
+
+#: legal/models.py:40 saas/models.py:93 util/models.py:151
+msgid "state"
+msgstr "etat"
+
+#: legal/models.py:41
+msgid "Address state"
+msgstr "État associé à l'addresse"
+
+#: legal/models.py:46 saas/models.py:100 util/models.py:124 util/models.py:140
+msgid "country"
+msgstr "pays"
+
+#: legal/models.py:47
+msgid "Address country"
+msgstr "Pays associé à l'adresse"
+
+#: legal/models.py:52
+msgid "address"
+msgstr "adresse"
+
+#: legal/models.py:60
+msgid "addresses"
+msgstr "adresses"
+
+#: legal/models.py:61
+msgid "Profile addresses"
+msgstr "Adresses associées au profil"
+
+#: legal/models.py:68 saas/models.py:108
+msgid "website"
+msgstr "Site web"
+
+#: legal/models.py:69
+msgid "Profile main website"
+msgstr "Site web associé au profil"
+
+#: legal/models.py:74 saas/models.py:114
+msgid "phone"
+msgstr "téléphone"
+
+#: legal/models.py:75
+msgid "Profile phone"
+msgstr "Téléphone associé au profil"
+
+#: legal/models.py:80 saas/models.py:121
+msgid "fax"
+msgstr "fax"
+
+#: legal/models.py:81
+msgid "Profile Fax"
+msgstr "Fax associé au profil"
+
+#: legal/models.py:86 saas/models.py:156 saas/models.py:291 util/models.py:165
+msgid "locale"
+msgstr "locale"
+
+#: legal/models.py:87
+msgid "Profile Locale"
+msgstr "Locale associée au profil"
+
+#: legal/models.py:92
+msgid "Profile timezone"
+msgstr "Fuseau horaire associé au profil"
+
+#: legal/models.py:93 saas/models.py:165 saas/models.py:300
+msgid "Timezone"
+msgstr "Fuseau horaire"
+
+#: legal/models.py:98 saas/models.py:312
+msgid "profile"
+msgstr "profil"
+
+#: legal/models.py:99 saas/models.py:313
+msgid "profiles"
+msgstr "profils"
+
+#: legal/models.py:106 saas/models.py:127
+msgid "tin"
+msgstr "tva"
+
+#: legal/models.py:107 saas/models.py:128
+msgid "Tax intra. number"
+msgstr "Numéro de TVA intracommunautaire"
+
+#: legal/models.py:112 saas/models.py:139
+msgid "logo height"
+msgstr "hauteur du logo"
+
+#: legal/models.py:116 saas/models.py:143
+msgid "logo width"
+msgstr "largeur du logo"
+
+#: legal/models.py:120 saas/models.py:147
+msgid "logo"
+msgstr "logo"
+
+#: legal/models.py:121
+msgid "Entity logo"
+msgstr "Logo de l'entité"
+
+#: legal/models.py:129
+msgid "entity"
+msgstr "entité"
+
+#: legal/models.py:137
+msgid "first_name"
+msgstr "prénom"
+
+#: legal/models.py:138
+msgid "Person first name"
+msgstr "Prénom de la personne"
+
+#: legal/models.py:144 saas/models.py:267
+msgid "last name"
+msgstr "nom"
+
+#: legal/models.py:145
+msgid "Person last name"
+msgstr "Nom de la personne"
+
+#: legal/models.py:151 saas/models.py:274
+msgid "avatar height"
+msgstr "hauteur de l'avatar"
+
+#: legal/models.py:155 saas/models.py:278
+msgid "avatar width"
+msgstr "largeur de l'avatar"
+
+#: legal/models.py:159 saas/models.py:282
+msgid "avatar"
+msgstr "avatar"
+
+#: legal/models.py:160 saas/models.py:283
+msgid "Avatar"
+msgstr "Avatar"
+
+#: legal/models.py:170
+msgid "person"
+msgstr "personne"
+
+#: legal/models.py:171
+msgid "persons"
+msgstr "personnes"
+
+#: saas/apps.py:8
+msgid "Gluon - 02 - SAAS management"
+msgstr "Gluon - 02 - Gestion du SAAS"
+
+#: saas/mixins.py:44 saas/models.py:185 saas/models.py:220
+msgid "instance"
+msgstr "instance"
+
+#: saas/mixins.py:90 saas/models.py:58
+msgid "owner"
+msgstr "propriétaire"
+
+#: saas/models.py:25
+msgid "Is this module a main application ?"
+msgstr "Ce module est-il une application de premier plan ?"
+
+#: saas/models.py:26
+msgid "Is this module an application ?"
+msgstr "Ce module est-il une application ?"
+
+#: saas/models.py:33
+msgid "price"
+msgstr "prix"
+
+#: saas/models.py:34
+msgid "Module price"
+msgstr "Prix du module"
+
+#: saas/models.py:40
+msgid "module"
+msgstr "module"
+
+#: saas/models.py:41 saas/models.py:133
+msgid "modules"
+msgstr "modules"
+
+#: saas/models.py:49
+msgid "opened"
+msgstr "ouvert"
+
+#: saas/models.py:50
+msgid "Is the instance is open ?"
+msgstr "L'instance est-elle ouverte ?"
+
+#: saas/models.py:59
+msgid "Owner"
+msgstr "Propriétaire"
+
+#: saas/models.py:66
+msgid "Address 1 of the instance owner"
+msgstr "Adresse du propriétaire de l'instance"
+
+#: saas/models.py:73
+msgid "Address 2 of the instance owner"
+msgstr "Complément d'adresse du propriétaire de l'instance"
+
+#: saas/models.py:80
+msgid "Zip of the instance owner"
+msgstr "Code postal du propriétaire de l'instance"
+
+#: saas/models.py:87
+msgid "City of the instance owner"
+msgstr "Ville du propriétaire de l'instance"
+
+#: saas/models.py:95
+msgid "State of the instance owner"
+msgstr "État du propriétaire de l'instance"
+
+#: saas/models.py:102
+msgid "Country of the instance owner"
+msgstr "Pays du propriétaire de l'instance"
+
+#: saas/models.py:109
+msgid "Website URI"
+msgstr "URI du site web"
+
+#: saas/models.py:115
+msgid "Phone number"
+msgstr "Numéro de téléphone"
+
+#: saas/models.py:122
+msgid "Fax number"
+msgstr "Numéro de fax"
+
+#: saas/models.py:134
+msgid "List of module installed on the instance"
+msgstr "Liste des modules installés sur l'instance"
+
+#: saas/models.py:148
+msgid "Logo of the instance owner"
+msgstr "Logo du propriétaire de l'instance"
+
+#: saas/models.py:158 saas/models.py:292
+msgid "Locale"
+msgstr "Locale"
+
+#: saas/models.py:163 saas/models.py:298 util/models.py:173
+msgid "timezone"
+msgstr "fuseau horaire"
+
+#: saas/models.py:186
+msgid "instances"
+msgstr "instances"
+
+#: saas/models.py:193
+msgid "groups"
+msgstr "groupes"
+
+#: saas/models.py:194
+msgid "List of groups used by the role"
+msgstr "Liste de groupes associés au rôle"
+
+#: saas/models.py:204
+msgid "access role"
+msgstr "rôle d'accès"
+
+#: saas/models.py:205
+msgid "access roles"
+msgstr "rôles d'accès"
+
+#: saas/models.py:212 saas/models.py:252
+msgid "user"
+msgstr "utilisateur"
+
+#: saas/models.py:213
+msgid "user who owns this account"
+msgstr "utilisateur associé à ce compte"
+
+#: saas/models.py:221 saas/models.py:228
+msgid "Role linked to this account"
+msgstr "rôle associé à ce compte"
+
+#: saas/models.py:227
+msgid "role"
+msgstr "rôle"
+
+#: saas/models.py:245
+msgid "access account"
+msgstr "compte utilisateur"
+
+#: saas/models.py:246
+msgid "access accounts"
+msgstr "comptes utilisateur"
+
+#: saas/models.py:253
+msgid "User linked to this profile"
+msgstr "Utilisateur rattaché à ce profil"
+
+#: saas/models.py:260
+msgid "first name"
+msgstr "prénom"
+
+#: saas/models.py:261
+msgid "First name"
+msgstr "nom"
+
+#: saas/models.py:268
+msgid "Last name"
+msgstr "Nom"
+
+#: util/apps.py:8
+msgid "Gluon - 01 - Utilities"
+msgstr "Gluon - 01 - Utilitaires"
+
+#: util/mixins.py:26
+#, python-brace-format
+msgid ""
+"Model \"{0}\" has a field named \"{1}\".\n"
+"    > It conflicts with the TimeFramedMixin manager."
+msgstr ""
+"Le modèle \"{0}\" a un champs nommé \"{1}\".\n"
+"    > Ce champs entre en conflit avec le gestionnaire TimeFramedMixin."
+
+#: util/mixins.py:39
+msgid "start on"
+msgstr "début le"
+
+#: util/mixins.py:45
+msgid "end on"
+msgstr "fin le"
+
+#: util/models.py:22 util/models_todo.py:13
+msgid "model"
+msgstr "modèle"
+
+#: util/models.py:23
+msgid "Model related to the status"
+msgstr "modèle associé au statut"
+
+#: util/models.py:33
+msgid "Is the status usable ?"
+msgstr "Le statut est-il utilisable ?"
+
+#: util/models.py:43
+msgid "deleted"
+msgstr "supprimé"
+
+#: util/models.py:44
+msgid "Is the status deleted"
+msgstr "Le statut est-il supprimé"
+
+#: util/models.py:54 util/models.py:64 util/models_todo.py:39
+#: util/models_todo.py:45
+msgid "status name"
+msgstr "nom du statut"
+
+#: util/models.py:55
+msgid "Name of the status"
+msgstr "Nom du statut"
+
+#: util/models.py:65
+msgid "Is the status is the default one for the model ?"
+msgstr "Le statut est-il celui par défaut du modèle ?"
+
+#: util/models.py:70
+msgid "status"
+msgstr "statut"
+
+#: util/models.py:71
+msgid "statuses"
+msgstr "statuts"
+
+#: util/models.py:78
+msgid "alpha2"
+msgstr "alpha2"
+
+#: util/models.py:79 util/models.py:133
+msgid "Two letters code"
+msgstr "Code à deux lettres"
+
+#: util/models.py:85
+msgid "alpha3"
+msgstr "alpha3"
+
+#: util/models.py:86
+msgid "Three letters code"
+msgstr "Code à trois lettres"
+
+#: util/models.py:93
+msgid "number"
+msgstr "numéro"
+
+#: util/models.py:94
+msgid "Three digits number code"
+msgstr "Code à trois chiffres"
+
+#: util/models.py:100
+msgid "french name"
+msgstr "nom français"
+
+#: util/models.py:101
+msgid "French common name of the country"
+msgstr "Nom commun français donné au pays"
+
+#: util/models.py:108
+msgid "english name"
+msgstr "nom anglais"
+
+#: util/models.py:109
+msgid "English common name of the country"
+msgstr "Nom commun anglais donné au pays"
+
+#: util/models.py:116
+msgid "usage name"
+msgstr "nom d'usage"
+
+#: util/models.py:117
+msgid "Usage name (localised)"
+msgstr "nom d'usage (localisé)"
+
+#: util/models.py:125
+msgid "countries"
+msgstr "pays"
+
+#: util/models.py:132
+msgid "code"
+msgstr "code"
+
+#: util/models.py:141
+msgid "Related country"
+msgstr "Pays associé"
+
+#: util/models.py:152
+msgid "states"
+msgstr "états"
+
+#: util/models.py:166
+msgid "locales"
+msgstr "locales"
+
+#: util/models.py:174
+msgid "timezones"
+msgstr "fuseaux horaires"
