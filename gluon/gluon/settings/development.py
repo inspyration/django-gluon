@@ -15,7 +15,7 @@ INSTALLED_APPS += (
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.sqlite3",
-        "NAME": str(BASE_DIR / "data" / "db.sqlite3"),
+        "NAME": str(BASE_PATH / "data" / "db.sqlite3"),
     }
 }
 

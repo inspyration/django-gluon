@@ -8,8 +8,10 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/1.7/ref/settings/
 """
 
+from django.utils.translation import gettext_lazy as _
+
 from pathlib import Path
-BASE_DIR = Path('.').resolve()
+BASE_PATH = Path('.').resolve()
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.7/howto/deployment/checklist/
@@ -51,8 +53,25 @@ MIDDLEWARE_CLASSES = (
     "django.contrib.auth.middleware.SessionAuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "django.middleware.locale.LocaleMiddleware",
     "base.middleware.GluonBaseMiddleware",
     "saas.middleware.GluonSaasMiddleware",
+)
+
+TEMPLATE_CONTEXT_PROCESSORS = (
+    "django.contrib.auth.context_processors.auth",
+    "django.core.context_processors.debug",
+    "django.core.context_processors.i18n",
+    "django.core.context_processors.media",
+    "django.core.context_processors.static",
+    "django.core.context_processors.tz",
+    "django.contrib.messages.context_processors.messages",
+    "django.core.context_processors.i18n",
+)
+
+TEMPLATE_LOADERS = (
+    "django.template.loaders.filesystem.Loader",
+    "django.template.loaders.app_directories.Loader",
 )
 
 ROOT_URLCONF = "gluon.urls"
@@ -68,13 +87,24 @@ USE_L10N = True
 
 USE_TZ = True
 
+LANGUAGES = (
+    ('fr', _('French')),
+    ('en', _('English')),
+)
 
-MEDIA_ROOT = str(BASE_DIR / "media")
+LOCALE_PATHS = (
+    str(BASE_PATH / "locales"),
+)
+
+# Media files
+
+MEDIA_ROOT = str(BASE_PATH / "media")
 
 MEDIA_URL = "/media/"
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.7/howto/static-files/
 
-STATIC_URL = "/static/"
+STATIC_ROOT = str(BASE_PATH / "static")
 
+STATIC_URL = "/static/"
