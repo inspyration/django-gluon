@@ -43,6 +43,8 @@ class Module(BaseMixin):
         decimal_places=2,
     )
 
+    _auto_compute_name = False
+
     class Meta:
         verbose_name = _("module")
         verbose_name_plural = _("modules")

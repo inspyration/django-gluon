@@ -367,8 +367,13 @@ class BaseMixin(Model):
     # Model methods
     #
 
-    def save(self, *, compute=True):
+    _auto_compute_name = True
+
+    def save(self, *, compute=None):
         """Compute label then name before saving, no matter what"""
+
+        if compute is None:
+            compute = self._auto_compute_name
 
         if compute:
             if hasattr(self, "compute_label"):
@@ -412,15 +417,11 @@ class BaseMixin(Model):
     def import_data(cls, filename):
         import_field_names, data = cls.extract_data_from_file(filename)
 
-        # check on field_names and build transformation lambda functions
-        functions, foreign_objects, model_field_names = {}, {}, list(cls.keys())
+        # Check if the imported field is in the model
+        model_field_names = list(cls.keys())
         for import_field_name in import_field_names:
-            # Is there a reference to a foreign key ?
-            if "__" in import_field_name:
-                field_name, foreign_field_name = import_field_name.split("__")
-            else:
-                field_name, foreign_field_name = import_field_name, None
             # Is the field in the model ?
+            field_name = import_field_name.split("__")[0]
             if field_name not in model_field_names:
                 raise(Exception(
                     "field name {0} not is part of the model {1}".format(
@@ -428,48 +429,66 @@ class BaseMixin(Model):
                         ".".join([cls.__module__, cls.__name__])
                     )
                 ))
-            if foreign_field_name is None:
-                functions[import_field_name] = lambda k, v: v
-            else:
-                foreign_model, foreign_type = cls.get_foreign_model(field_name)
-                if foreign_field_name not in foreign_model.keys():
-                    raise(Exception(
-                        "field name {0} not is part of the model {1}".format(
-                            foreign_field_name,
-                            ".".join([foreign_model.__module__,
-                                      foreign_model.__name__])
-                        )
-                    ))
-                foreign_objects[import_field_name] = {
-                    getattr(o, foreign_field_name): o
-                    for o in foreign_model.objects.active()
-                }
+        # TODO: Check if all required field are populated
 
-                if foreign_type == "ForeignKey":
-                    functions[import_field_name] =\
-                        lambda k, v: foreign_objects[k][v]
-                elif foreign_type == "ManyToManyField":
-                    pass
-                elif foreign_type == "OneToOneField":
-                    functions[import_field_name] =\
-                        lambda k, v: foreign_objects[k][v]
-                else:
-                    raise(Exception(
-                        "field type {0} is not a relational field".format(
-                            foreign_type)
-                    ))
-
-        # Create record
+        # Create records with all but field involving foreign data
         for d in data:
-            o = cls(**{k.split("__")[0]: functions[k](k, v)
-                       for k, v in d.items() if k in functions})
+            o = cls(**{k: v for k, v in d.items() if "__" not in k})
             o.save()
+            d["_inserted_object_"] = o
+
+        # check on field_names and build transformation lambda functions
+        functions, foreign_objects = {}, {}
+        for import_field_name in import_field_names:
+            # Is there a reference to a foreign key ?
+            if "__" not in import_field_name:
+                continue
+
+            field_name, foreign_field_name = import_field_name.split("__")
+            foreign_model, foreign_type = cls.get_foreign_model(field_name)
+            if foreign_field_name not in foreign_model.keys():
+                raise(Exception(
+                    "field name {0} not is part of the model {1}".format(
+                        foreign_field_name,
+                        ".".join([foreign_model.__module__,
+                                  foreign_model.__name__])
+                    )
+                ))
+            foreign_objects[import_field_name] = {
+                getattr(o, foreign_field_name): o
+                for o in foreign_model.objects.active()
+            }
+
+            if foreign_type == "ForeignKey":
+                functions[import_field_name] =\
+                    lambda k, v: foreign_objects[k][v]
+            elif foreign_type == "ManyToManyField":
+                pass
+            elif foreign_type == "OneToOneField":
+                functions[import_field_name] =\
+                    lambda k, v: foreign_objects[k][v]
+            else:
+                raise(Exception(
+                    "field type {0} is not a relational field".format(
+                        foreign_type)
+                ))
+
+        # Create records
+        for d in data:
+            o = d["_inserted_object_"]
+
+            # Deal with one2one and many2one
+            for field_name, function in functions:
+                setattr(o, field_name, function(field_name, d[field_name]))
+            o.save()
+
+            # Deal with many2many
             for field_name in foreign_objects:
                 if field_name in functions:
-                    continue  # Already done in object creation
+                    continue  # Already done
                 o_m2m = getattr(o, field_name.split("__")[0])
                 o_m2m.add(*[foreign_objects[field_name][x]
-                            for x in d[field_name].split(",")])
+                            for x in d[field_name].split(",") if x])
 
     @staticmethod
     def export_data_into_file(filename, data, headers):
