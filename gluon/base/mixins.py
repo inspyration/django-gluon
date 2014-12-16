@@ -431,17 +431,17 @@ class BaseMixin(Model):
                 ))
         # TODO: Check if all required field are populated
 
-        # Create records with all but field involving foreign data
-        for d in data:
-            o = cls(**{k: v for k, v in d.items() if "__" not in k})
-            o.save()
-            d["_inserted_object_"] = o
+        #
+        # Get information, prepare data
+        #
 
         # check on field_names and build transformation lambda functions
-        functions, foreign_objects = {}, {}
+        functions, foreign_objects, self_referenced_fields = {}, {}, {}
         for import_field_name in import_field_names:
             # Is there a reference to a foreign key ?
             if "__" not in import_field_name:
+                functions[import_field_name] =\
+                    lambda k, v: v
                 continue
 
             field_name, foreign_field_name = import_field_name.split("__")
@@ -454,6 +454,15 @@ class BaseMixin(Model):
                                   foreign_model.__name__])
                     )
                 ))
+
+            if foreign_model == cls:
+                self_referenced_fields[import_field_name] = (
+                    foreign_field_name,
+                    foreign_type
+                )
+                continue
+
+            # If self referenced, calculation take place later
             foreign_objects[import_field_name] = {
                 getattr(o, foreign_field_name): o
                 for o in foreign_model.objects.active()
@@ -473,19 +482,44 @@ class BaseMixin(Model):
                         foreign_type)
                 ))
 
-        # Create records
+        # Create records without self referenced fields and many2many fields
+        for d in data:
+            o = cls(**{k.split("__")[0]: functions[k](k, v)
+                       for k, v in d.items()
+                       if k in functions
+                       and k not in self_referenced_fields})
+
+            o.save()
+            d["_inserted_object_"] = o
+
+        # Calculation of object from a unique columns is done just once
+        self_objects = {foreign_field_name: {getattr(o, foreign_field_name): o
+                                             for o in cls.objects.active()}
+                        for foreign_field_name, foreign_type  # 2-tuple
+                        in set(self_referenced_fields.values())}
+
+        # Then, use as many time as needed these objects
+        foreign_objects.update({k: self_objects[v] for k, (v, _)
+                                in self_referenced_fields.items()})
+
+        # Update records with self referenced fields and many2many fields
         for d in data:
             o = d["_inserted_object_"]
 
-            # Deal with one2one and many2one
-            for field_name, function in functions:
-                setattr(o, field_name, function(field_name, d[field_name]))
+            # Deal with many2one self referenced fields only
+            for field_name, (_, foreign_type) in self_referenced_fields.items():
+                if foreign_type != "ForeignKey":
+                    continue
+                functions[field_name] = None  # We mark the field as processed
+                setattr(o,
+                        field_name,
+                        foreign_objects[field_name][d[field_name]])
             o.save()
 
-            # Deal with many2many
+            # Deal with many2many other fields
             for field_name in foreign_objects:
-                if field_name in functions:
-                    continue  # Already done
+                if field_name in functions:  # Marked as already processed
+                    continue
                 o_m2m = getattr(o, field_name.split("__")[0])
                 o_m2m.add(*[foreign_objects[field_name][x]
                             for x in d[field_name].split(",") if x])
