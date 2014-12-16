@@ -1,0 +1,4 @@
+"name","label","application","price","dependencies__name"
+"base","Base module","0","0",""
+"util","Basic utilities","0","0","base"
+"saas","SASS management","0","0","base,util"
