@@ -1,3 +1,7 @@
+# dotfiles
+.*
+!.gitignore
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
@@ -37,23 +41,38 @@ coverage.xml
 *.mo
 *.pot
 
-# Django stuff:
+# Logging stuff:
 *.log
 
 # Sphinx documentation
 docs/_build/
 
-# vim stuff
+# editors backup, swap or config files
+*~
 *.swp
-
-# Eclipse stuff
 .project
 .pydevproject
 .settings
-
-# PyCharm Stuff
 .idea/
 
 # Data directory
-data
+/data
 
+# hg stuff
+*.orig
+status
+
+# odoo filestore
+openerp/filestore
+
+# generated for windows installer?
+install/win32/*.bat
+install/win32/meta.py
+
+# various virtualenv
+/bin/
+/include/
+/lib/
+/man/
+/share/
+/src/
