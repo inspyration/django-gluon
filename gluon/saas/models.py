@@ -29,6 +29,13 @@ class Module(BaseMixin):
         default=True,
     )
 
+    dependencies = ManyToManyField(
+        verbose_name=_("Dependencies"),
+        help_text=_("List of modules required to make this one work"),
+        to="self",
+        blank=False,
+    )
+
     price = DecimalField(
         verbose_name=_("price"),
         help_text=_("Module price"),

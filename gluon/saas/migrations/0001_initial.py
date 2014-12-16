@@ -105,6 +105,7 @@ class Migration(migrations.Migration):
                 ('created_by', base.fields.UserField(help_text='The user who created this data', related_name='created_saas_module_set', editable=False, verbose_name='created by', to=settings.AUTH_USER_MODEL, null=True)),
                 ('deleted_by', base.fields.UserField(help_text='The user who deleted this data', related_name='deleted_saas_module_set', editable=False, verbose_name='deleted by', to=settings.AUTH_USER_MODEL, null=True)),
                 ('last_modified_by', base.fields.UserField(help_text='The user who last modified this data', related_name='last_modified_saas_module_set', editable=False, verbose_name='last modified by', to=settings.AUTH_USER_MODEL, null=True)),
+                ('dependencies', models.ManyToManyField(help_text='List of modules required to make this one work', related_name='dependencies_rel_+', verbose_name='Dependencies', to='saas.Module')),
             ],
             options={
                 'verbose_name': 'module',
