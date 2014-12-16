@@ -33,6 +33,7 @@ class Module(BaseMixin):
         verbose_name=_("Dependencies"),
         help_text=_("List of modules required to make this one work"),
         to="self",
+        symmetrical=False,
         blank=False,
     )
 
