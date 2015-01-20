@@ -76,3 +76,7 @@ install/win32/meta.py
 /man/
 /share/
 /src/
+
+# Specific to this project
+/gluon/data/
+
