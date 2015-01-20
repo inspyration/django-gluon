@@ -6,17 +6,17 @@ from django.db.models import (
     BooleanField,
     CharField,
     ForeignKey,
+    PositiveSmallIntegerField,
+    ImageField,
     Q,
 )
 
-from model_utils.managers import QueryManager
-
 from .fields import StatusField
-from base.fields import UserField
 from base.mixins import BaseManager, BaseMixin, BaseQuerySet
 
 from django.utils.translation import ugettext_lazy as _
 from django.utils.timezone import now
+from util.models import State, Country, Locale, TimeZone
 
 
 class StatusMixin(Model):
@@ -134,6 +134,145 @@ class NaiveHierarchyMixin(BaseMixin):
             return self,
         else:
             return self.parent._name_unique_model_path() + (self,)
+
+    class Meta:
+        abstract = True
+
+
+class LocalisationMixin(Model):
+
+    address1 = CharField(
+        verbose_name=_("address 1"),
+        help_text=_("first line of the address"),
+        max_length=255,
+        blank=False,
+    )
+
+    address2 = CharField(
+        verbose_name=_("address 2"),
+        help_text=_("second line of the address"),
+        max_length=255,
+        blank=False,
+    )
+
+    zip = CharField(
+        verbose_name=_("zip"),
+        help_text=_("Zip code"),
+        max_length=16,
+        blank=False,
+    )
+
+    city = CharField(
+        verbose_name=_("city"),
+        help_text=_("City"),
+        max_length=255,
+        blank=False,
+    )
+
+    state = ForeignKey(
+        verbose_name=_("state"),
+        related_name="%(app_label)s_%(class)s_set",
+        help_text=_("State"),
+        to=State,
+    )
+
+    country = ForeignKey(
+        verbose_name=_("country"),
+        related_name="%(app_label)s_%(class)s_set",
+        help_text=_("Country"),
+        to=Country,
+        blank=False,
+    )
+
+    class Meta:
+        abstract = True
+
+
+class SettingsMixin(Model):
+
+    locale = ForeignKey(
+        verbose_name=_("locale"),
+        related_name="%(app_label)s_%(class)s_set",
+        help_text=_("Locale"),
+        to=Locale,
+    )
+
+    timezone = ForeignKey(
+        verbose_name=_("timezone"),
+        related_name="%(app_label)s_%(class)s_set",
+        help_text=_("Timezone"),
+        to=TimeZone,
+    )
+
+    class Meta:
+        abstract = True
+
+
+class WebMixin(Model):
+
+    website = CharField(
+        verbose_name=_("website"),
+        help_text=_("Website URI"),
+        max_length=64,
+    )
+
+    class Meta:
+        abstract = True
+
+
+class ContactDetailMixin(Model):
+
+    phone = CharField(
+        verbose_name=_("phone"),
+        help_text=_("Phone number"),
+        max_length=16,
+        blank=False,
+    )
+
+    fax = CharField(
+        verbose_name=_("fax"),
+        help_text=_("Fax number"),
+        max_length=16,
+    )
+
+    class Meta:
+        abstract = True
+
+
+class CorporateMixin(Model):
+
+    tin = CharField(
+        verbose_name=_("tin"),
+        help_text=_("Tax intra. number"),
+        max_length=16,
+    )
+
+    class Meta:
+        abstract = True
+
+
+class LogoMixin(Model):
+
+    logo_height = PositiveSmallIntegerField(
+        verbose_name=_("logo height"),
+    )
+
+    logo_width = PositiveSmallIntegerField(
+        verbose_name=_("logo width"),
+    )
+
+    logo = ImageField(
+        verbose_name=_("logo"),
+        help_text=_("Logo of the instance owner"),
+        max_length=64,
+        upload_to="media/saas/logos/%Y/%m/%d",
+        height_field=logo_height,
+        width_field=logo_width,
+    )
+
+    #
+    # Meta class
+    #
 
     class Meta:
         abstract = True

@@ -43,6 +43,7 @@ LOCAL_APPS = (
     "edm",
 #    "legal",
 #    "planning",
+    "kaoka",
 )
 
 INSTALLED_APPS = FRAMEWORK_APPS + LOCAL_APPS

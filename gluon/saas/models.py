@@ -1,7 +1,15 @@
 from django.conf import settings
 
 from base.mixins import BaseMixin
-from util.mixins import StatusMixin
+from util.mixins import (
+    StatusMixin,
+    LocalisationMixin,
+    SettingsMixin,
+    WebMixin,
+    ContactDetailMixin,
+    CorporateMixin,
+    LogoMixin,
+)
 
 from util.models import Country, State, Locale, TimeZone
 
@@ -53,7 +61,8 @@ class Module(BaseMixin, StatusMixin):
         verbose_name_plural = _("modules")
 
 
-class Instance(BaseMixin, StatusMixin):
+class Instance(BaseMixin, LocalisationMixin, SettingsMixin, WebMixin,
+               ContactDetailMixin, CorporateMixin, LogoMixin, StatusMixin):
     """An instance is linked to a customer. It contains only his data"""
 
     # Instance status (opened or not)
@@ -73,109 +82,10 @@ class Instance(BaseMixin, StatusMixin):
         blank=False,
     )
 
-    address1 = CharField(
-        verbose_name=_("address 1"),
-        help_text=_("Address 1 of the instance owner"),
-        max_length=255,
-        blank=False,
-    )
-
-    address2 = CharField(
-        verbose_name=_("address 2"),
-        help_text=_("Address 2 of the instance owner"),
-        max_length=255,
-        blank=False,
-    )
-
-    zip = CharField(
-        verbose_name=_("zip"),
-        help_text=_("Zip of the instance owner"),
-        max_length=16,
-        blank=False,
-    )
-
-    city = CharField(
-        verbose_name=_("city"),
-        help_text=_("City of the instance owner"),
-        max_length=255,
-        blank=False,
-    )
-
-    state = ForeignKey(
-        verbose_name=_("state"),
-        related_name="saas_instance_set",
-        help_text=_("State of the instance owner"),
-        to=State,
-    )
-
-    country = ForeignKey(
-        verbose_name=_("country"),
-        related_name="saas_instance_set",
-        help_text=_("Country of the instance owner"),
-        to=Country,
-        blank=False,
-    )
-
-    website = CharField(
-        verbose_name=_("website"),
-        help_text=_("Website URI"),
-        max_length=64,
-    )
-
-    phone = CharField(
-        verbose_name=_("phone"),
-        help_text=_("Phone number"),
-        max_length=16,
-        blank=False,
-    )
-
-    fax = CharField(
-        verbose_name=_("fax"),
-        help_text=_("Fax number"),
-        max_length=16,
-    )
-
-    tin = CharField(
-        verbose_name=_("tin"),
-        help_text=_("Tax intra. number"),
-        max_length=16,
-    )
-
     modules = ManyToManyField(
         verbose_name=_("modules"),
         help_text=_("List of module installed on the instance"),
         to=Module,
-    )
-
-    logo_height = PositiveSmallIntegerField(
-        verbose_name=_("logo height"),
-    )
-
-    logo_width = PositiveSmallIntegerField(
-        verbose_name=_("logo width"),
-    )
-
-    logo = ImageField(
-        verbose_name=_("logo"),
-        help_text=_("Logo of the instance owner"),
-        max_length=64,
-        upload_to="media/saas/logos/%Y/%m/%d",
-        height_field=logo_height,
-        width_field=logo_width,
-    )
-
-    locale = ForeignKey(
-        verbose_name=_("locale"),
-        related_name="saas_instance_set",
-        help_text=_("Locale"),
-        to=Locale,
-    )
-
-    timezone = ForeignKey(
-        verbose_name=_("timezone"),
-        related_name="saas_instance_set",
-        help_text=_("Timezone"),
-        to=TimeZone,
     )
 
     @staticmethod
