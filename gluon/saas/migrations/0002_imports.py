@@ -8,6 +8,7 @@ from django.db import migrations
 from ..models import Module
 
 from pathlib import Path
+from util.models import Status
 
 BASE_DIR = getattr(settings, "BASE_PATH", Path(".").resolve())
 
@@ -19,6 +20,11 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
+        migrations.RunPython(
+            lambda apps, schema_editor: Status.import_data(
+                BASE_DIR / "saas" / "imports" / "statuses.csv"
+            )
+        ),
         migrations.RunPython(
             lambda apps, schema_editor: Module.import_data(
                 BASE_DIR / "saas" / "imports" / "modules.csv"

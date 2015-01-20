@@ -9,6 +9,9 @@ from django.db.models import (
     DateTimeField,
     BooleanField,
     CharField,
+    ForeignKey,
+    OneToOneField,
+    ManyToManyField
 )
 
 from .fields import UserField
@@ -16,7 +19,8 @@ from .fields import UserField
 from .data_handlers import get_data_handler
 
 from django.utils.translation import ugettext_lazy as _
-#from django.utils.timezone import now
+
+from django.utils.timezone import now
 
 LABEL_TO_NAME_TRANS_DOUBLE = (
     ("Æ", "AE"),
@@ -164,6 +168,7 @@ class BaseMixin(Model):
         verbose_name=_("created on"),
         help_text=_("Date of creation"),
         auto_now_add=True,
+        default=now,
         blank=False,
         editable=False
     )
@@ -176,6 +181,7 @@ class BaseMixin(Model):
         verbose_name=_("last modified on"),
         help_text=_("Date of last modification"),
         auto_now=True,
+        default=now,
         blank=False,
         editable=False
     )
@@ -297,7 +303,7 @@ class BaseMixin(Model):
 
     def compute_name(self):
         """Rule to get name from label and foreign keys: name must be unique!"""
-        return "__".join([label_to_name(x.label)
+        return "__".join([label_to_name(str(x))
                           for x in self._name_unique_model_path()])
 
     #
@@ -350,6 +356,15 @@ class BaseMixin(Model):
     def get_field_type(cls, field):
         if type(field) == str:
             field = cls.get_field(field)
+
+        field_classes = type.mro(type(field))
+        if ForeignKey in field_classes:
+            return "ForeignKey"
+        elif ManyToManyField in field_classes:
+            return "ManyToManyField"
+        elif OneToOneField in field_classes:
+            return "OneToOneField"
+
         return type(field).__name__
 
     @classmethod
@@ -398,7 +413,7 @@ class BaseMixin(Model):
     def delete(self, light=True):
         """Delete the object or set deleted_on and deleted_by"""
         if light:
-            self.deleted_on = datetime.now()
+            self.deleted_on = now()
 #            assert self.deleted_by is not None
             self.save(compute=False)
         else:

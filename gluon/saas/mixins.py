@@ -1,4 +1,5 @@
 from django.db.models import (
+    Model,
     ForeignKey,
 )
 
@@ -23,7 +24,7 @@ class InstanceAssignedManager(BaseManager):
         return queryset.active().from_instance(instance=instance)
 
 
-class InstanceAssignedMixin(BaseMixin):
+class InstanceAssignedMixin(Model):
     """Must be inherited by models that are usable only by an instance users"""
 
     #
@@ -66,10 +67,10 @@ class UserAssignedManager(BaseManager):
 
     def active_from_owner(self, owner):
         queryset = super(UserAssignedManager, self).get_queryset()
-        return queryset.active().from_instance(owner=owner)
+        return queryset.active().from_owner(owner=owner)
 
 
-class UserAssignedMixin(BaseMixin):
+class UserAssignedMixin(Model):
     """Must be inherited by models that are usable only by an instance users"""
 
     #

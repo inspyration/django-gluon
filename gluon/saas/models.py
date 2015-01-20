@@ -1,6 +1,7 @@
 from django.conf import settings
 
 from base.mixins import BaseMixin
+from util.mixins import StatusMixin
 
 from util.models import Country, State, Locale, TimeZone
 
@@ -18,7 +19,7 @@ from django.db.models import (
 from django.utils.translation import ugettext_lazy as _
 
 
-class Module(BaseMixin):
+class Module(BaseMixin, StatusMixin):
     """Each module can be activated for each instance"""
 
     application = BooleanField(
@@ -31,6 +32,7 @@ class Module(BaseMixin):
 
     dependencies = ManyToManyField(
         verbose_name=_("Dependencies"),
+        related_name='dependencies_rel_set',
         help_text=_("List of modules required to make this one work"),
         to="self",
         symmetrical=False,
@@ -51,7 +53,7 @@ class Module(BaseMixin):
         verbose_name_plural = _("modules")
 
 
-class Instance(BaseMixin):
+class Instance(BaseMixin, StatusMixin):
     """An instance is linked to a customer. It contains only his data"""
 
     # Instance status (opened or not)
@@ -215,7 +217,7 @@ class AccessRole(BaseMixin):
         verbose_name_plural = _("access roles")
 
 
-class AccessAccount(BaseMixin):
+class AccessAccount(BaseMixin, StatusMixin):
     """An account is linked to some instances and to one user"""
 
     user = ForeignKey(

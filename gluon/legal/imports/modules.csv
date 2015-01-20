@@ -1,2 +1,2 @@
-"name","label","application","price","dependencies__name"
-"legal","Legal related data management","0","0","saas"
+"name","label","application","price","dependencies__name","status__name"
+"legal","Legal related data management","0","0","saas","saas_module__alpha"

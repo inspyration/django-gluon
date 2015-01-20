@@ -11,7 +11,7 @@ from django.db.models import (
 from django.utils.translation import ugettext_lazy as _
 
 
-class Status(Model):
+class Status(BaseMixin):
     """Model handling all status"""
 
     # Field that indicate the model related to the status
@@ -24,47 +24,15 @@ class Status(Model):
         max_length=16,
     )
 
-    # Field that indicate whether the instance can be used by other models
-    # > not required
-    # > default True
-    # > editable
-    active = BooleanField(
-        verbose_name=_("active"),
-        help_text=_("Is the status usable ?"),
-        default=True,
-        editable=True
-    )
-
-    # Field that indicate whether the state has been deleted
-    # > not required
-    # > default True
-    # > editable
-    deleted = BooleanField(
-        verbose_name=_("deleted"),
-        help_text=_("Is the status deleted"),
-        default=False,
-        editable=True
-    )
-
-    # Field that indicate the name of the status
-    # > not required
-    # > default True
-    # > editable
-    name = CharField(
-        verbose_name=_("status name"),
-        help_text=_("Name of the status"),
-        max_length=16,
-    )
-
-    # Field that indicate if the status is the default one
-    # > required
-    # > default False
-    # > editable
     is_default = BooleanField(
         verbose_name=_("status name"),
         help_text=_("Is the status is the default one for the model ?"),
         default=False,
     )
+
+    def _name_unique_model_path(self):
+        """The logical model path to get the current object in a unique way"""
+        return self.model, self
 
     class Meta:
         verbose_name = _("status")
