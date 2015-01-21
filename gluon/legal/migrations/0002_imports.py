@@ -15,8 +15,8 @@ BASE_DIR = getattr(settings, "BASE_PATH", Path(".").resolve())
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('legal', '0002_auto_20141207_1547'),
-        ('saas', '0002_auto_20141215_2000'),
+        ('legal', '0001_initial'),
+        ('saas', '0002_imports'),
     ]
 
     operations = [
