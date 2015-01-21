@@ -87,14 +87,15 @@ class TimeFramedMixin(BaseMixin):
     start = DateTimeField(
         verbose_name=_("start on"),
         auto_now_add=True,
-        editable=False
+        blank=False,
+        editable=False,
     )
 
     end = DateTimeField(
         verbose_name=_("end on"),
         null=True,
         blank=True,
-        editable=False
+        editable=False,
     )
 
     class Meta:
@@ -145,6 +146,7 @@ class LocalisationMixin(Model):
         verbose_name=_("address 1"),
         help_text=_("first line of the address"),
         max_length=255,
+        null=False,
         blank=False,
     )
 
@@ -152,13 +154,15 @@ class LocalisationMixin(Model):
         verbose_name=_("address 2"),
         help_text=_("second line of the address"),
         max_length=255,
-        blank=False,
+        null=True,
+        blank=True,
     )
 
     zip = CharField(
         verbose_name=_("zip"),
         help_text=_("Zip code"),
         max_length=16,
+        null=False,
         blank=False,
     )
 
@@ -166,6 +170,7 @@ class LocalisationMixin(Model):
         verbose_name=_("city"),
         help_text=_("City"),
         max_length=255,
+        null=False,
         blank=False,
     )
 
@@ -174,6 +179,8 @@ class LocalisationMixin(Model):
         related_name="%(app_label)s_%(class)s_set",
         help_text=_("State"),
         to=State,
+        null=True,
+        blank=True,
     )
 
     country = ForeignKey(
@@ -181,6 +188,7 @@ class LocalisationMixin(Model):
         related_name="%(app_label)s_%(class)s_set",
         help_text=_("Country"),
         to=Country,
+        null=False,
         blank=False,
     )
 
@@ -195,6 +203,8 @@ class SettingsMixin(Model):
         related_name="%(app_label)s_%(class)s_set",
         help_text=_("Locale"),
         to=Locale,
+        null=False,
+        blank=False,
     )
 
     timezone = ForeignKey(
@@ -202,6 +212,8 @@ class SettingsMixin(Model):
         related_name="%(app_label)s_%(class)s_set",
         help_text=_("Timezone"),
         to=TimeZone,
+        null=False,
+        blank=False,
     )
 
     class Meta:
@@ -214,6 +226,8 @@ class WebMixin(Model):
         verbose_name=_("website"),
         help_text=_("Website URI"),
         max_length=64,
+        null=True,
+        blank=True,
     )
 
     class Meta:
@@ -226,6 +240,7 @@ class ContactDetailMixin(Model):
         verbose_name=_("phone"),
         help_text=_("Phone number"),
         max_length=16,
+        null=False,
         blank=False,
     )
 
@@ -233,6 +248,8 @@ class ContactDetailMixin(Model):
         verbose_name=_("fax"),
         help_text=_("Fax number"),
         max_length=16,
+        null=True,
+        blank=True,
     )
 
     class Meta:
@@ -245,6 +262,8 @@ class CorporateMixin(Model):
         verbose_name=_("tin"),
         help_text=_("Tax intra. number"),
         max_length=16,
+        null=True,
+        blank=True,
     )
 
     class Meta:
@@ -255,10 +274,14 @@ class LogoMixin(Model):
 
     logo_height = PositiveSmallIntegerField(
         verbose_name=_("logo height"),
+        null=False,
+        blank=True,
     )
 
     logo_width = PositiveSmallIntegerField(
         verbose_name=_("logo width"),
+        null=False,
+        blank=True,
     )
 
     logo = ImageField(
@@ -268,6 +291,8 @@ class LogoMixin(Model):
         upload_to="media/%(app_label)s/%(class)s/logos/%Y/%m/%d",
         height_field=logo_height,
         width_field=logo_width,
+        null=True,
+        blank=True,
     )
 
     #
@@ -282,10 +307,14 @@ class AvatarMixin(Model):
 
     avatar_height = PositiveSmallIntegerField(
         verbose_name=_("avatar height"),
+        null=False,
+        blank=True,
     )
 
     avatar_width = PositiveSmallIntegerField(
         verbose_name=_("avatar width"),
+        null=False,
+        blank=True,
     )
 
     avatar = ImageField(
@@ -295,6 +324,8 @@ class AvatarMixin(Model):
         upload_to="media/%(app_label)s/%(class)s/avatars/%Y/%m/%d",
         height_field=avatar_height,
         width_field=avatar_width,
+        null=True,
+        blank=True,
     )
 
     #
@@ -312,6 +343,7 @@ class PersonalInformationMixin(Model):
         help_text=_("Person first name"),
         max_length=127,
         blank=False,
+        null=False,
     )
 
     last_name = CharField(
@@ -319,6 +351,7 @@ class PersonalInformationMixin(Model):
         help_text=_("Person last name"),
         max_length=127,
         blank=False,
+        null=False,
     )
 
     #
