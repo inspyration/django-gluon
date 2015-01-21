@@ -5,7 +5,7 @@ from django.conf import settings
 
 from django.db import migrations
 
-from ..models import Country, State, Locale, TimeZone
+from ..models import Country, State, Locale, TimeZone, MimeRegistry, Mime
 
 from pathlib import Path
 
@@ -36,6 +36,16 @@ class Migration(migrations.Migration):
         migrations.RunPython(
             lambda apps, schema_editor: Locale.import_data(
                 BASE_DIR / "util" / "imports" / "locales.csv"
+            )
+        ),
+        migrations.RunPython(
+            lambda apps, schema_editor: MimeRegistry.import_data(
+                BASE_DIR / "edm" / "imports" / "mime_registries.csv"
+            )
+        ),
+        migrations.RunPython(
+            lambda apps, schema_editor: Mime.import_data(
+                BASE_DIR / "edm" / "imports" / "mime_types.csv"
             )
         ),
     ]

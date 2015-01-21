@@ -6,6 +6,8 @@ from .models import (
     State,
     Locale,
     TimeZone,
+    MimeRegistry,
+    Mime
 )
 
 
@@ -26,3 +28,5 @@ admin.site.register(Country)
 admin.site.register(State, StateAdmin)
 admin.site.register(Locale)
 admin.site.register(TimeZone)
+admin.site.register(MimeRegistry)
+admin.site.register(Mime)

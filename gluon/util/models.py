@@ -140,3 +140,37 @@ class TimeZone(BaseMixin):
     class Meta:
         verbose_name = _("timezone")
         verbose_name_plural = _("timezones")
+
+
+class MimeRegistry(BaseMixin):
+    """Media Type Registry"""
+
+    class Meta:
+        verbose_name = _("MIME registry")
+        verbose_name_plural = _("MIME registries")
+
+
+class Mime(BaseMixin):
+    """Type Mime"""
+
+    registry = ForeignKey(
+        verbose_name=_("registry"),
+        related_name="registry_%(class)s_set",
+        help_text=_("Mime type registry"),
+        to=MimeRegistry,
+    )
+
+    reference =  CharField(
+        verbose_name=_("reference"),
+        help_text=_("Mime type reference"),
+        max_length=127,
+        blank=True,
+    )
+
+    def _name_unique_model_path(self):
+        """The logical model path to get the current object in a unique way"""
+        return self.registry, self
+
+    class Meta:
+        verbose_name = _("MIME type")
+        verbose_name_plural = _("MIME types")
