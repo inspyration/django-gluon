@@ -1,8 +1,7 @@
 from django.db.models import ForeignKey, ManyToManyField
 
-from base.mixins import BaseMixin
-
 from saas.mixins import SaasMixin
+
 from util.mixins import (
     LocalisationMixin,
     SettingsMixin,

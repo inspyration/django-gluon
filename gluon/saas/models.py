@@ -60,6 +60,13 @@ class Module(BaseMixin, StatusMixin):
         verbose_name_plural = _("modules")
 
 
+########################
+#                      #
+#      SAAS Vital      #
+#                      #
+########################
+
+
 class Subscription(BaseMixin, LocalisationMixin, SettingsMixin, WebMixin,
                    ContactDetailMixin, CorporateMixin, LogoMixin, StatusMixin):
     """An instance is linked to a customer. It contains only his data"""
@@ -165,6 +172,13 @@ class AccessAccount(BaseMixin, StatusMixin):
     class Meta:
         verbose_name = _("access account")
         verbose_name_plural = _("access accounts")
+
+
+########################
+#                      #
+#      SAAS Basis      #
+#                      #
+########################
 
 
 class Profile(BaseMixin, PersonalInformationMixin, AvatarMixin, SettingsMixin):
