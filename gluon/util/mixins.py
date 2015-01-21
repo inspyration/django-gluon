@@ -265,9 +265,60 @@ class LogoMixin(Model):
         verbose_name=_("logo"),
         help_text=_("Logo of the instance owner"),
         max_length=64,
-        upload_to="media/saas/logos/%Y/%m/%d",
+        upload_to="media/%(app_label)s/%(class)s/logos/%Y/%m/%d",
         height_field=logo_height,
         width_field=logo_width,
+    )
+
+    #
+    # Meta class
+    #
+
+    class Meta:
+        abstract = True
+
+
+class AvatarMixin(Model):
+
+    avatar_height = PositiveSmallIntegerField(
+        verbose_name=_("avatar height"),
+    )
+
+    avatar_width = PositiveSmallIntegerField(
+        verbose_name=_("avatar width"),
+    )
+
+    avatar = ImageField(
+        verbose_name=_("avatar"),
+        help_text=_("Avatar"),
+        max_length=64,
+        upload_to="media/%(app_label)s/%(class)s/avatars/%Y/%m/%d",
+        height_field=avatar_height,
+        width_field=avatar_width,
+    )
+
+    #
+    # Meta class
+    #
+
+    class Meta:
+        abstract = True
+
+
+class PersonalInformationMixin(Model):
+
+    first_name = CharField(
+        verbose_name=_("first_name"),
+        help_text=_("Person first name"),
+        max_length=127,
+        blank=False,
+    )
+
+    last_name = CharField(
+        verbose_name=_("last name"),
+        help_text=_("Person last name"),
+        max_length=127,
+        blank=False,
     )
 
     #

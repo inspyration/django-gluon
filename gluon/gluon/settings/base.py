@@ -40,10 +40,14 @@ LOCAL_APPS = (
     "base",
     "util",
     "saas",
-    "edm",
-#    "legal",
+    "legal",
+# Main applications
+#    TODO: "edm"
+#    TODO: "crm"
+#    TODO: "erp", ...
+# Custom applications (no committed)
 #    "planning",
-    "kaoka",
+#    "kaoka",
 )
 
 INSTALLED_APPS = FRAMEWORK_APPS + LOCAL_APPS
