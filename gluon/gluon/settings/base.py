@@ -41,14 +41,16 @@ LOCAL_APPS = (
     "util",
     "saas",
     "legal",
-# Main applications
-#    TODO: "edm"
-#    TODO: "crm"
-#    TODO: "erp", ...
-# Custom applications (no committed)
-#    "planning",
-#    "kaoka",
 )
+
+if Path("apps.txt").is_file():
+    with open("apps.txt") as f:
+        for line in f.readlines():
+            line = line.strip()
+            if not line or line[0] == "#":
+                continue
+            else:
+                LOCAL_APPS = LOCAL_APPS + (line,)
 
 INSTALLED_APPS = FRAMEWORK_APPS + LOCAL_APPS
 
