@@ -1,6 +1,7 @@
 from django.conf import settings
 
 from base.mixins import BaseMixin
+
 from util.mixins import (
     StatusMixin,
     LocalisationMixin,
@@ -9,9 +10,9 @@ from util.mixins import (
     ContactDetailMixin,
     CorporateMixin,
     LogoMixin,
+    PersonalInformationMixin,
+    AvatarMixin,
 )
-
-from util.models import Country, State, Locale, TimeZone
 
 from django.db.models import (
     BooleanField,
@@ -20,8 +21,6 @@ from django.db.models import (
     ManyToManyField,
     OneToOneField,
     ForeignKey,
-    ImageField,
-    PositiveSmallIntegerField,
 )
 
 from django.utils.translation import ugettext_lazy as _
@@ -61,8 +60,8 @@ class Module(BaseMixin, StatusMixin):
         verbose_name_plural = _("modules")
 
 
-class Instance(BaseMixin, LocalisationMixin, SettingsMixin, WebMixin,
-               ContactDetailMixin, CorporateMixin, LogoMixin, StatusMixin):
+class Subscription(BaseMixin, LocalisationMixin, SettingsMixin, WebMixin,
+                   ContactDetailMixin, CorporateMixin, LogoMixin, StatusMixin):
     """An instance is linked to a customer. It contains only his data"""
 
     # Instance status (opened or not)
@@ -141,7 +140,7 @@ class AccessAccount(BaseMixin, StatusMixin):
     instance = ForeignKey(
         verbose_name=_("instance"),
         help_text=_("Role linked to this account"),
-        to=Instance,
+        to=Subscription,
         blank=False,
     )
 
@@ -168,7 +167,7 @@ class AccessAccount(BaseMixin, StatusMixin):
         verbose_name_plural = _("access accounts")
 
 
-class Profile(BaseMixin):
+class Profile(BaseMixin, PersonalInformationMixin, AvatarMixin, SettingsMixin):
 
     user = OneToOneField(
         verbose_name=_("user"),
@@ -178,50 +177,7 @@ class Profile(BaseMixin):
         blank=False,
     )
 
-    first_name = CharField(
-        verbose_name=_("first name"),
-        help_text=_("First name"),
-        max_length=32,
-        blank=False,
-    )
-
-    last_name = CharField(
-        verbose_name=_("last name"),
-        help_text=_("Last name"),
-        max_length=32,
-        blank=False,
-    )
-
-    avatar_height = PositiveSmallIntegerField(
-        verbose_name=_("avatar height"),
-    )
-
-    avatar_width = PositiveSmallIntegerField(
-        verbose_name=_("avatar width"),
-    )
-
-    avatar = ImageField(
-        verbose_name=_("avatar"),
-        help_text=_("Avatar"),
-        max_length=64,
-        upload_to="media/saas/avatars/%Y/%m/%d",
-        height_field=avatar_height,
-        width_field=avatar_width,
-    )
-
-    locale = ForeignKey(
-        verbose_name=_("locale"),
-        help_text=_("Locale"),
-        related_name="user_set",
-        to=Locale,
-    )
-
-    timezone = ForeignKey(
-        verbose_name=_("timezone"),
-        related_name="user_set",
-        help_text=_("Timezone"),
-        to=TimeZone,
-    )
+#    default_subscription = #TODO
 
     @staticmethod
     def get_related_fields():

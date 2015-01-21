@@ -1,1 +1,1 @@
-default_app_config = 'legal.apps.LegalConfig'
+default_app_config = "legal.apps.LegalConfig"

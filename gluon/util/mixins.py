@@ -19,21 +19,6 @@ from django.utils.timezone import now
 from util.models import State, Country, Locale, TimeZone
 
 
-class StatusMixin(Model):
-    """Must be inherited by models using a workflow based on status"""
-
-    status = StatusField(
-        verbose_name=_("status"),
-        related_name="status_%(app_label)s_%(class)s_set",
-        unique=False,
-        blank=False,
-        null=False,
-    )
-
-    class Meta:
-        abstract = True
-
-
 class TimeFramedQuerySet(BaseQuerySet):
     """QuerySet used by BaseMixin models"""
 
@@ -55,9 +40,6 @@ class TimeFramedQuerySet(BaseQuerySet):
 
 class TimeFramedManager(BaseManager):
 
-    def get_queryset(self):
-        return self._get_queryset().auto_join().alive()
-
     def in_effect(self):
         """Get only active objects"""
         return self.get_queryset().in_effect()
@@ -67,7 +49,7 @@ class TimeFramedManager(BaseManager):
         return self.get_queryset().in_effect_at(date)
 
 
-class TimeFramedMixin(BaseMixin):
+class TimeFramedMixin(Model):
     """Must be inherited by models that are valid only in a period of time"""
 
     #
@@ -78,7 +60,7 @@ class TimeFramedMixin(BaseMixin):
         """Base QuerySet used by BaseMixin models that does not overwrite it"""
 
     # same default filters as BaseManager, with some other filters added
-    objects = TimeFramedManager()
+    time_framed_objects = TimeFramedManager()
 
     #
     # Define valid period
@@ -107,7 +89,7 @@ class NaiveHierarchyManager(BaseManager):
         return self.get_query_set().filter(parent__isnull=True)
 
 
-class NaiveHierarchyMixin(BaseMixin):
+class NaiveHierarchyMixin(Model):
 
     parent = ForeignKey(
         verbose_name=_("parent"),
@@ -121,7 +103,7 @@ class NaiveHierarchyMixin(BaseMixin):
     tree = NaiveHierarchyManager()
 
     def get_children(self):
-        return type(self).objects.filter(parent=self)
+        return type(self).tree.filter(parent=self)
 
     def get_descendants(self):
         result = set(self.get_children())
@@ -135,6 +117,21 @@ class NaiveHierarchyMixin(BaseMixin):
             return self,
         else:
             return self.parent._name_unique_model_path() + (self,)
+
+    class Meta:
+        abstract = True
+
+
+class StatusMixin(Model):
+    """Must be inherited by models using a workflow based on status"""
+
+    status = StatusField(
+        verbose_name=_("status"),
+        related_name="status_%(app_label)s_%(class)s_set",
+        unique=False,
+        blank=False,
+        null=False,
+    )
 
     class Meta:
         abstract = True
@@ -262,8 +259,8 @@ class CorporateMixin(Model):
         verbose_name=_("tin"),
         help_text=_("Tax intra. number"),
         max_length=16,
-        null=True,
-        blank=True,
+        null=False,
+        blank=False,
     )
 
     class Meta:
@@ -274,13 +271,13 @@ class LogoMixin(Model):
 
     logo_height = PositiveSmallIntegerField(
         verbose_name=_("logo height"),
-        null=False,
+        null=True,
         blank=True,
     )
 
     logo_width = PositiveSmallIntegerField(
         verbose_name=_("logo width"),
-        null=False,
+        null=True,
         blank=True,
     )
 
@@ -289,8 +286,8 @@ class LogoMixin(Model):
         help_text=_("Logo of the instance owner"),
         max_length=64,
         upload_to="media/%(app_label)s/%(class)s/logos/%Y/%m/%d",
-        height_field=logo_height,
-        width_field=logo_width,
+        height_field="logo_height",
+        width_field="logo_width",
         null=True,
         blank=True,
     )
@@ -307,13 +304,13 @@ class AvatarMixin(Model):
 
     avatar_height = PositiveSmallIntegerField(
         verbose_name=_("avatar height"),
-        null=False,
+        null=True,
         blank=True,
     )
 
     avatar_width = PositiveSmallIntegerField(
         verbose_name=_("avatar width"),
-        null=False,
+        null=True,
         blank=True,
     )
 
@@ -322,8 +319,8 @@ class AvatarMixin(Model):
         help_text=_("Avatar"),
         max_length=64,
         upload_to="media/%(app_label)s/%(class)s/avatars/%Y/%m/%d",
-        height_field=avatar_height,
-        width_field=avatar_width,
+        height_field="avatar_height",
+        width_field="avatar_width",
         null=True,
         blank=True,
     )

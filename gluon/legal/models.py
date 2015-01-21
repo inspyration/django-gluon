@@ -2,7 +2,7 @@ from django.db.models import ForeignKey, ManyToManyField
 
 from base.mixins import BaseMixin
 
-from saas.mixins import InstanceAssignedMixin
+from saas.mixins import SaasMixin
 from util.mixins import (
     LocalisationMixin,
     SettingsMixin,
@@ -17,7 +17,7 @@ from util.mixins import (
 from django.utils.translation import ugettext_lazy as _
 
 
-class Address(BaseMixin, InstanceAssignedMixin, LocalisationMixin):
+class Address(SaasMixin, LocalisationMixin):
     """Addresses properties"""
 
     class Meta:
@@ -25,8 +25,7 @@ class Address(BaseMixin, InstanceAssignedMixin, LocalisationMixin):
         verbose_name_plural = "addresses"
 
 
-class Profile(BaseMixin, InstanceAssignedMixin, SettingsMixin, WebMixin,
-              ContactDetailMixin):
+class Profile(SaasMixin, SettingsMixin, WebMixin, ContactDetailMixin):
     """Profiles are common to both entities and persons"""
 
     addresses = ManyToManyField(
