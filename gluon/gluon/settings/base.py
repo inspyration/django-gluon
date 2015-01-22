@@ -11,13 +11,13 @@ https://docs.djangoproject.com/en/1.7/ref/settings/
 from django.utils.translation import gettext_lazy as _
 
 from pathlib import Path
-BASE_PATH = Path('.').resolve()
+BASE_PATH = Path(".").resolve()
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.7/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'h-g0sh#owg%$2c*@%&6#kw3mc(2okzn+-r_o326py3st3mc6el'
+SECRET_KEY = "h-g0sh#owg%$2c*@%&6#kw3mc(2okzn+-r_o326py3st3mc6el"
 
 ALLOWED_HOSTS = []
 
@@ -31,6 +31,7 @@ FRAMEWORK_APPS = (
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "django_extensions",
+    "compressor",
     "bootstrap3",
     "chartit",
 )
@@ -40,7 +41,7 @@ LOCAL_APPS = (
     "base",
     "util",
     "saas",
-    "legal",
+#    "legal",
 )
 
 if Path("apps.txt").is_file():
@@ -97,8 +98,8 @@ USE_L10N = True
 USE_TZ = True
 
 LANGUAGES = (
-    ('fr', _('French')),
-    ('en', _('English')),
+    ("fr", _("French")),
+    ("en", _("English")),
 )
 
 LOCALE_PATHS = (
@@ -117,3 +118,9 @@ MEDIA_URL = "/media/"
 STATIC_ROOT = str(BASE_PATH / "static")
 
 STATIC_URL = "/static/"
+
+STATICFILES_FINDERS = (
+    "django.contrib.staticfiles.finders.FileSystemFinder",
+    "django.contrib.staticfiles.finders.AppDirectoriesFinder",
+    "compressor.finders.CompressorFinder",
+)

@@ -5,7 +5,18 @@ from django.conf import settings
 
 from django.db import migrations
 
-from ..models import Country, State, Locale, TimeZone, MimeRegistry, Mime
+from ..models import (
+    Country,
+    State,
+    Locale,
+    TimeZone,
+    MimeRegistry,
+    Mime,
+    HtmlTag,
+    Browser,
+    HttpResource,
+    Keyword,
+)
 
 from pathlib import Path
 
@@ -40,12 +51,32 @@ class Migration(migrations.Migration):
         ),
         migrations.RunPython(
             lambda apps, schema_editor: MimeRegistry.import_data(
-                BASE_DIR / "edm" / "imports" / "mime_registries.csv"
+                BASE_DIR / "util" / "imports" / "mime_registries.csv"
             )
         ),
         migrations.RunPython(
             lambda apps, schema_editor: Mime.import_data(
-                BASE_DIR / "edm" / "imports" / "mime_types.csv"
+                BASE_DIR / "util" / "imports" / "mime_types.csv"
+            )
+        ),
+        migrations.RunPython(
+            lambda apps, schema_editor: HtmlTag.import_data(
+                BASE_DIR / "util" / "imports" / "html_tags.csv"
+            )
+        ),
+        migrations.RunPython(
+            lambda apps, schema_editor: Browser.import_data(
+                BASE_DIR / "util" / "imports" / "browsers.csv"
+            )
+        ),
+        migrations.RunPython(
+            lambda apps, schema_editor: HttpResource.import_data(
+                BASE_DIR / "util" / "imports" / "html_resources.csv"
+            )
+        ),
+        migrations.RunPython(
+            lambda apps, schema_editor: Keyword.import_data(
+                BASE_DIR / "util" / "imports" / "keywords.csv"
             )
         ),
     ]

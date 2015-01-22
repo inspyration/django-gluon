@@ -1,6 +1,17 @@
 from django.conf import settings
 
+from django.db.models import (
+    BooleanField,
+    CharField,
+    DecimalField,
+    ManyToManyField,
+    OneToOneField,
+    ForeignKey,
+    TextField)
+
 from base.mixins import BaseMixin
+
+from util.models import Keyword, HttpResource
 
 from util.mixins import (
     StatusMixin,
@@ -12,15 +23,6 @@ from util.mixins import (
     LogoMixin,
     PersonalInformationMixin,
     AvatarMixin,
-)
-
-from django.db.models import (
-    BooleanField,
-    CharField,
-    DecimalField,
-    ManyToManyField,
-    OneToOneField,
-    ForeignKey,
 )
 
 from django.utils.translation import ugettext_lazy as _
@@ -181,6 +183,16 @@ class AccessAccount(BaseMixin, StatusMixin):
 ########################
 
 
+class Notification(BaseMixin, StatusMixin):
+    """A notification can be broadcast by any application"""
+
+    message = TextField(
+        verbose_name=_("message"),
+        help_text=_("Message"),
+        blank=False,
+    )
+
+
 class Profile(BaseMixin, PersonalInformationMixin, AvatarMixin, SettingsMixin):
 
     user = OneToOneField(
@@ -189,6 +201,13 @@ class Profile(BaseMixin, PersonalInformationMixin, AvatarMixin, SettingsMixin):
         to=getattr(settings, 'AUTH_USER_MODEL', 'auth.User'),
         related_name="profile",
         blank=False,
+    )
+
+    notifications = ManyToManyField(
+        verbose_name=_("notifications"),
+        help_text=_("Notifications"),
+        to=Notification,
+        blank=True,
     )
 
 #    default_subscription = #TODO
@@ -203,3 +222,49 @@ class Profile(BaseMixin, PersonalInformationMixin, AvatarMixin, SettingsMixin):
     class Meta:
         verbose_name = _("profile")
         verbose_name_plural = _("profiles")
+
+
+class View(BaseMixin):
+    """SAAS View, used by SaasTemplateView"""
+
+    module = ForeignKey(
+        verbose_name=_("module"),
+        help_text=_("Module of the view"),
+        to=Module,
+        related_name="view_set",
+        blank=False,
+    )
+
+    page_title = CharField(
+        verbose_name=_("page title"),
+        help_text=_("Title of the page"),
+        max_length=127,
+        blank=False,
+    )
+
+    page_keywords = ManyToManyField(
+        verbose_name=_("page keywords"),
+        help_text=_("List of keywords used by the page"),
+        to=Keyword,
+        related_name="view_set",
+        blank=True,
+    )
+
+    page_description = CharField(
+        verbose_name=_("page description"),
+        help_text=_("Description of the page (250 characters max, 200 ideally)"),
+        max_length=250,
+        blank=False,
+    )
+
+    resources = ManyToManyField(
+        verbose_name=_("HTTP resources"),
+        help_text=_("List of resources used by this view (CSS, JS, Meta, ...)"),
+        to=HttpResource,
+        related_name="view_set",
+        blank=True,
+    )
+
+    class Meta:
+        verbose_name = _("view")
+        verbose_name_plural = _("views")

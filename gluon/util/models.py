@@ -11,6 +11,11 @@ from django.db.models import (
 from django.utils.translation import ugettext_lazy as _
 
 
+#
+# Status
+#
+
+
 class Status(BaseMixin):
     """Model handling all status"""
 
@@ -37,6 +42,11 @@ class Status(BaseMixin):
     class Meta:
         verbose_name = _("status")
         verbose_name_plural = _("statuses")
+
+
+#
+# Localization
+#
 
 
 class Country(BaseMixin):
@@ -120,6 +130,11 @@ class State(BaseMixin):
         verbose_name_plural = _("states")
 
 
+#
+# Settings
+#
+
+
 class Locale(BaseMixin):
     """Locale:
     label contains language code such as fr-fr
@@ -140,6 +155,11 @@ class TimeZone(BaseMixin):
     class Meta:
         verbose_name = _("timezone")
         verbose_name_plural = _("timezones")
+
+
+#
+# File management
+#
 
 
 class MimeRegistry(BaseMixin):
@@ -174,3 +194,67 @@ class Mime(BaseMixin):
     class Meta:
         verbose_name = _("MIME type")
         verbose_name_plural = _("MIME types")
+
+
+#
+# HTTP Resources management
+#
+
+
+class HtmlTag(BaseMixin):
+    """HTML Tag"""
+
+    class Meta:
+        verbose_name = _("Html tag")
+        verbose_name_plural = _("Html tags")
+
+
+class Browser(BaseMixin):
+    """Web Browser"""
+
+    class Meta:
+        verbose_name = _("Browser")
+        verbose_name_plural = _("Browsers")
+
+
+class HttpResource(BaseMixin):
+    """HTTP Resource"""
+
+    tag = ForeignKey(
+        verbose_name=_("tag"),
+        related_name="tag_%(class)s_set",
+        help_text=_("HTML Tag used to call this resource"),
+        to=HtmlTag,
+        blank=False,
+    )
+
+    browser = ForeignKey(
+        verbose_name=_("browser"),
+        related_name="browser_%(class)s_set",
+        help_text=_("Specific Browser (potentially with version number)"),
+        to=Browser,
+        blank=False,
+    )
+
+    path = CharField(
+        verbose_name=_("path"),
+        help_text=_("Path to the (hosted) resource"),
+        max_length=127,
+        blank=True,
+    )
+
+    def _name_unique_model_path(self):
+        """The logical model path to get the current object in a unique way"""
+        return self.tag, self.browser, self
+
+    class Meta:
+        verbose_name = _("Http resource")
+        verbose_name_plural = _("Http resources")
+
+
+class Keyword(BaseMixin):
+    """Keyword of a page (html>head>meta[keyword])"""
+
+    class Meta:
+        verbose_name = _("keyword")
+        verbose_name_plural = _("keywords")

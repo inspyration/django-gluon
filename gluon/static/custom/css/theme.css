@@ -1,0 +1,44 @@
+
+table.dataTable tbody tr.odd {color: #000;}
+table.dataTable tbody tr.even{color: #111;}
+.nav-tabs > li > a {background-color: #CCC;}
+.dhx_matrix_scell {color: #000;}
+
+.time_spinner, .int_spinner {
+  width: 100px;
+}
+.time_spinner input, .int_spinner input {
+  text-align: right;
+  padding: 6px;
+  height: 34px;
+}
+.input-group-btn-vertical {
+  position: relative;
+  white-space: nowrap;
+  width: 1%;
+  vertical-align: middle;
+  display: table-cell;
+}
+.input-group-btn-vertical > .btn {
+  display: block;
+  float: none;
+  width: 100%;
+  max-width: 100%;
+  padding: 8px;
+  margin-left: -1px;
+  margin-bottom: 0;
+  position: relative;
+  border-radius: 0;
+}
+.input-group-btn-vertical > .btn:first-child {
+  border-top-right-radius: 4px;
+}
+.input-group-btn-vertical > .btn:last-child {
+  margin-top: -2px;
+  border-bottom-right-radius: 4px;
+}
+.input-group-btn-vertical i{
+  position: absolute;
+  top: 0;
+  left: 4px;
+}

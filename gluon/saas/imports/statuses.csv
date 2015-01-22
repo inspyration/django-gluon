@@ -12,3 +12,5 @@
 "saas.accessaccount","ongoing",""
 "saas.accessaccount","suspended",""
 "saas.accessaccount","terminated",""
+"saas.notification","new","1"
+"saas.notification","read",""

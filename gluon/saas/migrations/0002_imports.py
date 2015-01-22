@@ -5,7 +5,7 @@ from django.conf import settings
 
 from django.db import migrations
 
-from ..models import Module
+from ..models import Module, View
 
 from pathlib import Path
 from util.models import Status
@@ -28,6 +28,11 @@ class Migration(migrations.Migration):
         migrations.RunPython(
             lambda apps, schema_editor: Module.import_data(
                 BASE_DIR / "saas" / "imports" / "modules.csv"
+            )
+        ),
+        migrations.RunPython(
+            lambda apps, schema_editor: View.import_data(
+                BASE_DIR / "saas" / "imports" / "views.csv"
             )
         ),
     ]

@@ -10,3 +10,9 @@ django-bootstrap3==5.0.2
 django-datatables-view==1.12
 zope.component
 pillow==2.6.1
+django_compressor==1.4
+django-appconf
+beautifulsoup4
+lxml
+html5lib
+slimit
