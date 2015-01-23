@@ -125,5 +125,6 @@ STATICFILES_FINDERS = (
     "compressor.finders.CompressorFinder",
 )
 
+PLATFORM_NAME = "The Gluon project"
 GOOGLE_SITE_VERIFICATION = None
 WELCOME_MESSAGE = "Welcome,"
