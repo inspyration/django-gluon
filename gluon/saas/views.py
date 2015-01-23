@@ -1,14 +1,13 @@
-from django.shortcuts import render
+from .models import View as SaasView, Profile
 
 from django.views.generic.base import ContextMixin, TemplateResponseMixin, View
-from .models import View as SaasView
-# Create your views here.
+
+from django.contrib.auth import get_user
+
+from django.shortcuts import render
 
 from django.core.exceptions import ImproperlyConfigured
 
-
-def get_saas_context(context, *args, **kwargs):
-    """Inject SAAS Context into view context"""
 
 class SaasContextMixin(ContextMixin):
     """SAAS Context Mixin"""
@@ -86,19 +85,34 @@ class SaasContextMixin(ContextMixin):
         })
 
         # update context with data from user
-        if self.request.user.is_anonymous():
+        context.update({
+            "nb_notifications": 0,
+            "current_user_avatar_uri": "/static/images/anonymous.png",
+            "current_user_display_name": "Anonymous user"
+        })
+        if self.request.user.is_authenticated():
+            # Get current user and get or create profile
+            user = get_user(self.request)
+            profile = Profile.objects.filter(user=user).first()
+            if not profile:
+                profile = Profile
+                profile.user = user
+                profile.save()
+
+            display_name = profile.label
+            if not display_name.strip():
+                display_name = user.username
+
             context.update({
-                "nb_notifications": 0,
-                "current_user_avatar_uri": "/static/images/anonymous.png",
-                "current_user_display_name": "Anonymous user"
+                "nb_notifications": len([
+                    n for n in profile.notifications.all()
+                    if n.status == "new"]),
+                "current_user_display_name": display_name,
             })
-        else:
-            # Get current user
-            user = self.request.user.username
-            context.update({
-                "nb_notifications": None, # TODO:
-                "current_user_avatar_uri": None, # TODO:
-                "current_user_display_name": None, # TODO:
+
+            if profile.avatar:
+                context.update({
+                    "current_user_avatar_uri": profile.avatar.url,
             })
 
         # update context with data from session
@@ -109,6 +123,7 @@ class SaasContextMixin(ContextMixin):
             "confirms": [], # TODO:
             "messages": [], # TODO:
         })
+
         return context
 
 

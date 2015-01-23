@@ -41,7 +41,7 @@ class Module(BaseMixin, StatusMixin):
 
     dependencies = ManyToManyField(
         verbose_name=_("Dependencies"),
-        related_name='dependencies_rel_set',
+        related_name="dependencies_rel_set",
         help_text=_("List of modules required to make this one work"),
         to="self",
         symmetrical=False,
@@ -122,7 +122,7 @@ class AccessRole(BaseMixin):
     groups = ManyToManyField(
         verbose_name=_("groups"),
         help_text=_("List of groups used by the role"),
-        to=getattr(settings, 'AUTH_USER_GROUP', 'auth.Group'),
+        to=getattr(settings, "AUTH_USER_GROUP", "auth.Group"),
         blank=False,
     )
 
@@ -141,7 +141,7 @@ class AccessAccount(BaseMixin, StatusMixin):
     user = ForeignKey(
         verbose_name=_("user"),
         help_text=_("user who owns this account"),
-        to=getattr(settings, 'AUTH_USER_MODEL', 'auth.User'),
+        to=getattr(settings, "AUTH_USER_MODEL", "auth.User"),
         related_name="saas_access_account_set",
         blank=False,
     )
@@ -193,12 +193,12 @@ class Notification(BaseMixin, StatusMixin):
     )
 
 
-class Profile(BaseMixin, PersonalInformationMixin, AvatarMixin, SettingsMixin):
+class Profile(BaseMixin, AvatarMixin, SettingsMixin):
 
     user = OneToOneField(
         verbose_name=_("user"),
         help_text=_("User linked to this profile"),
-        to=getattr(settings, 'AUTH_USER_MODEL', 'auth.User'),
+        to=getattr(settings, "AUTH_USER_MODEL", "auth.User"),
         related_name="profile",
         blank=False,
     )
@@ -212,12 +212,15 @@ class Profile(BaseMixin, PersonalInformationMixin, AvatarMixin, SettingsMixin):
 
 #    default_subscription = #TODO
 
+    LABEL_FORMAT = "{self.user.first_name} {self.user.last_name}"
+
+    def compute_name(self):
+        """Rule to get name from label and foreign keys: name must be unique!"""
+        return "__".join([self.user.username, self.label])
+
     @staticmethod
     def get_related_fields():
         return BaseMixin.get_related_fields() + ("user",)
-
-    def compute_label(self):
-        return " ".join((self.first_name, self.last_name))
 
     class Meta:
         verbose_name = _("profile")
