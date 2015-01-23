@@ -6,6 +6,7 @@ from django.db.models import (
     CharField,
     PositiveSmallIntegerField,
     ForeignKey,
+    ManyToManyField,
 )
 
 from django.utils.translation import ugettext_lazy as _
@@ -250,6 +251,22 @@ class HttpResource(BaseMixin):
     class Meta:
         verbose_name = _("Http resource")
         verbose_name_plural = _("Http resources")
+
+
+class HttpResourcesConfig(BaseMixin):
+    """HTTP Resource"""
+
+    resources = ManyToManyField(
+        verbose_name=_("HTTP resources"),
+        help_text=_("List of resources used by this view (CSS, JS, Meta, ...)"),
+        to=HttpResource,
+        related_name="view_set",
+        blank=True,
+    )
+
+    class Meta:
+        verbose_name = _("Http resources configuration")
+        verbose_name_plural = _("Http resources configurations")
 
 
 class Keyword(BaseMixin):
