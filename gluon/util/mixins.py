@@ -1,3 +1,6 @@
+from pathlib import Path
+from uuid import uuid4
+
 from django.db.models import (
     Manager,
     QuerySet,
@@ -269,14 +272,26 @@ class CorporateMixin(Model):
 
 class LogoMixin(Model):
 
+    def compute_upload_path(self, filename):
+        today = now()
+        return str(Path.joinpath(*list(map(Path, (self._meta.app_label,
+                                                  self._meta.model_name,
+                                                  "logos",
+                                                  str(today.year),
+                                                  str(today.month),
+                                                  str(uuid4()) +
+                                                  Path(filename).suffix)))))
+
     logo_height = PositiveSmallIntegerField(
         verbose_name=_("logo height"),
+        editable=False,
         null=True,
         blank=True,
     )
 
     logo_width = PositiveSmallIntegerField(
         verbose_name=_("logo width"),
+        editable=False,
         null=True,
         blank=True,
     )
@@ -285,7 +300,7 @@ class LogoMixin(Model):
         verbose_name=_("logo"),
         help_text=_("Logo of the instance owner"),
         max_length=64,
-        upload_to="media/%(app_label)s/%(class)s/logos/%Y/%m/%d",
+        upload_to=compute_upload_path,
         height_field="logo_height",
         width_field="logo_width",
         null=True,
@@ -302,14 +317,26 @@ class LogoMixin(Model):
 
 class AvatarMixin(Model):
 
+    def compute_upload_path(self, filename):
+        today = now()
+        return str(Path.joinpath(*list(map(Path, (self._meta.app_label,
+                                                  self._meta.model_name,
+                                                  "avatars",
+                                                  str(today.year),
+                                                  str(today.month),
+                                                  str(uuid4()) +
+                                                  Path(filename).suffix)))))
+
     avatar_height = PositiveSmallIntegerField(
         verbose_name=_("avatar height"),
+        editable=False,
         null=True,
         blank=True,
     )
 
     avatar_width = PositiveSmallIntegerField(
         verbose_name=_("avatar width"),
+        editable=False,
         null=True,
         blank=True,
     )
@@ -318,7 +345,7 @@ class AvatarMixin(Model):
         verbose_name=_("avatar"),
         help_text=_("Avatar"),
         max_length=64,
-        upload_to="media/%(app_label)s/%(class)s/avatars/%Y/%m/%d",
+        upload_to=compute_upload_path,
         height_field="avatar_height",
         width_field="avatar_width",
         null=True,
