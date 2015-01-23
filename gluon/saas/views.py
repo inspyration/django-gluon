@@ -1,6 +1,7 @@
 from django.conf import settings
+from django.views.generic import ListView
 
-from .models import View as SaasView, Profile, MenuItem
+from .models import View as SaasView, Profile, MenuItem, Subscription
 
 from django.views.generic.base import ContextMixin, TemplateResponseMixin, View
 
@@ -87,7 +88,6 @@ class SaasContextMixin(ContextMixin):
             "platform_name": settings.PLATFORM_NAME,
             "google_site_verification": settings.GOOGLE_SITE_VERIFICATION,
             "welcome_message": settings.WELCOME_MESSAGE,
-            "menu": MenuItem.tree.get_roots(),
         })
 
         # update context with data from user
@@ -98,6 +98,7 @@ class SaasContextMixin(ContextMixin):
             # Get current user and get or create profile
             is_authenticated = True
             user = get_user(self.request)
+            menu = MenuItem.get_menu(user)
             profile = Profile.objects.filter(user=user).first()
             current_user_avatar_uri = "/static/images/authenticated.png"
             if not profile:
@@ -113,12 +114,15 @@ class SaasContextMixin(ContextMixin):
 
                 if profile.avatar:
                     current_user_avatar_uri = profile.avatar.url
+        else:
+            menu = MenuItem.get_default_menu()
 
         context.update({
             "nb_notifications": nb_notifications,
             "current_user_avatar_uri": current_user_avatar_uri,
             "current_user_display_name": current_user_display_name,
             "is_authenticated": is_authenticated,
+            "menu": menu,
         })
 
         # update context with data from session
@@ -143,17 +147,27 @@ class SaasTemplateView(TemplateResponseMixin, SaasContextMixin, View):
         return self.render_to_response(context)
 
 
+class SaasListView(ListView, SaasContextMixin):
+
+    def get_context_data(self, **kwargs):
+        context = super(SaasListView, self).get_context_data(**kwargs)
+        return context
+
+
 class DashboardView(SaasTemplateView):
     template_name = "dashboard.html"
 
 
-class SubscriptionsView(SaasTemplateView):
+class SubscriptionsView(SaasListView):
+
+    model = Subscription
+
     template_name = "subscriptions.html"
 
 
-class AccountsView(SaasTemplateView):
+class AccountsView(SaasListView):
     template_name = "accounts.html"
 
 
-class ModulesView(SaasTemplateView):
+class ModulesView(SaasListView):
     template_name = "modules.html"

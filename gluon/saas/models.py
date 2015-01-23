@@ -147,7 +147,7 @@ class AccessAccount(BaseMixin, StatusMixin):
         blank=False,
     )
 
-    instance = ForeignKey(
+    instance = ForeignKey(####TODO #####
         verbose_name=_("instance"),
         help_text=_("Role linked to this account"),
         to=Subscription,
@@ -305,3 +305,13 @@ class MenuItem(BaseMixin, NaiveHierarchyMixin):
         for child in self.get_children():
             result.extend(child.view_names())
         return result
+
+    @classmethod
+    def get_menu(cls, user):
+        if user.is_superuser:
+            return cls.get_roots()
+        return cls.get_roots()  # TODO: Utiliser les bons modules
+
+    @classmethod
+    def get_default_menu(cls):
+        return cls.get_roots()  # TODO: Utiliser les menus de SAAS Uniquement.
