@@ -1,14 +1,14 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
+from pathlib import Path
+
 from django.conf import settings
 
 from django.db import migrations
 
-from ..models import Module, View
-
-from pathlib import Path
-from util.models import Status
+from ..models import Module, View, MenuItem
+from util.models import Status, HttpResourcesConfig, Keyword
 
 BASE_DIR = getattr(settings, "BASE_PATH", Path(".").resolve())
 
@@ -31,8 +31,23 @@ class Migration(migrations.Migration):
             )
         ),
         migrations.RunPython(
+            lambda apps, schema_editor: HttpResourcesConfig.import_data(
+                BASE_DIR / "saas" / "imports" / "http_resources_config.csv"
+            )
+        ),
+        migrations.RunPython(
+            lambda apps, schema_editor: Keyword.import_data(
+                BASE_DIR / "saas" / "imports" / "keywords.csv"
+            )
+        ),
+        migrations.RunPython(
             lambda apps, schema_editor: View.import_data(
                 BASE_DIR / "saas" / "imports" / "views.csv"
+            )
+        ),
+        migrations.RunPython(
+            lambda apps, schema_editor: MenuItem.import_data(
+                BASE_DIR / "saas" / "imports" / "menu_items.csv"
             )
         ),
     ]

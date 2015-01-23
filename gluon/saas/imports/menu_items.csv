@@ -1,0 +1,7 @@
+"label","parent__name","path","icon","views__name"
+"Dashboard","","/dashboard","dashboard","dashboard"
+"Management","","","cubes",""
+"Subscriptions","Management","/subscriptions","ticket","subscriptions"
+"Accounts","Management","/accounts","street-view","accounts"
+"Modules","Management","/modules","puzzle-piece","modules"
+"Administration","","/admin","cogs",""

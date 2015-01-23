@@ -11,7 +11,7 @@ from django.db.models import (
 
 from base.mixins import BaseMixin
 
-from util.models import Keyword, HttpResource
+from util.models import Keyword, HttpResource, HttpResourcesConfig
 
 from util.mixins import (
     StatusMixin,
@@ -23,6 +23,7 @@ from util.mixins import (
     LogoMixin,
     PersonalInformationMixin,
     AvatarMixin,
+    NaiveHierarchyMixin,
 )
 
 from django.utils.translation import ugettext_lazy as _
@@ -260,10 +261,10 @@ class View(BaseMixin):
         blank=False,
     )
 
-    resources = ManyToManyField(
-        verbose_name=_("HTTP resources"),
+    resources_config = ForeignKey(
+        verbose_name=_("HTTP resources configuration"),
         help_text=_("List of resources used by this view (CSS, JS, Meta, ...)"),
-        to=HttpResource,
+        to=HttpResourcesConfig,
         related_name="view_set",
         blank=True,
     )
@@ -271,3 +272,36 @@ class View(BaseMixin):
     class Meta:
         verbose_name = _("view")
         verbose_name_plural = _("views")
+
+
+class MenuItem(BaseMixin, NaiveHierarchyMixin):
+    """Menu item"""
+
+    path = CharField(
+        verbose_name=_("path"),
+        help_text=_("Menu item link"),
+        max_length=127,
+        blank=False,
+    )
+
+    icon = CharField(
+        verbose_name=_("icon"),
+        help_text=_("Icon (font-awesome)"),
+        max_length=31,
+        blank=False,
+    )
+
+    views = ManyToManyField(
+        verbose_name=_("views"),
+        help_text=_("Views related to this menu item"),
+        to=View,
+        related_name="menu_item_set",
+        blank=True,
+    )
+
+    def view_names(self):
+        # TODO: Optimization
+        result = [v.label for v in self.views.all()]
+        for child in self.get_children():
+            result.extend(child.view_names())
+        return result

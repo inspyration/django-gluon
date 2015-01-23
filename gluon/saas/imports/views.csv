@@ -1,2 +1,5 @@
-"label","module__name","page_title","page_keywords__name","page_description","resources__name"
-"dashboard","saas","Dashboard","python,django,gluon","Welcome to your dashboard","link__all__Font_awesome,link__all__Font_Righteous,link__all__Bootstrap_stylesheet,link__all__DataTables_stylesheet,link__all__DataTables_Bootstrap_stylesheet,link__all__jQuery_UI_stylesheet,link__all__jQuery_fancybox_stylesheet,link__all__Full_calendar_stylesheet,link__all__X_Charts_stylesheet,link__all__select2_stylesheet,link__all__justified_Gallery_stylesheet,link__all__Main_stylesheet,link__all__Main_theme_stylesheet,script__ie__HTML5_ie_fix,script__ie678__HTML5_SHIV_ie_Fix,script__ie678__HTML5_respond_IE_Fix,script__all__Bootstrap,script__all__DataTables,script__all__DataTables_Bootstrap_integration,script__all__jQuery,script__all__jQuery_UI,script__all__jQuery_Knob,script__all__justified_Gallery,script__all__TinyMCE,script__all__TinyMCE_jQuery_Integration,script__all__Spinner,script__all__Devoops"
+"label","module__name","page_title","page_keywords__name","page_description","resources_config__name"
+"dashboard","saas","Dashboard","python,django,gluon","Welcome to your dashboard","saas"
+"subscriptions","saas","Subscriptions","management,subscription","Subscription list","saas"
+"accounts","saas","Accounts","management,account","Account list","saas"
+"modules","saas","Modules","management,module","Module list","saas"
