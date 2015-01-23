@@ -124,3 +124,6 @@ STATICFILES_FINDERS = (
     "django.contrib.staticfiles.finders.AppDirectoriesFinder",
     "compressor.finders.CompressorFinder",
 )
+
+GOOGLE_SITE_VERIFICATION = None
+WELCOME_MESSAGE = "Welcome,"
