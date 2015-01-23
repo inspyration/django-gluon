@@ -522,13 +522,26 @@ class BaseMixin(Model):
             o = d["_inserted_object_"]
 
             # Deal with many2one self referenced fields only
-            for field_name, (_, foreign_type) in self_referenced_fields.items():
+            for import_field_name, (_, foreign_type)\
+                    in self_referenced_fields.items():
+
+                # This is just useful for many to ones.
                 if foreign_type != "ForeignKey":
                     continue
-                functions[field_name] = None  # We mark the field as processed
-                setattr(o,
-                        field_name,
-                        foreign_objects[field_name][d[field_name]])
+
+                # local vars
+                field_name = import_field_name.split("__")[0]
+                foreign_object = foreign_objects[import_field_name]
+                data = d[import_field_name]
+
+                # We mark the field as processed
+                functions[import_field_name] = None
+
+                if data or data in foreign_object:
+                    # If not data (=d[field_name]) then value is empty.
+                    # That means fk is not set and should be left empty
+                    # unless '' is a real thing, the second condition check that
+                    setattr(o, field_name, foreign_object[data])
             o.save()
 
             # Deal with many2many other fields
