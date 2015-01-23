@@ -79,6 +79,7 @@ install/win32/meta.py
 
 # Specific to this project
 /gluon/data/
+/gluon/media/
 /gluon/apps.txt
 *_todo.*
 
