@@ -104,6 +104,27 @@ class Migration(migrations.Migration):
             bases=(models.Model,),
         ),
         migrations.CreateModel(
+            name='HttpResourcesConfig',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('created_on', models.DateTimeField(verbose_name='created on', auto_now_add=True, help_text='Date of creation', default=django.utils.timezone.now)),
+                ('last_modified_on', models.DateTimeField(verbose_name='last modified on', help_text='Date of last modification', default=django.utils.timezone.now, auto_now=True)),
+                ('deleted_on', models.DateTimeField(blank=True, verbose_name='deleted on', null=True, help_text='Date of deletion', editable=False)),
+                ('active', models.BooleanField(verbose_name='active', help_text='Is the data usable ?', default=True, editable=False)),
+                ('label', models.CharField(verbose_name='label', help_text='The way the data will be see from foreign objects', max_length=32)),
+                ('name', models.CharField(verbose_name='name', unique=True, help_text='Unique name, used in imports/exports features', max_length=255, editable=False)),
+                ('created_by', base.fields.UserField(verbose_name='created by', to=settings.AUTH_USER_MODEL, related_name='created_util_httpresourcesconfig_set', editable=False, null=True, help_text='The user who created this data')),
+                ('deleted_by', base.fields.UserField(verbose_name='deleted by', to=settings.AUTH_USER_MODEL, related_name='deleted_util_httpresourcesconfig_set', editable=False, null=True, help_text='The user who deleted this data')),
+                ('last_modified_by', base.fields.UserField(verbose_name='last modified by', to=settings.AUTH_USER_MODEL, related_name='last_modified_util_httpresourcesconfig_set', editable=False, null=True, help_text='The user who last modified this data')),
+                ('resources', models.ManyToManyField(blank=True, verbose_name='HTTP resources', help_text='List of resources used by this view (CSS, JS, Meta, ...)', to='util.HttpResource', related_name='view_set')),
+            ],
+            options={
+                'verbose_name': 'Http resources configuration',
+                'verbose_name_plural': 'Http resources configurations',
+            },
+            bases=(models.Model,),
+        ),
+        migrations.CreateModel(
             name='Keyword',
             fields=[
                 ('id', models.AutoField(auto_created=True, serialize=False, verbose_name='ID', primary_key=True)),

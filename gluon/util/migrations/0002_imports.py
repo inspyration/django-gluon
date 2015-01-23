@@ -16,6 +16,7 @@ from ..models import (
     Browser,
     HttpResource,
     Keyword,
+    HttpResourcesConfig,
 )
 
 from pathlib import Path
