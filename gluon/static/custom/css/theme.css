@@ -42,3 +42,14 @@ table.dataTable tbody tr.even{color: #111;}
   top: 0;
   left: 4px;
 }
+
+#content footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+
+#content {
+    margin-bottom: 32px;
+}
+
