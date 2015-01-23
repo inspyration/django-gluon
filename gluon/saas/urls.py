@@ -1,6 +1,11 @@
 from django.conf.urls import patterns, url
 
-from .views import DashboardView, SubscriptionsView, AccountsView, ModulesView
+from .views import (
+    DashboardView,
+    SubscriptionsView,
+    AccountsView,
+    ModulesView,
+)
 
 urlpatterns = patterns(
     '',
