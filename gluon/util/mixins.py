@@ -117,6 +117,10 @@ class NaiveHierarchyMixin(Model):
             result.update(node.get_descendants())
         return result
 
+    @classmethod
+    def get_roots(cls):
+        return cls.tree.get_roots()
+
     def _name_unique_model_path(self):
         """The logical model path to get the current object in a unique way"""
         if not self.parent:
