@@ -108,6 +108,9 @@ class NaiveHierarchyMixin(Model):
     def get_children(self):
         return type(self).tree.filter(parent=self)
 
+    def has_children(self):
+        return len(self.get_children()) > 0
+
     def get_descendants(self):
         result = set(self.get_children())
         for node in list(result):
