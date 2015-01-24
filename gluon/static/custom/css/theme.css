@@ -57,3 +57,7 @@ table.dataTable tbody tr.even{color: #111;}
     margin: 0;
     padding: 0;
 }
+
+tr.selected td {
+    background-color: transparent !important;
+}
