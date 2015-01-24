@@ -237,7 +237,7 @@ class Migration(migrations.Migration):
                 ('active', models.BooleanField(editable=False, help_text='Is the data usable ?', verbose_name='active', default=True)),
                 ('label', models.CharField(max_length=32, help_text='The way the data will be see from foreign objects', verbose_name='label')),
                 ('name', models.CharField(max_length=255, editable=False, help_text='Unique name, used in imports/exports features', verbose_name='name', unique=True)),
-                ('model', models.CharField(max_length=16, help_text='Model related to the status', verbose_name='model')),
+                ('model', models.CharField(max_length=32, help_text='Model related to the status', verbose_name='model')),
                 ('is_default', models.BooleanField(help_text='Is the status is the default one for the model ?', verbose_name='status name', default=False)),
                 ('created_by', base.fields.UserField(to=settings.AUTH_USER_MODEL, help_text='The user who created this data', editable=False, null=True, verbose_name='created by', related_name='created_util_status_set')),
                 ('deleted_by', base.fields.UserField(to=settings.AUTH_USER_MODEL, help_text='The user who deleted this data', editable=False, null=True, verbose_name='deleted by', related_name='deleted_util_status_set')),

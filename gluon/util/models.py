@@ -27,7 +27,7 @@ class Status(BaseMixin):
     model = CharField(
         verbose_name=_("model"),
         help_text=_("Model related to the status"),
-        max_length=16,
+        max_length=32,
     )
 
     is_default = BooleanField(
