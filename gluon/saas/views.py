@@ -1,10 +1,10 @@
 from django.conf import settings
-from django.views.generic import ListView
 
 from .models import View as SaasView, Profile, MenuItem, Subscription
 from django.db.models import Q
 
 from django.views.generic.base import ContextMixin, TemplateResponseMixin, View
+from django.views.generic import ListView, DetailView
 from django_datatables_view.base_datatable_view import BaseDatatableView
 
 from django.contrib.auth import get_user
@@ -139,6 +139,13 @@ class SaasContextMixin(ContextMixin):
         return context
 
 
+########################
+#                      #
+#  SAAS Generic views  #
+#                      #
+########################
+
+
 class SaasTemplateView(TemplateResponseMixin, SaasContextMixin, View):
     """
     A view that renders a template with SAAS Context.  This view will also pass
@@ -156,8 +163,33 @@ class SaasListView(ListView, SaasContextMixin):
         return context
 
 
+class SaasDetailView(DetailView, SaasContextMixin):
+
+    def get_context_data(self, **kwargs):
+        context = super(SaasDetailView, self).get_context_data(**kwargs)
+        return context
+
+
+########################
+#                      #
+#  SAAS utility views  #
+#                      #
+########################
+
+
+#
+# Dashboard
+#
+
+
 class DashboardView(SaasTemplateView):
+
     template_name = "dashboard.html"
+
+
+#
+# Subscription
+#
 
 
 class SubscriptionsView(SaasListView):
@@ -172,9 +204,9 @@ class SubscriptionListJson(BaseDatatableView):
     model = Subscription
 
     # define the columns that will be returned
-    columns = ["label", "owner", "opened", "status"]
+    columns = ["id", "label", "owner", "opened", "status"]
 
-    order_columns = ["label", "owner", "", "status"]
+    order_columns = ["id", "label", "owner", "", "status"]
 
     # protection against attack attempts
     max_display_length = 500
@@ -198,8 +230,25 @@ class SubscriptionListJson(BaseDatatableView):
         return qs
 
 
+class SubscriptionView(SaasDetailView):
+
+    model = Subscription
+
+    template_name = "subscription.html"
+
+
+#
+# Account
+#
+
+
 class AccountsView(SaasListView):
     template_name = "accounts.html"
+
+
+#
+# Module
+#
 
 
 class ModulesView(SaasListView):
