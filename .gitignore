@@ -81,5 +81,6 @@ install/win32/meta.py
 /gluon/data/
 /gluon/media/
 /gluon/apps.txt
+/gluon/infos.txt
 *_todo.*
 
