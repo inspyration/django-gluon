@@ -51,6 +51,13 @@
                         "searchable": false,
                     },
                 ],
+                "createdRow": function ( row, data, index ) {
+                    if ( data[3] == "Yes" ) {
+                        $('td', row).eq(2).html('<button type="button" class="btn btn-success"><i class="fa fa-check-square-o"> Open</button>'); // Column 1 hidden, so data 3 match column 2
+                    } else {
+                        $('td', row).eq(2).html('<button type="button" class="btn btn-danger"><i class="fa fa-square-o"> Closed</button>'); // Column 1 hidden
+                    }
+                },
             });
 
             $(".datatable tbody").on("click", "tr", function () {
@@ -97,7 +104,7 @@
                             <th>#</th>
                             <th>Label</th>
                             <th>Owner</th>
-                            <th>Opened</th>
+                            <th>Still Open ?</th>
                             <th>Status</th>
                         </tr>
                     </thead>
