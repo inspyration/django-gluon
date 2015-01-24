@@ -241,7 +241,7 @@ function LoadSparkLineScript(callback){
 //
 //  Function for load content from url and put in $('.ajax-content') block
 //
-/*function LoadAjaxContent(url){
+function LoadAjaxContent(url){
 	$('.preloader').show();
 	$.ajax({
 		mimeType: 'text/html; charset=utf-8', // ! Need set mimeType only when run from local file
@@ -257,7 +257,7 @@ function LoadSparkLineScript(callback){
 		dataType: "html",
 		async: false
 	});
-}*/
+}
 //
 //  Function maked all .box selector is draggable, to disable for concrete element add class .no-drop
 //
@@ -2303,7 +2303,21 @@ $(document).ready(function () {
 	if (ajax_url.length < 1) {
 		ajax_url = 'ajax/dashboard.html';
 	}
-	LoadAjaxContent(ajax_url);
+	LoadAjaxContent(ajax_url);*/
+	$('#content').on('click', 'a', function (e) {
+		if ($(this).hasClass('ajax-link')) {
+			e.preventDefault();
+			if ($(this).hasClass('add-full')) {
+				$('#content').addClass('full-content');
+			}
+			else {
+				$('#content').removeClass('full-content');
+			}
+			var url = $(this).attr('href');
+			window.location.hash = url;
+			LoadAjaxContent(url);
+		}
+	});
 	$('.main-menu').on('click', 'a', function (e) {
 		var parents = $(this).parents('li');
 		var li = $(this).closest('li.dropdown');
@@ -2347,7 +2361,7 @@ $(document).ready(function () {
 		if ($(this).attr('href') == '#') {
 			e.preventDefault();
 		}
-	});*/
+	});
 	var height = window.innerHeight - 49;
 	$('#main').css('min-height', height)
 		.on('click', '.expand-link', function (e) {
@@ -2397,7 +2411,7 @@ $(document).ready(function () {
 		e.preventDefault();
 		CloseModalBox();
 	});
-/*	$('#top-panel').on('click','a', function(e){
+	$('#top-panel').on('click','a', function(e){
 		if ($(this).hasClass('ajax-link')) {
 			e.preventDefault();
 			if ($(this).hasClass('add-full')) {
@@ -2410,8 +2424,8 @@ $(document).ready(function () {
 			window.location.hash = url;
 			LoadAjaxContent(url);
 		}
-	});*/
-/*	$('#search').on('keydown', function(e){
+	});
+	$('#search').on('keydown', function(e){
 		if (e.keyCode == 13){
 			e.preventDefault();
 			$('#content').removeClass('full-content');
@@ -2419,7 +2433,7 @@ $(document).ready(function () {
 			window.location.hash = ajax_url;
 			LoadAjaxContent(ajax_url);
 		}
-	});*/
+	});
 	$('#screen_unlock').on('mouseover', function(){
 		var header = 'Enter current username and password';
 		var form = $('<div class="form-group"><label class="control-label">Username</label><input type="text" class="form-control" name="username" /></div>'+
