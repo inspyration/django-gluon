@@ -61,7 +61,7 @@
         {% block javascript %}{% endblock %}
     </head>
 
-    <body>
+    <body class="body-expanded">
 
     <header class="navbar">
         <div class="container-fluid expanded-panel">
@@ -213,10 +213,10 @@
                     </div>
                 </div>
 
-                <!-- TODO
                 <div class="preloader">
-                    <img src="img/devoops_getdata.gif" class="devoops-getdata" alt="preloader"/>
-                </div>-->
+                    <img src="{{ STATIC_URL }}devoops/img/devoops_getdata.gif" class="devoops-getdata" alt="preloader"/>
+                </div>
+
                 <aside class="row">
                     {% for msg in errors %}
                     <p class="btn btn-block btn-danger">{{ msg }}</p>
@@ -234,9 +234,10 @@
                     <p class="btn btn-block btn-primary">{{ msg }}</p>
                     {% endfor %}
                 </aside>
-                <!-- TODO <div id="ajax-content"></div> -->
 
                 <article>{% block content %}{% endblock %}</article>
+
+                <div id="ajax-content"></div>
 
                 <footer class="row">
                     <p class="text-center"><strong>InsPyration</strong> | <strong>Python & Django</strong></p>
