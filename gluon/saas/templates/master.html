@@ -58,6 +58,7 @@
         <script src="{{ STATIC_URL }}{{ script.path }}" type="text/javascript" charset="utf-8"></script>{% endfor %}{% endcompress %}<![endif]-->{% endif %}
         {% if ie9_scripts %}<!--[if IE 9]>{% compress js %}{% for script in ie9_scripts %}
         <script src="{{ STATIC_URL }}{{ script.path }}" type="text/javascript" charset="utf-8"></script>{% endfor %}{% endcompress %}<![endif]-->{% endif %}
+        {% block javascript %}{% endblock %}
     </head>
 
     <body>

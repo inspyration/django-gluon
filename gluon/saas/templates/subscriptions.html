@@ -1,12 +1,39 @@
 {% extends "master.html" %}
 
+{% block javascript %}
+    <script type="application/javascript">
+        $(document).ready(function() {
+            var oTable = $('.datatable').dataTable({
+                "processing": true,
+                "serverSide": true,
+                "ajax": "{% url 'subscriptions_json' %}",
+                "oLanguage": {
+                    "sLengthMenu": "Display _MENU_ subscription by page",
+                    "sZeroRecords": "There is any subscription yet",
+                    "sInfo": "Displaying subscriptions _START_ to _END_ on _TOTAL_",
+                    "sInfoEmpty": "No subscriptions to display",
+                    "sInfoFiltered": "(without any filter, there is actually _MAX_ subscription)",
+                    "sSearch": "Search filter",
+                },
+            });
+        });
+    </script>
+{% endblock %}
+
 {% block content %}
     <h2>Subscriptions</h2>
-    <ul>
-        {% for subscription in object_list %}
-        <li>{{ subscription.create_date|date }} - {{ subscription.label }}</li>
-        {% empty %}
-        <li>No subscriptions yet.</li>
-        {% endfor %}
-    </ul>
+
+    <table id="list" class="datatable table table-striped">
+        <thead>
+            <tr>
+                <th>Label</th>
+                <th>Owner</th>
+                <th>Opened</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+
 {% endblock %}

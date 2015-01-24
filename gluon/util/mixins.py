@@ -305,7 +305,7 @@ class LogoMixin(Model):
 
     logo = ImageField(
         verbose_name=_("logo"),
-        help_text=_("Logo of the instance owner"),
+        help_text=_("Logo"),
         max_length=64,
         upload_to=compute_upload_path,
         height_field="logo_height",

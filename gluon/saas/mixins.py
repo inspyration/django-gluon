@@ -21,7 +21,7 @@ from django.utils.translation import ugettext_lazy as _
 
 
 class SaasManager(BaseManager):
-    """Model manager used by InstanceAssignedMixin models"""
+    """Model manager used by SaasMixin models"""
 
     def get_queryset(self, subscription):
         queryset = super(SaasManager, self).get_queryset()
@@ -29,7 +29,7 @@ class SaasManager(BaseManager):
 
 
 class SaasMixin(BaseMixin):
-    """Must be inherited by models that are usable only by an instance users"""
+    """Must be inherited by models that are usable only at subscription level"""
 
     #
     # Define manager
@@ -38,16 +38,16 @@ class SaasMixin(BaseMixin):
     objects = SaasManager()
 
     #
-    # Define relation to instance
+    # Define relation to subscription
     #
 
-    # Field that keeps the user that created the instance
+    # Field that keeps the user that created the subscription
     # > required
     # > not editable
     # > automatically set
     subscription = SubscriptionField(
-        verbose_name=_("instance"),
-        related_name="instance_%(app_label)s_%(class)s_set",
+        verbose_name=_("subscription"),
+        related_name="subscription_%(app_label)s_%(class)s_set",
     )
 
     #
@@ -56,7 +56,7 @@ class SaasMixin(BaseMixin):
 
     def _name_unique_model_path(self):
         """The logical model path to get the current object in a unique way"""
-        return self.instance, self
+        return self.subscription, self
 
     class Meta:
         abstract = True
@@ -67,7 +67,7 @@ class SaasMixin(BaseMixin):
 #
 
 class SaasTimeFramedManager(TimeFramedManager):
-    """Model manager used by InstanceAssignedMixin models"""
+    """Model manager used by SAASTimeFramedMixin models"""
 
     def get_queryset(self, subscription):
         queryset = super(SaasTimeFramedManager, self).get_queryset()
@@ -75,7 +75,7 @@ class SaasTimeFramedManager(TimeFramedManager):
 
 
 class SaasTimeFramedMixin(SaasMixin, TimeFramedMixin):
-    """Must be inherited by models that are usable only by an instance users"""
+    """Must be inherited by models that are usable only at subscription level"""
 
     objects = SaasTimeFramedManager()
 
@@ -87,7 +87,7 @@ class SaasTimeFramedMixin(SaasMixin, TimeFramedMixin):
 # Naive hierarchy SAAS Mixin
 #
 class SaasHierarchyManager(NaiveHierarchyManager):
-    """Model manager used by InstanceAssignedMixin models"""
+    """Model manager used by SaasHierarchyMixin models"""
 
     def get_queryset(self, subscription):
         queryset = super(SaasHierarchyManager, self).get_queryset()
@@ -95,7 +95,7 @@ class SaasHierarchyManager(NaiveHierarchyManager):
 
 
 class SaasHierarchyMixin(SaasMixin, NaiveHierarchyMixin):
-    """Must be inherited by models that are usable only by an instance users"""
+    """Must be inherited by models that are usable only at subscription level"""
 
     objects = SaasHierarchyManager()
 
@@ -116,7 +116,7 @@ class SaasHierarchyMixin(SaasMixin, NaiveHierarchyMixin):
 
 
 class PrivateManager(BaseManager):
-    """Model manager used by InstanceAssignedMixin models"""
+    """Model manager used byPrivateMixin models"""
 
     def get_queryset(self, owner):
         queryset = super(SaasManager, self).get_queryset()
@@ -124,7 +124,7 @@ class PrivateManager(BaseManager):
 
 
 class PrivateMixin(BaseMixin):
-    """Must be inherited by models that are usable only by an instance users"""
+    """Must be inherited by models that are usable only at subscription level"""
 
     #
     # Define manager
@@ -133,10 +133,10 @@ class PrivateMixin(BaseMixin):
     objects = PrivateManager()
 
     #
-    # Define relation to instance
+    # Define relation to subscription
     #
 
-    # Field that keeps the user that created the instance
+    # Field that keeps the user that created the subscription
     # > required
     # > not editable
     # > automatically set
@@ -164,7 +164,7 @@ class PrivateMixin(BaseMixin):
 #
 
 class PrivateTimeFramedManager(TimeFramedManager):
-    """Model manager used by InstanceAssignedMixin models"""
+    """Model manager used by PrivateTimeFramedMixin models"""
 
     def get_queryset(self, subscription):
         queryset = super(PrivateTimeFramedManager, self).get_queryset()
@@ -172,7 +172,7 @@ class PrivateTimeFramedManager(TimeFramedManager):
 
 
 class PrivateTimeFramedMixin(PrivateMixin, TimeFramedMixin):
-    """Must be inherited by models that are usable only by an instance users"""
+    """Must be inherited by models that are usable only at user level"""
 
     objects = PrivateTimeFramedManager()
 
@@ -184,7 +184,7 @@ class PrivateTimeFramedMixin(PrivateMixin, TimeFramedMixin):
 # Naive hierarchy private Mixin
 #
 class PrivateHierarchyManager(NaiveHierarchyManager):
-    """Model manager used by InstanceAssignedMixin models"""
+    """Model manager used by PrivateHierarchyMixin models"""
 
     def get_queryset(self, subscription):
         queryset = super(PrivateHierarchyManager, self).get_queryset()
@@ -192,7 +192,7 @@ class PrivateHierarchyManager(NaiveHierarchyManager):
 
 
 class PrivateHierarchyMixin(PrivateMixin, NaiveHierarchyMixin):
-    """Must be inherited by models that are usable only by an instance users"""
+    """Must be inherited by models that are usable only at user level"""
 
     objects = PrivateHierarchyManager()
 

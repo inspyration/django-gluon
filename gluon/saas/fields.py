@@ -8,7 +8,7 @@ from .models import Subscription
 
 class SubscriptionField(models.ForeignKey):
     """
-    A field that keeps the SASS instance that own the model instance
+    A field that keeps the SASS subscription that own the model instance
     """
 
     def __init__(self, to=Subscription, null=False, editable=False, **kwargs):

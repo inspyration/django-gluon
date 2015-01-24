@@ -2,8 +2,10 @@ from django.conf import settings
 from django.views.generic import ListView
 
 from .models import View as SaasView, Profile, MenuItem, Subscription
+from django.db.models import Q
 
 from django.views.generic.base import ContextMixin, TemplateResponseMixin, View
+from django_datatables_view.base_datatable_view import BaseDatatableView
 
 from django.contrib.auth import get_user
 
@@ -163,6 +165,35 @@ class SubscriptionsView(SaasListView):
     model = Subscription
 
     template_name = "subscriptions.html"
+
+
+class SubscriptionListJson(BaseDatatableView):
+
+    model = Subscription
+
+    # define the columns that will be returned
+    columns = ["label", "owner", "opened", "status"]
+
+    order_columns = ["label", "owner", "", "status"]
+
+    # protection against attack attempts
+    max_display_length = 500
+
+    def render_column(self, row, column):
+        if column == "status":
+            return row.status.capitalize()
+        else:
+            return super(SubscriptionListJson, self).render_column(row, column)
+
+    def filter_queryset(self, qs):
+        # use parameters passed in POST request to filter queryset
+
+        # simple example:
+        search = self.request.POST.get('search[value]', None)
+        if search:
+            qs = qs.filter(label__istartswith=search)
+
+        return qs
 
 
 class AccountsView(SaasListView):

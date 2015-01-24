@@ -5,6 +5,7 @@ from .views import (
     SubscriptionsView,
     AccountsView,
     ModulesView,
+    SubscriptionListJson,
 )
 
 urlpatterns = patterns(
@@ -13,4 +14,6 @@ urlpatterns = patterns(
     url(r'^subscriptions$', SubscriptionsView.as_view(), name='subscriptions'),
     url(r'^accounts$', AccountsView.as_view(), name='accounts'),
     url(r'^modules$', ModulesView.as_view(), name='modules'),
+    # Datatables
+    url(r'^subscriptions/data/$', SubscriptionListJson.as_view(), name='subscriptions_json'),
 )

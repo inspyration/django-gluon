@@ -30,7 +30,7 @@ from django.utils.translation import ugettext_lazy as _
 
 
 class Module(BaseMixin, StatusMixin):
-    """Each module can be activated for each instance"""
+    """Each module can be activated for each subscription"""
 
     application = BooleanField(
         verbose_name=_("Is this module a main application ?"),
@@ -72,18 +72,18 @@ class Module(BaseMixin, StatusMixin):
 
 class Subscription(BaseMixin, LocalisationMixin, SettingsMixin, WebMixin,
                    ContactDetailMixin, CorporateMixin, LogoMixin, StatusMixin):
-    """An instance is linked to a customer. It contains only his data"""
+    """An subscription is linked to a customer. It contains only his data"""
 
-    # Instance status (opened or not)
+    # subscription status (opened or not)
     opened = BooleanField(
         verbose_name=_("opened"),
-        help_text=_("Is the instance is open ?"),
+        help_text=_("Is the subscription is open ?"),
         blank=False,
         null=False,
         default=True,
     )
 
-    # Person who create instance on his behalf or on his company behalf
+    # Person who create subscription on his behalf or on his company behalf
     owner = CharField(
         verbose_name=_("owner"),
         help_text=_("Owner"),
@@ -93,7 +93,7 @@ class Subscription(BaseMixin, LocalisationMixin, SettingsMixin, WebMixin,
 
     modules = ManyToManyField(
         verbose_name=_("modules"),
-        help_text=_("List of module installed on the instance"),
+        help_text=_("List of module installed on the subscription"),
         to=Module,
     )
 
@@ -113,8 +113,8 @@ class Subscription(BaseMixin, LocalisationMixin, SettingsMixin, WebMixin,
         self.save(compute=False)
 
     class Meta:
-        verbose_name = _("instance")
-        verbose_name_plural = _("instances")
+        verbose_name = _("subscription")
+        verbose_name_plural = _("subscriptions")
 
 
 class AccessRole(BaseMixin):
@@ -137,7 +137,7 @@ class AccessRole(BaseMixin):
 
 
 class AccessAccount(BaseMixin, StatusMixin):
-    """An account is linked to some instances and to one user"""
+    """An account is linked to some subscriptions and to one user"""
 
     user = ForeignKey(
         verbose_name=_("user"),
@@ -147,8 +147,8 @@ class AccessAccount(BaseMixin, StatusMixin):
         blank=False,
     )
 
-    instance = ForeignKey(####TODO #####
-        verbose_name=_("instance"),
+    subscription = ForeignKey(
+        verbose_name=_("subscription"),
         help_text=_("Role linked to this account"),
         to=Subscription,
         blank=False,
@@ -162,11 +162,11 @@ class AccessAccount(BaseMixin, StatusMixin):
         blank=False,
     )
 
-    LABEL_FORMAT = "{self.user.label}@{self.instance.label}:{self.role.label}"
+    LABEL_FORMAT = "{self.user.label}@{self.subscription.label}:{self.role.label}"
 
     def _name_unique_model_path(self):
         """The logical model path to get the current object in a unique way"""
-        return self.user, self.instance, self.role
+        return self.user, self.subscription, self.role
 
     @staticmethod
     def get_related_fields():
