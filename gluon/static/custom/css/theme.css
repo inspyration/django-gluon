@@ -53,3 +53,7 @@ table.dataTable tbody tr.even{color: #111;}
     margin-bottom: 32px;
 }
 
+.dataTables_wrapper .dataTables_paginate .paginate_button {
+    margin: 0;
+    padding: 0;
+}

@@ -1296,16 +1296,20 @@ td.beauty-hover {
   border-radius: 2px;
   color: #000;
 }
+/*
 .form-control {
   height: 26px;
   padding: 2px 12px;
 }
+*/
 .input-lg {
   height:39px;
 }
+/*
 .input-sm {
   height:18px;
 }
+*/
 .bg-default {
   background: #D8D8D8 !important;
 }
