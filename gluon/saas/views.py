@@ -181,7 +181,9 @@ class SubscriptionListJson(BaseDatatableView):
 
     def render_column(self, row, column):
         if column == "status":
-            return row.status.capitalize()
+            return row.status.label.capitalize()
+        elif column == "opened":
+            return row.opened and "Yes" or "No"
         else:
             return super(SubscriptionListJson, self).render_column(row, column)
 
