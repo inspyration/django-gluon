@@ -1,0 +1,66 @@
+<!DOCTYPE html>{% load compress %}
+<html lang="fr">
+    <head>
+        <title>{{ page_title }}</title>
+
+        <!-- Metadata -->
+
+        <meta charset="UTF-8" />
+        <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+        <meta name="author" content="InsPyration EURL / Sébastien CHAZALLET" />
+        <meta name="keywords" content="{{ page_keywords }}" />
+        <meta name="description" content="{{ page_description }}" />
+        <meta name="generator" content="Gluon - http://www.inspyration.fr" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        {% if google_site_verification %}
+        <meta name="google-site-verification" content="{{ google_site_verification }}" />{% endif %}
+        {% for meta in metas %}
+        <meta name="{{ meta.label }}" content="{{ STATIC_URL }}{{ meta.path }}" />{% endfor %}
+
+        <!-- Icon -->
+
+        <link rel="shortcut icon" href="{{ STATIC_URL }}images/favicon.ico" type="image/ico" />
+
+        <!-- Fonts and Styles -->
+
+        {% compress css %}{% for style in styles %}
+        <link href="{{ STATIC_URL }}{{ style.path }}" rel="stylesheet" type="text/css" />{% endfor %}{% endcompress %}
+        {% if ie_styles %}<!--[if IE]>{% compress css %}{% for style in ie_styles %}
+        <link href="{{ STATIC_URL }}{{ style.path }}" rel="stylesheet" type="text/css" />{% endfor %}{% endcompress %}<![endif]-->{% endif %}
+        {% if ie6_styles %}<!--[if IE 6]>{% compress css %}{% for style in ie6_styles %}
+        <link href="{{ STATIC_URL }}{{ style.path }}" rel="stylesheet" type="text/css" />{% endfor %}{% endcompress %}<![endif]-->{% endif %}
+        {% if ie7_styles %}<!--[if IE 7]>{% compress css %}{% for style in ie7_styles %}
+        <link href="{{ STATIC_URL }}{{ style.path }}" rel="stylesheet" type="text/css" />{% endfor %}{% endcompress %}<![endif]-->{% endif %}
+        {% if ie67_styles %}<!--[if lt IE 8]>{% compress css %}{% for style in ie67_styles %}
+        <link href="{{ STATIC_URL }}{{ style.path }}" rel="stylesheet" type="text/css" />{% endfor %}{% endcompress %}<![endif]-->{% endif %}
+        {% if ie8_styles %}<!--[if IE 8]>{% compress css %}{% for style in ie8_styles %}
+        <link href="{{ STATIC_URL }}{{ style.path }}" rel="stylesheet" type="text/css" />{% endfor %}{% endcompress %}<![endif]-->{% endif %}
+        {% if ie678_styles %}<!--[if lt IE 9]>{% compress css %}{% for style in ie678_styles %}
+        <link href="{{ STATIC_URL }}{{ style.path }}" rel="stylesheet" type="text/css" />{% endfor %}{% endcompress %}<![endif]-->{% endif %}
+        {% if ie9_styles %}<!--[if IE 9]>{% compress css %}{% for style in ie9_styles %}
+        <link href="{{ STATIC_URL }}{{ style.path }}" rel="stylesheet" type="text/css" />{% endfor %}{% endcompress %}<![endif]-->{% endif %}
+
+        <!-- Scripts -->
+
+        {% compress js %}{% for script in scripts %}
+        <script src="{{ STATIC_URL }}{{ script.path }}" type="text/javascript" charset="utf-8"></script>{% endfor %}{% endcompress %}
+        {% if ie_scripts %}<!--[if IE]>{% compress js %}{% for script in ie_scripts %}
+        <script src="{{ STATIC_URL }}{{ script.path }}" type="text/javascript" charset="utf-8"></script>{% endfor %}{% endcompress %}<![endif]-->{% endif %}
+        {% if ie6_scripts %}<!--[if IE 6]>{% compress js %}{% for script in ie6_scripts %}
+        <script src="{{ STATIC_URL }}{{ script.path }}" type="text/javascript" charset="utf-8"></script>{% endfor %}{% endcompress %}<![endif]-->{% endif %}
+        {% if ie7_scripts %}<!--[if IE 7]>{% compress js %}{% for script in ie7_scripts %}
+        <script src="{{ STATIC_URL }}{{ script.path }}" type="text/javascript" charset="utf-8"></script>{% endfor %}{% endcompress %}<![endif]-->{% endif %}
+        {% if ie67_scripts %}<!--[if lt IE 8]>{% compress js %}{% for script in ie67_scripts %}
+        <script src="{{ STATIC_URL }}{{ script.path }}" type="text/javascript" charset="utf-8"></script>{% endfor %}{% endcompress %}<![endif]-->{% endif %}
+        {% if ie8_scripts %}<!--[if IE 8]>{% compress js %}{% for script in ie8_scripts %}
+        <script src="{{ STATIC_URL }}{{ script.path }}" type="text/javascript" charset="utf-8"></script>{% endfor %}{% endcompress %}<![endif]-->{% endif %}
+        {% if ie678_scripts %}<!--[if lt IE 9]>{% compress js %}{% for script in ie678_scripts %}
+        <script src="{{ STATIC_URL }}{{ script.path }}" type="text/javascript" charset="utf-8"></script>{% endfor %}{% endcompress %}<![endif]-->{% endif %}
+        {% if ie9_scripts %}<!--[if IE 9]>{% compress js %}{% for script in ie9_scripts %}
+        <script src="{{ STATIC_URL }}{{ script.path }}" type="text/javascript" charset="utf-8"></script>{% endfor %}{% endcompress %}<![endif]-->{% endif %}
+        {% block javascript %}{% endblock %}
+    </head>
+
+    {% block body %}{% endblock %}
+
+</html>
