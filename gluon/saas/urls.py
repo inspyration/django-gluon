@@ -1,6 +1,8 @@
 from django.conf.urls import patterns, url
 
 from .views import (
+    HomeView,
+    SubscribeView,
     DashboardView,
     SubscriptionsView,
     AccountsView,
@@ -11,6 +13,8 @@ from .views import (
 
 urlpatterns = patterns(
     "",
+    url(r"^$", HomeView.as_view(), name="home"),
+    url(r"^subscribe$", SubscribeView.as_view(), name="subscribe"),
     url(r"^dashboard$", DashboardView.as_view(), name="dashboard"),
     # Subscription
     url(r"^subscriptions/data/$", SubscriptionListJson.as_view(), name="subscriptions_json"),

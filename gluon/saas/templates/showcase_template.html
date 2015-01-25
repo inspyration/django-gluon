@@ -1,191 +1,84 @@
 {% extends "master_template.html" %}
 
 {% block body %}
-<body class="body-expanded">
+<body class="showcase">
 
-    <header class="navbar">
-        <div class="container-fluid expanded-panel">
-            <div class="row">
-                <div id="logo" class="col-xs-12 col-sm-2">
-                    <a href="/">{{ platform_name }}</a>
+    <div class="container">
+
+        <header class="row">
+            <div class="jumbotron">
+                <h1>Straightforward tools,<br />ergonomic interfaces.</h1>
+                <p>Our easy-to-use products are designed for very specifics needs. Feel free to try them all !</p>
+                <p><a class="btn btn-primary btn-lg" href="/subscribe" role="button">Try me !</a></p>
+            </div>
+        </header>
+
+        <nav class="navbar navbar-default navbar-fixed-top">
+            <div class="container">
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="/">{{ platform_name }}</a>
                 </div>
-                <div id="top-panel" class="col-xs-12 col-sm-10">
-                    <div class="row">
-                        <div class="col-xs-8 col-sm-4">
-                            <a href="#" class="show-sidebar">
-                              <i class="fa fa-bars"></i>
+
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+
+                    <ul role="menu" class="nav navbar-nav">
+                        {% for menu1 in menu %}
+                        {% if menu1.has_children %}
+                        <li role="presentation" class="dropdown{% if view_name in menu1.view_names %} open{% endif %}">
+                            <a data-toggle="dropdown" class="dropdown-toggle{% if view_name in menu1.view_names %} active-parent active{% endif %}" href="#" id="menu_{{ menu1.name }}" role="button" aria-expanded="false">
+                                <i class="fa fa-{{ menu1.icon }}"></i>
+                                <span class="hidden-xs">{{ menu1.label }}</span>
+                                <span class="caret"></span>
                             </a>
-                            <div id="search">
-                                <input type="text" placeholder="search"/>
-                                <i class="fa fa-search"></i>
-                            </div>
-                        </div>
-                        <div class="col-xs-4 col-sm-8 top-panel-right">
-                            <ul class="nav navbar-nav pull-right panel-menu">
-                                <li class="hidden-xs">
-                                    <a href="/" class="modal-link">
-                                        <i class="fa fa-bell"></i>
-                                        <span class="badge">{{ nb_notifications }}</span>
+                            <ul role="menu" class="dropdown-menu" aria-labelledby="menu_{{ menu1.name }}"{% if view_name in menu1.view_names %} style="display: block;"{% endif %}>
+                                {% for menu2 in menu1.get_children %}
+                                <li role="presentation">
+                                    <a href="{{ menu2.path  }}" class="{% if view_name in menu2.view_names %}active-parent active{% endif %}">
+                                        <i class="fa fa-{{ menu2.icon }}"></i>
+                                        <span class="hidden-xs">{{ menu2.label }}</span>
                                     </a>
                                 </li>
-                                <li class="dropdown">
-                                    <a href="#" class="dropdown-toggle account" data-toggle="dropdown" id="dropdown_profile">
-                                        <div class="avatar">
-                                            <img src="{{ current_user_avatar_uri }}" class="img-rounded" alt="avatar" />
-                                        </div>
-                                        <i class="fa fa-angle-down pull-right"></i>
-                                        <div class="user-mini pull-right">
-                                            <span class="welcome">{{ welcome_message }}</span>
-                                            <span>{{ current_user_display_name }}</span>
-                                        </div>
-                                    </a>
-                                    <ul class="dropdown-menu" role="menu" aria-labelledby="dropdown_profile">
-                                        {% if is_authenticated %}
-                                        <li role="presentation">
-                                            <a role="menuitem" href="/myprofile">
-                                                <i class="fa fa-user"></i>
-                                                <span>Profile</span>
-                                            </a>
-                                        </li>
-                                        <li role="presentation">
-                                            <a role="menuitem" href="#">
-                                                <i class="fa fa-cog"></i>
-                                                <span>Settings</span>
-                                            </a>
-                                        </li>
-                                        <li role="presentation" class="divider"></li>
-                                        <li role="presentation">
-                                            <a role="menuitem" href="/contact">
-                                                <i class="fa fa-pencil"></i>
-                                                <span>Contact us</span>
-                                            </a>
-                                        </li>
-                                        <li role="presentation">
-                                            <a role="menuitem" href="/issues/new">
-                                                <i class="fa fa-bug"></i>
-                                                <span>Report an issue</span>
-                                            </a>
-                                        </li>
-                                        <li role="presentation" class="divider"></li>
-                                        <li role="presentation">
-                                            <a role="menuitem" href="/log-out">
-                                                <i class="fa fa-sign-out"></i>
-                                                <span>Log out</span>
-                                            </a>
-                                        </li>
-                                        {% else %}
-                                        <li role="presentation">
-                                            <a role="menuitem" href="/log-in">
-                                                <i class="fa fa-sign-in"></i>
-                                                <span>Log in</span>
-                                            </a>
-                                        </li>
-                                        <li role="presentation">
-                                            <a role="menuitem" href="/sign-up">
-                                                <i class="fa fa-user-plus"></i>
-                                                <span>Sign up</span>
-                                            </a>
-                                        </li>
-                                        <li role="presentation" class="divider"></li>
-                                        <li role="presentation">
-                                            <a role="menuitem" href="/contact">
-                                                <i class="fa fa-pencil"></i>
-                                                <span>Contact us</span>
-                                            </a>
-                                        </li>
-                                        {% endif %}
-                                    </ul>
-                                </li>
+                                {% endfor %}
                             </ul>
+                        </li>
+                        {% else %}
+                        <li role="presentation">
+                            <a href="{{ menu1.path  }}" class="{% if view_name in menu1.view_names %}active-parent active{% endif %}">
+                                <i class="fa fa-{{ menu1.icon }}"></i>
+                                <span class="hidden-xs">{{ menu1.label }}</span>
+                            </a>
+                        </li>
+                        {% endif %}
+                        {% endfor %}
+                    </ul>
+
+                    <!-- login form -->
+                    <form class="navbar-form navbar-right" role="form">
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="Username">
+                            <input type="password" class="form-control" placeholder="Password">
                         </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </header>
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </form>
+                </div><!-- /.navbar-collapse -->
+            </div><!-- /.container -->
+        </nav>
 
-    <!-- Container -->
+        <article class="row">{% block content %}{% endblock %}</article>
 
-    <div id="main" class="container-fluid">
-        <div class="row">
-            <div id="sidebar-left" class="col-xs-2 col-sm-2">
-                <ul role="menu" class="nav main-menu">
-                    {% for menu1 in menu %}
-                    {% if menu1.has_children %}
-                    <li role="presentation" class="dropdown{% if view_name in menu1.view_names %} open{% endif %}">
-                        <a data-toggle="dropdown" class="dropdown-toggle{% if view_name in menu1.view_names %} active-parent active{% endif %}" href="#" id="menu_{{ menu1.name }}">
-                            <i class="fa fa-{{ menu1.icon }}"></i>
-                            <span class="hidden-xs">{{ menu1.label }}</span>
-                        </a>
-                        <ul role="menu" class="dropdown-menu" aria-labelledby="menu_{{ menu1.name }}"{% if view_name in menu1.view_names %} style="display: block;"{% endif %}>
-                            {% for menu2 in menu1.get_children %}
-                            <li role="presentation">
-                                <a href="{{ menu2.path  }}" class="{% if view_name in menu2.view_names %}active-parent active{% endif %}">
-                                    <i class="fa fa-{{ menu2.icon }}"></i>
-                                    <span class="hidden-xs">{{ menu2.label }}</span>
-                                </a>
-                            </li>
-                            {% endfor %}
-                        </ul>
-                    </li>
-                    {% else %}
-                    <li role="presentation">
-                        <a href="{{ menu1.path  }}" class="{% if view_name in menu1.view_names %}active-parent active{% endif %}">
-                            <i class="fa fa-{{ menu1.icon }}"></i>
-                            <span class="hidden-xs">{{ menu1.label }}</span>
-                        </a>
-                    </li>
-                    {% endif %}
-                    {% endfor %}
-                </ul>
-            </div>
+        <footer class="navbar-fixed-bottom">
+            <p class="text-center"><strong>InsPyration</strong> | <strong>Python & Django</strong></p>
+        </footer>
 
-            <!--Main Content-->
-
-            <div id="content" class="col-xs-12 col-sm-10">
-
-                <div class="row">
-                    <div id="breadcrumb" class="col-xs-12">
-                        <ol class="breadcrumb">
-                            <li><a href="/"><i class="fa fa-home"></i></a></li>
-                            <li><a href="#">{{ page_title }}</a></li>
-                        </ol>
-                    </div>
-                </div>
-
-                <div class="preloader">
-                    <img src="{{ STATIC_URL }}devoops/img/devoops_getdata.gif" class="devoops-getdata" alt="preloader"/>
-                </div>
-
-                <aside class="row">
-                    {% for msg in errors %}
-                    <p class="btn btn-block btn-danger">{{ msg }}</p>
-                    {% endfor %}
-                    {% for msg in warns %}
-                    <p class="btn btn-block btn-warning">{{ msg }}</p>
-                    {% endfor %}
-                    {% for msg in info %}
-                    <p class="btn btn-block btn-info">{{ msg }}</p>
-                    {% endfor %}
-                    {% for msg in confirms %}
-                    <p class="btn btn-block btn-success">{{ msg }}</p>
-                    {% endfor %}
-                    {% for msg in messages %}
-                    <p class="btn btn-block btn-primary">{{ msg }}</p>
-                    {% endfor %}
-                </aside>
-
-                <article>{% block content %}{% endblock %}</article>
-
-                <div id="ajax-content"></div>
-
-                <footer class="row">
-                    <p class="text-center"><strong>InsPyration</strong> | <strong>Python & Django</strong></p>
-                </footer>
-            </div>
-            <!--End Content-->
-        </div>
     </div>
-    <!--End Container-->
+
 </body>
 {% endblock %}

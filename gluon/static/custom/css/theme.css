@@ -47,10 +47,11 @@ table.dataTable tbody tr.even{color: #111;}
     position: fixed;
     bottom: 0;
     width: 100%;
+    z-index: 10000;
 }
 
 #content {
-    margin-bottom: 32px;
+    padding-bottom: 32px;
 }
 
 .dataTables_wrapper .dataTables_paginate .paginate_button {
@@ -64,4 +65,45 @@ tr.selected td {
 
 .datatable .btn {
     margin: 0;
+}
+
+body.showcase {
+    padding: 70px 0 32px;
+}
+
+nav.navbar {
+    background-color: white;
+    color: #6aa6d6;
+    font-size: 14px;
+}
+
+.navbar-brand {
+    font-size: 18px;
+}
+
+.navbar-default .navbar-nav > li > a, .navbar-default .navbar-brand {
+    color: #6aa6d6;
+}
+
+
+nav.navbar .form-control {
+    background-color: #fff;
+    border: 1px solid #6aa6d6;
+    border-radius: 20px;
+    color: #6aa6d6;
+    font-size: 12px;
+    height: 26px;
+    padding: 6px;
+    width: 80px;
+}
+
+body.showcase  > div > footer {
+    background-color: white;
+    color: #6aa6d6;
+    box-shadow: 0 -2px 2px #272727;
+    left: 0;
+    position: fixed;
+    right: 0;
+    transform: translate3d(0px, 0px, 0px);
+    z-index: 1030;
 }
