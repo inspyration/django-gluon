@@ -16,5 +16,5 @@ class FieldRegistry(object):
         return self._registry[self._field_cls][model]
 
     def __contains__(self, model):
-        """Allow to use 'in' keyword with FieldRegistry instances"""
+        """Allow to use "in" keyword with FieldRegistry instances"""
         return model in self._registry[self._field_cls]

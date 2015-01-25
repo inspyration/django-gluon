@@ -178,6 +178,17 @@ class SaasDetailView(DetailView, SaasContextMixin):
 
 
 #
+#
+#
+
+
+class HomeView(SaasTemplateView):
+    """Home Page"""
+
+    template_name = "home.html"
+
+
+#
 # Dashboard
 #
 
@@ -223,7 +234,7 @@ class SubscriptionListJson(BaseDatatableView):
         # use parameters passed in POST request to filter queryset
 
         # simple example:
-        search = self.request.POST.get('search[value]', None)
+        search = self.request.POST.get("search[value]", None)
         if search:
             qs = qs.filter(label__istartswith=search)
 

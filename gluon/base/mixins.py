@@ -43,7 +43,7 @@ def label_to_name(label):
         if old in label:
             label.replace(old, new)
     label = label.translate(LABEL_TO_NAME_TRANS_SIMPLE)
-    return ''.join(filter(lambda c: c in string.printable, label))
+    return "".join(filter(lambda c: c in string.printable, label))
 
 
 BASE_MIXIN_BAD_QUERYSET =\
@@ -540,7 +540,7 @@ class BaseMixin(Model):
                 if data or data in foreign_object:
                     # If not data (=d[field_name]) then value is empty.
                     # That means fk is not set and should be left empty
-                    # unless '' is a real thing, the second condition check that
+                    # unless "" is a real thing, the second condition check that
                     setattr(o, field_name, foreign_object[data])
             o.save()
 

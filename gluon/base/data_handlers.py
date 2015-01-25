@@ -44,7 +44,7 @@ class CSVHandler(object):
             writer.writeheader()
             writer.writerows(data)
 
-gsm.registerUtility(Factory(CSVHandler), IFactory, '.csv')
+gsm.registerUtility(Factory(CSVHandler), IFactory, ".csv")
 
 
 def get_data_handler(filename):

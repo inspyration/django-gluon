@@ -11,7 +11,7 @@ class UserField(models.ForeignKey):
     None will be the value for AnonymousUser.
     """
 
-    def __init__(self, to=getattr(settings, 'AUTH_USER_MODEL', 'auth.User'),
+    def __init__(self, to=getattr(settings, "AUTH_USER_MODEL", "auth.User"),
                  null=True, editable=False, **kwargs):
         super(UserField, self).__init__(to=to, null=null, editable=editable,
                                         **kwargs)
