@@ -1,7 +1,15 @@
 from django.conf import settings
 
-from .models import View as SaasView, Profile, MenuItem, Subscription
 from django.db.models import Q
+
+from .models import (
+    View as SaasView,
+    Profile,
+    MenuItem,
+    Subscription,
+    AccessAccount,
+    Module,
+)
 
 from django.views.generic.base import ContextMixin, TemplateResponseMixin, View
 from django.views.generic import ListView, DetailView
@@ -254,6 +262,9 @@ class SubscriptionView(SaasDetailView):
 
 
 class AccountsView(SaasListView):
+
+    model = AccessAccount
+
     template_name = "accounts.html"
 
 
@@ -263,4 +274,7 @@ class AccountsView(SaasListView):
 
 
 class ModulesView(SaasListView):
+
+    model = Module
+
     template_name = "modules.html"
