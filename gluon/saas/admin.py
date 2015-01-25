@@ -8,7 +8,10 @@ from .models import (
     Module,
     AccessAccount,
     AccessRole,
+    Notification,
     Profile,
+    View,
+    MenuItem,
 )
 
 
@@ -26,6 +29,9 @@ admin.site.register(Subscription)
 admin.site.register(Module)
 admin.site.register(AccessAccount)
 admin.site.register(AccessRole)
+admin.site.register(Notification)
+admin.site.register(View)
+admin.site.register(MenuItem)
 
 admin.site.unregister(User)
 admin.site.register(User, ProfileAdmin)

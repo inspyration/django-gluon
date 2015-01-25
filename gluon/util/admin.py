@@ -7,7 +7,12 @@ from .models import (
     Locale,
     TimeZone,
     MimeRegistry,
-    Mime
+    Mime,
+    HtmlTag,
+    Browser,
+    HttpResource,
+    HttpResourcesConfig,
+    Keyword,
 )
 
 
@@ -29,4 +34,9 @@ admin.site.register(State, StateAdmin)
 admin.site.register(Locale)
 admin.site.register(TimeZone)
 admin.site.register(MimeRegistry)
+admin.site.register(HtmlTag)
+admin.site.register(Browser)
+admin.site.register(HttpResource)
+admin.site.register(HttpResourcesConfig)
+admin.site.register(Keyword)
 admin.site.register(Mime)
