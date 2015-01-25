@@ -186,7 +186,7 @@ class SaasDetailView(DetailView, SaasContextMixin):
 
 
 #
-#
+# Showcase views
 #
 
 
@@ -194,6 +194,12 @@ class HomeView(SaasTemplateView):
     """Home Page"""
 
     template_name = "home.html"
+
+
+class SubscribeView(SaasTemplateView):
+    """Subscribe Page"""
+
+    template_name = "subscribe.html"
 
 
 #

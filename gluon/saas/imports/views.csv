@@ -1,4 +1,6 @@
 "label","module__name","page_title","page_keywords__name","page_description","resources_config__name"
+"home","saas","Welcome to the Gluon project","python,django,gluon","The Gluon Project welcomes you!","saas"
+"subscribe","saas","Subscribe to the Gluon project","python,django,gluon","Discover Gluon project true potential!","saas"
 "dashboard","saas","Dashboard","python,django,gluon","Welcome to your dashboard","saas"
 "subscriptions","saas","Subscriptions","management,subscription","Subscription list","saas"
 "subscription","saas","Subscription","","Subscription detail","saas"
