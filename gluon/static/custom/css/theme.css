@@ -97,6 +97,14 @@ nav.navbar .form-control {
     width: 80px;
 }
 
+nav.navbar-default .navbar-nav > .open > a, nav.navbar-default .navbar-nav > .open > a:hover, nav.navbar-default .navbar-nav > .open > a:focus {
+    background-color: #6aa6d6;
+    color: white;
+}
+
+nav.navbar .dropdown-menu > li > a {
+    color: #6aa6d6 !important;
+}
 body.showcase  > div > footer {
     background-color: white;
     color: #6aa6d6;

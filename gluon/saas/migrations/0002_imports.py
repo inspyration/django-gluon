@@ -7,7 +7,7 @@ from django.conf import settings
 
 from django.db import migrations
 
-from ..models import Module, View, MenuItem
+from ..models import Module, View, MenuItem, ViewContext
 from util.models import Status, HttpResourcesConfig, Keyword
 
 BASE_DIR = getattr(settings, "BASE_PATH", Path(".").resolve())
@@ -38,6 +38,11 @@ class Migration(migrations.Migration):
         migrations.RunPython(
             lambda apps, schema_editor: Keyword.import_data(
                 BASE_DIR / "saas" / "imports" / "keywords.csv"
+            )
+        ),
+        migrations.RunPython(
+            lambda apps, schema_editor: ViewContext.import_data(
+                BASE_DIR / "saas" / "imports" / "view_contexts.csv"
             )
         ),
         migrations.RunPython(

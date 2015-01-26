@@ -228,6 +228,14 @@ class Profile(BaseMixin, AvatarMixin, SettingsMixin):
         verbose_name_plural = _("profiles")
 
 
+class ViewContext(BaseMixin):
+    """View Context, shared with Menu item"""
+
+    class Meta:
+        verbose_name = _("view context")
+        verbose_name_plural = _("view contexts")
+
+
 class View(BaseMixin):
     """SAAS View, used by SaasTemplateView"""
 
@@ -235,6 +243,14 @@ class View(BaseMixin):
         verbose_name=_("module"),
         help_text=_("Module of the view"),
         to=Module,
+        related_name="view_set",
+        blank=False,
+    )
+
+    context = ForeignKey(
+        verbose_name=_("context"),
+        help_text=_("Context of the menu Item"),
+        to=ViewContext,
         related_name="view_set",
         blank=False,
     )
@@ -277,6 +293,22 @@ class View(BaseMixin):
 class MenuItem(BaseMixin, NaiveHierarchyMixin):
     """Menu item"""
 
+    context = ForeignKey(
+        verbose_name=_("context"),
+        help_text=_("Context of the menu Item"),
+        to=ViewContext,
+        related_name="menu_item_set",
+        blank=False,
+    )
+
+    default = BooleanField(
+        verbose_name=_("default"),
+        help_text=_("Is this menu item is always displayed ?"),
+        blank=False,
+        null=False,
+        default=False,
+    )
+
     path = CharField(
         verbose_name=_("path"),
         help_text=_("Menu item link"),
@@ -307,11 +339,15 @@ class MenuItem(BaseMixin, NaiveHierarchyMixin):
         return result
 
     @classmethod
-    def get_menu(cls, user):
+    def get_menu(cls, view, user):
         if user.is_superuser:
-            return cls.get_roots()
-        return cls.get_roots()  # TODO: Utiliser les bons modules
+            return cls.get_roots().filter(context=view.context)
+        return cls.get_roots().filter(context=view.context)  # TODO: permissions
 
     @classmethod
-    def get_default_menu(cls):
-        return cls.get_roots()  # TODO: Utiliser les menus de SAAS Uniquement.
+    def get_default_menu(cls, view):
+        return cls.get_roots().filter(context=view.context).filter(default=True)
+
+    class Meta:
+        verbose_name = _("menu item")
+        verbose_name_plural = _("menu items")

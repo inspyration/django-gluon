@@ -33,7 +33,8 @@ class SaasContextMixin(ContextMixin):
         view_name = self.request.resolver_match.url_name
         view = SaasView.objects.filter(name=view_name).first()
         if view is None:
-            raise ImproperlyConfigured("A view is not properly registered !")
+            raise ImproperlyConfigured(
+                "The view {0} is not properly registered !".format(view_name))
         resources = view.resources_config.resources.all()
 
         # update context with data from view
@@ -108,7 +109,7 @@ class SaasContextMixin(ContextMixin):
             # Get current user and get or create profile
             is_authenticated = True
             user = get_user(self.request)
-            menu = MenuItem.get_menu(user)
+            menu = MenuItem.get_menu(view, user)
             profile = Profile.objects.filter(user=user).first()
             current_user_avatar_uri = "/static/images/authenticated.png"
             if not profile:
@@ -125,7 +126,7 @@ class SaasContextMixin(ContextMixin):
                 if profile.avatar:
                     current_user_avatar_uri = profile.avatar.url
         else:
-            menu = MenuItem.get_default_menu()
+            menu = MenuItem.get_default_menu(view)
 
         context.update({
             "nb_notifications": nb_notifications,
