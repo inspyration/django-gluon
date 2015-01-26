@@ -13,18 +13,18 @@
                     <div class="row">
                         <div class="col-xs-8 col-sm-4">
                             <a href="#" class="show-sidebar">
-                              <i class="fa fa-bars"></i>
+                              <i class="fa fa-fw fa-bars"></i>
                             </a>
                             <div id="search">
                                 <input type="text" placeholder="search"/>
-                                <i class="fa fa-search"></i>
+                                <i class="fa fa-fw fa-search"></i>
                             </div>
                         </div>
                         <div class="col-xs-4 col-sm-8 top-panel-right">
                             <ul class="nav navbar-nav pull-right panel-menu">
                                 <li class="hidden-xs">
                                     <a href="/" class="modal-link">
-                                        <i class="fa fa-bell"></i>
+                                        <i class="fa fa-fw fa-bell"></i>
                                         <span class="badge">{{ nb_notifications }}</span>
                                     </a>
                                 </li>
@@ -33,7 +33,7 @@
                                         <div class="avatar">
                                             <img src="{{ current_user_avatar_uri }}" class="img-rounded" alt="avatar" />
                                         </div>
-                                        <i class="fa fa-angle-down pull-right"></i>
+                                        <i class="fa fa-fw fa-angle-down pull-right"></i>
                                         <div class="user-mini pull-right">
                                             <span class="welcome">{{ welcome_message }}</span>
                                             <span>{{ current_user_display_name }}</span>
@@ -43,53 +43,53 @@
                                         {% if is_authenticated %}
                                         <li role="presentation">
                                             <a role="menuitem" href="/myprofile">
-                                                <i class="fa fa-user"></i>
+                                                <i class="fa fa-fw fa-user"></i>
                                                 <span>Profile</span>
                                             </a>
                                         </li>
                                         <li role="presentation">
                                             <a role="menuitem" href="#">
-                                                <i class="fa fa-cog"></i>
+                                                <i class="fa fa-fw fa-cog"></i>
                                                 <span>Settings</span>
                                             </a>
                                         </li>
                                         <li role="presentation" class="divider"></li>
                                         <li role="presentation">
                                             <a role="menuitem" href="/contact">
-                                                <i class="fa fa-pencil"></i>
+                                                <i class="fa fa-fw fa-pencil"></i>
                                                 <span>Contact us</span>
                                             </a>
                                         </li>
                                         <li role="presentation">
                                             <a role="menuitem" href="/issues/new">
-                                                <i class="fa fa-bug"></i>
+                                                <i class="fa fa-fw fa-bug"></i>
                                                 <span>Report an issue</span>
                                             </a>
                                         </li>
                                         <li role="presentation" class="divider"></li>
                                         <li role="presentation">
                                             <a role="menuitem" href="/log-out">
-                                                <i class="fa fa-sign-out"></i>
+                                                <i class="fa fa-fw fa-sign-out"></i>
                                                 <span>Log out</span>
                                             </a>
                                         </li>
                                         {% else %}
                                         <li role="presentation">
                                             <a role="menuitem" href="/log-in">
-                                                <i class="fa fa-sign-in"></i>
+                                                <i class="fa fa-fw fa-sign-in"></i>
                                                 <span>Log in</span>
                                             </a>
                                         </li>
                                         <li role="presentation">
                                             <a role="menuitem" href="/sign-up">
-                                                <i class="fa fa-user-plus"></i>
+                                                <i class="fa fa-fw fa-user-plus"></i>
                                                 <span>Sign up</span>
                                             </a>
                                         </li>
                                         <li role="presentation" class="divider"></li>
                                         <li role="presentation">
                                             <a role="menuitem" href="/contact">
-                                                <i class="fa fa-pencil"></i>
+                                                <i class="fa fa-fw fa-pencil"></i>
                                                 <span>Contact us</span>
                                             </a>
                                         </li>
@@ -114,14 +114,14 @@
                     {% if menu1.has_children %}
                     <li role="presentation" class="dropdown{% if view_name in menu1.view_names %} open{% endif %}">
                         <a data-toggle="dropdown" class="dropdown-toggle{% if view_name in menu1.view_names %} active-parent active{% endif %}" href="#" id="menu_{{ menu1.name }}">
-                            <i class="fa fa-{{ menu1.icon }}"></i>
+                            <i class="fa fa-fw fa-{{ menu1.icon }}"></i>
                             <span class="hidden-xs">{{ menu1.label }}</span>
                         </a>
                         <ul role="menu" class="dropdown-menu" aria-labelledby="menu_{{ menu1.name }}"{% if view_name in menu1.view_names %} style="display: block;"{% endif %}>
                             {% for menu2 in menu1.get_children %}
                             <li role="presentation">
                                 <a href="{{ menu2.path  }}" class="{% if view_name in menu2.view_names %}active-parent active{% endif %}">
-                                    <i class="fa fa-{{ menu2.icon }}"></i>
+                                    <i class="fa fa-fw fa-{{ menu2.icon }}"></i>
                                     <span class="hidden-xs">{{ menu2.label }}</span>
                                 </a>
                             </li>
@@ -131,7 +131,7 @@
                     {% else %}
                     <li role="presentation">
                         <a href="{{ menu1.path  }}" class="{% if view_name in menu1.view_names %}active-parent active{% endif %}">
-                            <i class="fa fa-{{ menu1.icon }}"></i>
+                            <i class="fa fa-fw fa-{{ menu1.icon }}"></i>
                             <span class="hidden-xs">{{ menu1.label }}</span>
                         </a>
                     </li>
@@ -147,7 +147,7 @@
                 <div class="row">
                     <div id="breadcrumb" class="col-xs-12">
                         <ol class="breadcrumb">
-                            <li><a href="/"><i class="fa fa-home"></i></a></li>
+                            <li><a href="/"><i class="fa fa-fw fa-home"></i></a></li>
                             <li><a href="#">{{ page_title }}</a></li>
                         </ol>
                     </div>
