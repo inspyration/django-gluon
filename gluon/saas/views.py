@@ -278,7 +278,7 @@ class SubscribeView(SaasProcessFormViewMixin, SaasTemplateView):
 
         subscription = forms["subscription_form"].save(commit=False)
         subscription.owner = user
-        subscription.label = str(uuid4())
+        subscription.label = str(uuid4()).replace("-", "")
         subscription.save()
         for module in chain(Module.objects.filter(monthly_price=0),
                             forms["subscription_form"].cleaned_data["modules"]):
