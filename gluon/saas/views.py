@@ -11,6 +11,12 @@ from .models import (
     Module,
 )
 
+from .forms import (
+    SubscriptionForm,
+    SubscriptionUserForm,
+    SubscriptionProfileForm,
+)
+
 from django.views.generic.base import ContextMixin, TemplateResponseMixin, View
 from django.views.generic import ListView, DetailView
 from django_datatables_view.base_datatable_view import BaseDatatableView
@@ -18,6 +24,7 @@ from django_datatables_view.base_datatable_view import BaseDatatableView
 from django.contrib.auth import get_user
 
 from django.shortcuts import render
+from django.http import HttpResponseRedirect
 
 from django.core.exceptions import ImproperlyConfigured
 
@@ -202,6 +209,33 @@ class SubscribeView(SaasTemplateView):
 
     template_name = "subscribe.html"
 
+    def get_context_data(self, **kwargs):
+        context = super(SubscribeView, self).get_context_data(**kwargs)
+
+        # if self.request.method == "POST":
+        #     # create a form instance and populate it with data from the request:
+        #     form = SubscriptionForm(self.request.POST)
+        #     # check whether it's valid:
+        #     if form.is_valid():
+        #         # process the data in form.cleaned_data as required
+        #         # ...
+        #         # redirect to a new URL:
+        #         return HttpResponseRedirect("/")
+        #
+        # # if a GET (or any other method) we'll create a blank form
+        # else:
+        #     form = SubscriptionForm()
+
+        subscription_form = SubscriptionForm(prefix="subscription")
+        subscription_user_form = SubscriptionUserForm(prefix="user")
+        subscription_profile_form = SubscriptionProfileForm(prefix="profile")
+
+        context["subscription_form"] = subscription_form
+        context["subscription_user_form"] = subscription_user_form
+        context["subscription_profile_form"] = subscription_profile_form
+        context["modules"] = {m.id: m for m in Module.objects.all()}
+
+        return context
 
 #
 # Dashboard

@@ -68,7 +68,7 @@ tr.selected td {
 }
 
 body.showcase {
-    padding: 70px 0 32px;
+    padding: 60px 0 32px;
 }
 
 nav.navbar {
@@ -105,6 +105,7 @@ nav.navbar-default .navbar-nav > .open > a, nav.navbar-default .navbar-nav > .op
 nav.navbar .dropdown-menu > li > a {
     color: #6aa6d6 !important;
 }
+
 body.showcase  > div > footer {
     background-color: white;
     color: #6aa6d6;
@@ -114,6 +115,11 @@ body.showcase  > div > footer {
     right: 0;
     transform: translate3d(0px, 0px, 0px);
     z-index: 1030;
+}
+
+body.showcase  > div.container > .row {
+    background: white;
+    padding: 15px;
 }
 
 header .page-header {
@@ -137,6 +143,15 @@ header .page-header:before {
 
 header .page-header h1 {
     padding: 8px;
+}
+
+.panel .page-header {
+    color: #6aa6d6;
+    border-bottom: dashed 1px #6aa6d6;
+}
+
+.panel .page-header.space-before {
+    margin-top: 26px;
 }
 
 .fa-fw {

@@ -7,7 +7,9 @@ from django.db.models import (
     ManyToManyField,
     OneToOneField,
     ForeignKey,
-    TextField)
+    TextField,
+    EmailField,
+)
 
 from base.mixins import BaseMixin
 
@@ -49,7 +51,14 @@ class Module(BaseMixin, StatusMixin):
         blank=False,
     )
 
-    price = DecimalField(
+    monthly_price = DecimalField(
+        verbose_name=_("price"),
+        help_text=_("Module price"),
+        max_digits=5,
+        decimal_places=2,
+    )
+
+    yearly_price = DecimalField(
         verbose_name=_("price"),
         help_text=_("Module price"),
         max_digits=5,
@@ -70,25 +79,46 @@ class Module(BaseMixin, StatusMixin):
 ########################
 
 
-class Subscription(BaseMixin, LocalisationMixin, SettingsMixin, WebMixin,
-                   ContactDetailMixin, CorporateMixin, LogoMixin, StatusMixin):
+class SubscriptionCategory(BaseMixin, StatusMixin):
+    """Subscription category"""
+
+    class Meta:
+        verbose_name = _("subscription category")
+        verbose_name_plural = _("subscription categories")
+
+
+class Subscription(BaseMixin, StatusMixin):
     """An subscription is linked to a customer. It contains only his data"""
 
-    # subscription status (opened or not)
-    opened = BooleanField(
-        verbose_name=_("opened"),
-        help_text=_("Is the subscription is open ?"),
+    category = ForeignKey(
+        verbose_name=_("category"),
+        help_text=_("Subscription category"),
+        to=SubscriptionCategory,
+        related_name="saas_subscription_set",
         blank=False,
-        null=False,
-        default=True,
+    )
+
+    owner = ForeignKey(
+        verbose_name=_("owner"),
+        help_text=_("Subscription owner"),
+        to=getattr(settings, "AUTH_USER_MODEL", "auth.User"),
+        related_name="saas_subscription_set",
+        blank=False,
     )
 
     # Person who create subscription on his behalf or on his company behalf
-    owner = CharField(
-        verbose_name=_("owner"),
-        help_text=_("Owner"),
+    referrer = EmailField(
+        verbose_name=_("referrer"),
+        help_text=_("Email of the person who recommended this site"),
+        blank=True,
+    )
+
+    # Person who create subscription on his behalf or on his company behalf
+    company_name = CharField(
+        verbose_name=_("company name"),
+        help_text=_("Company name if the subscription is on behalf a company"),
         max_length=127,
-        blank=False,
+        blank=True,
     )
 
     modules = ManyToManyField(

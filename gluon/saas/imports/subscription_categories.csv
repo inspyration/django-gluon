@@ -1,0 +1,5 @@
+"label","status__name"
+"yearly subscription","saas_subscriptioncategory__front-office"
+"monthly subscription","saas_subscriptioncategory__front-office"
+"partnership","saas_subscriptioncategory__back-office_only"
+"trial","saas_subscriptioncategory__front-office"

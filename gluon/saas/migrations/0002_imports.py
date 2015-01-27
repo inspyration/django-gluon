@@ -7,7 +7,7 @@ from django.conf import settings
 
 from django.db import migrations
 
-from ..models import Module, View, MenuItem, ViewContext
+from ..models import SubscriptionCategory, Module, View, MenuItem, ViewContext
 from util.models import Status, HttpResourcesConfig, Keyword
 
 BASE_DIR = getattr(settings, "BASE_PATH", Path(".").resolve())
@@ -53,6 +53,11 @@ class Migration(migrations.Migration):
         migrations.RunPython(
             lambda apps, schema_editor: MenuItem.import_data(
                 BASE_DIR / "saas" / "imports" / "menu_items.csv"
+            )
+        ),
+        migrations.RunPython(
+            lambda apps, schema_editor: SubscriptionCategory.import_data(
+                BASE_DIR / "saas" / "imports" / "subscription_categories.csv"
             )
         ),
     ]
