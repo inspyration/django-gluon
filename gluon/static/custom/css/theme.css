@@ -157,3 +157,32 @@ header .page-header h1 {
 .fa-fw {
     width: 2.5em;
 }
+
+ul.errorlist {
+    padding: 0;
+    margin: 0 15px;
+}
+
+ul.errorlist li {
+    background-color: #d15e5e;
+    border-color: rgba(0, 0, 0, 0.3);
+    color: #f8f8f8;
+    -moz-user-select: none;
+    border-radius: 4px;
+    border-style: solid;
+    border-width: 1px;
+    cursor: pointer;
+    display: inline-block;
+    font-family: "Lucida Grande","Lucida Sans","Lucida Sans Unicode","Segoe UI",Verdana,sans-serif;
+    font-size: 12px;
+    font-weight: bold;
+    line-height: 24px;
+    margin: 0 0 10px;
+    outline: medium none !important;
+    padding: 0 10px;
+    position: relative;
+    text-align: center;
+    text-decoration: none;
+    vertical-align: top;
+    width: 100%;
+}

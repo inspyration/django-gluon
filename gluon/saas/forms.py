@@ -32,6 +32,7 @@ class SubscriptionForm(ModelForm):
         queryset=Module.objects.filter(monthly_price__gt=0),
         widget=CheckboxSelectMultiple(),
         label=_("Select modules"),
+        error_messages={"required": _("You must select at least one module")},
     )
 
     class Meta:
@@ -47,28 +48,24 @@ class SubscriptionForm(ModelForm):
         labels = {
             "referrer": _("Referrer"),
             "company_name": _("Company name"),
-            "modules": _("Modules"),
         }
 
         widgets = {
             "referrer": TextInput(attrs={"class": "form-control"}),
             "company_name": TextInput(attrs={"class": "form-control"}),
-            "modules": TextInput(attrs={"class": "form-control"}),
-        }
-
-        help_texts = {
-        }
-
-        error_messages = {
         }
 
 
 class SubscriptionUserForm(ModelForm):
 
+    def __init__(self, *args, **kwargs):
+        super(SubscriptionUserForm, self).__init__(*args, **kwargs)
+        for key in self.fields:
+            self.fields[key].required = True
+
     class Meta:
         model = get_user_model()
 
-        # fields = ("username", "first_name", "last_name", "email", "password")
         fields = (
             "first_name",
             "last_name",
@@ -77,7 +74,6 @@ class SubscriptionUserForm(ModelForm):
         )
 
         labels = {
-            # "username": _("Username"),
             "first_name": _("First name"),
             "last_name": _("Last name"),
             "email": _("Email"),
@@ -85,21 +81,36 @@ class SubscriptionUserForm(ModelForm):
         }
 
         widgets = {
-            # "username": TextInput(attrs={"class": "form-control"}),
-            "first_name": TextInput(attrs={"class": "form-control"}),
-            "last_name": TextInput(attrs={"class": "form-control"}),
-            "email": TextInput(attrs={"class": "form-control"}),
-            "password": PasswordInput(attrs={"class": "form-control"}),
-        }
-
-        help_texts = {
-            # "username": _("You will use your username as an alias and to log in."),
+            "first_name": TextInput(
+                attrs={"class": "form-control",
+                       "placeholder": _("Your first name")}),
+            "last_name": TextInput(
+                attrs={"class": "form-control",
+                       "placeholder": _("Your last name")}),
+            "email": TextInput(
+                attrs={"class": "form-control",
+                       "placeholder": _("Your email")}),
+            "password": PasswordInput(
+                attrs={"class": "form-control",
+                       "placeholder": _("Your password")}),
         }
 
         error_messages = {
-            # "username": {
-            #     "max_length": _("This username is too long."),
-            # },
+            "first_name": {
+                "max_length": _("This first name is too long."),
+                "required": _("The first name is mandatory"),
+            },
+            "last_name": {
+                "max_length": _("This last name is too long."),
+                "required": _("The last name is mandatory"),
+            },
+            "email": {
+                "max_length": _("This email is too long."),
+                "required": _("The email is mandatory"),
+            },
+            "password": {
+                "required": _("The password is mandatory"),
+            },
         }
 
 

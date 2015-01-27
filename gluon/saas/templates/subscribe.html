@@ -9,13 +9,14 @@
 {% endblock %}
 
 {% block content %}
-    <form class="form-horizontal" role="form">
+    <form class="form-horizontal" role="form" method="POST">
 
         <div class="panel panel-primary">
 
             <div class="panel-heading">Subscribe</div>
 
             <div class="panel-body">
+                {% csrf_token %}
                 {{ subscription_user_form.non_field_errors }}
                 <div class="col-sm-6">
                     <div class="thumbnail">
@@ -98,7 +99,7 @@
             </div>
 
             <table class="table">
-                <caption><h4 class="page-header">Select modules</h4></caption>
+                <caption><h4 class="page-header">Select modules</h4>{{ subscription_form.modules.errors }}</caption>
                 <thead>
                     <tr>
                         <th>Name</th>
@@ -119,7 +120,7 @@
                             <div class="form-group">
                                 <div class="toggle-switch toggle-switch-info">
                                     <label>
-                                        <input id="id_subscription-modules_{{ pk }}" type="checkbox" value="1" checked="checked" name="subscription-modules">
+                                        <input id="id_subscription_form-modules_{{ pk }}" type="checkbox" value="{{ pk }}" checked="checked" name="subscription_form-modules" />
                                         <div class="toggle-switch-inner"></div>
                                         <div class="toggle-switch-switch"><i class="fa fa-check"></i></div>
                                     </label>
