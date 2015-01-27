@@ -143,6 +143,14 @@ class StatusMixin(Model):
         null=False,
     )
 
+    @classmethod
+    def get_default_status(cls):
+        model = ".".join([
+            cls._meta.app_label,
+            cls._meta.model_name,
+        ])
+        return cls.objects.filter(model=model, is_default=True).first()
+
     class Meta:
         abstract = True
 
