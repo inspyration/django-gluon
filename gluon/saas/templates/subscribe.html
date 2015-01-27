@@ -9,11 +9,11 @@
 {% endblock %}
 
 {% block content %}
-    <div class="panel panel-primary">
+    <form class="form-horizontal" role="form">
 
-        <div class="panel-heading">Subscribe</div>
+        <div class="panel panel-primary">
 
-        <form class="form-horizontal" role="form">
+            <div class="panel-heading">Subscribe</div>
 
             <div class="panel-body">
                 {{ subscription_user_form.non_field_errors }}
@@ -132,11 +132,18 @@
                 </tbody>
             </table>
 
-        </form>
+            <div class="panel-footer">
+                <div class="btn-toolbar pull-right" role="toolbar">
+                    <button class="btn-group btn-primary btn-label-left" role="group" type="submit">
+                        <span><i class="fa fa-caret-square-o-right"></i></span>Submit form
+                    </button>
+                    <button class="btn-group btn-label-left" role="group" type="cancel">
+                        <span><i class="fa fa-trash text-danger"></i></span>Reset form
+                    </button>
+                </div>
+            </div>
 
-        <div class="panel-footer">
-            Gluon project.
         </div>
 
-    </div>
+    </form>
 {% endblock %}
