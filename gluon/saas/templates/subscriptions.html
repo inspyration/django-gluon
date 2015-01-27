@@ -52,10 +52,14 @@
                     },
                 ],
                 "createdRow": function ( row, data, index ) {
-                    if ( data[3] == "Yes" ) {
-                        $('td', row).eq(2).html('<button type="button" class="btn btn-success"><i class="fa fa-fw fa-check-square-o"> Open</button>'); // Column 1 hidden, so data 3 match column 2
+                    if ( data[4] == "created" ) {
+                        $('td', row).eq(3).html('<button type="button" class="btn btn-primary btn-label-left"><span><i class="fa fa-fw fa-sign-in"></i></span>Created</button>'); // Column 1 hidden, so data 4 match column 3
+                    } else if ( data[4] == "ongoing" ) {
+                        $('td', row).eq(3).html('<button type="button" class="btn btn-success btn-label-left"><span><i class="fa fa-fw fa-thumbs-o-up"></i></span>Ongoing</button>'); // Column 1 hidden
+                    } else if ( data[4] == "to_renew" ) {
+                        $('td', row).eq(3).html('<button type="button" class="btn btn-info btn-label-left"><span><i class="fa fa-fw fa-spin fa-refresh"></i></span>To renew</button>'); // Column 1 hidden
                     } else {
-                        $('td', row).eq(2).html('<button type="button" class="btn btn-danger"><i class="fa fa-fw fa-square-o"> Closed</button>'); // Column 1 hidden
+                        $('td', row).eq(3).html('<button type="button" class="btn btn-danger btn-label-left"><span><i class="fa fa-fw fa-thumbs-down"></i></span>Revoked</button>'); // Column 1 hidden
                     }
                 },
             });
@@ -104,7 +108,7 @@
                             <th>#</th>
                             <th>Label</th>
                             <th>Owner</th>
-                            <th>Still Open ?</th>
+                            <th>Category</th>
                             <th>Status</th>
                         </tr>
                     </thead>

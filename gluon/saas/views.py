@@ -265,7 +265,6 @@ class SubscribeView(SaasProcessFormViewMixin, SaasTemplateView):
         return context
 
     def form_valid(self, forms):
-        import bpdb; bpdb.set_trace()
         user_form = forms["subscription_user_form"]
         user_password = user_form.cleaned_data.pop("password")
         user_form.cleaned_data["username"] = user_form.cleaned_data["email"]
@@ -321,18 +320,20 @@ class SubscriptionListJson(BaseDatatableView):
     model = Subscription
 
     # define the columns that will be returned
-    columns = ["id", "label", "owner", "opened", "status"]
+    columns = ["id", "label", "owner", "category", "status"]
 
-    order_columns = ["id", "label", "owner", "", "status"]
+    order_columns = ["id", "label", "owner", "category", "status"]
 
     # protection against attack attempts
     max_display_length = 500
 
     def render_column(self, row, column):
         if column == "status":
-            return row.status.label.capitalize()
-        elif column == "opened":
-            return row.opened and "Yes" or "No"
+            return row.status.label
+        if column == "owner":
+            return row.owner.profile.label
+        if column == "category":
+            return row.category.label
         else:
             return super(SubscriptionListJson, self).render_column(row, column)
 
