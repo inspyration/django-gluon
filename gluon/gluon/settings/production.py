@@ -11,7 +11,8 @@ TEMPLATE_DEBUG = DEBUG
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.sqlite3",
-        "NAME": str(BASE_PATH / "data" / "db.sqlite3"),
+        "NAME": str(BASE_PATH / "data" / "db.prod.sqlite3"),
+        "ATOMIC_REQUESTS": True,
     }
 }
 
