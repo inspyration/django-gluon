@@ -4,11 +4,6 @@ from django.db.models import ForeignKey, Q
 from .models import Status
 
 
-def get_default_status():
-    result = Status.objects.filter(is_default=True).first()
-    return result and result.id or None
-
-
 class StatusField(ForeignKey):
     """
     A ForeignKey that point to status table
@@ -19,6 +14,11 @@ class StatusField(ForeignKey):
             to = Status
         super(StatusField, self).__init__(to, *args, **kwargs)
 
+    def get_default(self):
+        result = Status.objects.filter(model=self.status_related_model,
+                                       is_default=True).first()
+        return result and result.id or None
+
     def prepare_class(self, sender, **kwargs):
         if not sender._meta.abstract:
 
@@ -26,11 +26,8 @@ class StatusField(ForeignKey):
                 sender._meta.app_label,
                 sender._meta.model_name,
             ])
-
+            self.status_related_model = model
             self.rel.limit_choices_to = {"model": model}
-
-            if not self.has_default():
-                self.default = get_default_status
 
     def contribute_to_class(self, cls, name):
         models.signals.class_prepared.connect(self.prepare_class, sender=cls)
