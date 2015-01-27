@@ -3,6 +3,7 @@ from django.conf.urls import patterns, url
 from .views import (
     HomeView,
     SubscribeView,
+    ThanksView,
     DashboardView,
     SubscriptionsView,
     AccountsView,
@@ -15,6 +16,7 @@ urlpatterns = patterns(
     "",
     url(r"^$", HomeView.as_view(), name="home"),
     url(r"^subscribe$", SubscribeView.as_view(), name="subscribe"),
+    url(r"^thanks$", ThanksView.as_view(), name="thanks"),
     url(r"^dashboard$", DashboardView.as_view(), name="dashboard"),
     # Subscription
     url(r"^subscriptions/data/$", SubscriptionListJson.as_view(), name="subscriptions_json"),

@@ -1,4 +1,9 @@
+from itertools import chain
+from uuid import uuid4
+
 from django.conf import settings
+
+from django.contrib.auth import get_user, get_user_model
 
 from django.db.models import Q
 
@@ -18,10 +23,11 @@ from .forms import (
 )
 
 from django.views.generic.base import ContextMixin, TemplateResponseMixin, View
+from django.views.generic.edit import ProcessFormView
 from django.views.generic import ListView, DetailView
 from django_datatables_view.base_datatable_view import BaseDatatableView
 
-from django.contrib.auth import get_user
+from django.core.urlresolvers import reverse
 
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
@@ -186,6 +192,38 @@ class SaasDetailView(DetailView, SaasContextMixin):
         return context
 
 
+class SaasProcessFormViewMixin:
+    """Handle forms. form_classes are 2-tuples that contains key of forms
+     set in context and its class"""
+
+    def get_forms(self):
+        if self.request.method == "POST":
+            return dict((k, v(self.request.POST, prefix=k))
+                         for k, v in self.form_classes)
+        else:
+            return dict((k, v(prefix=k))
+                         for k, v in self.form_classes)
+
+    def get_context_data(self, **kwargs):
+        context = super(SaasProcessFormViewMixin, self).get_context_data(**kwargs)
+        context.update(self.get_forms())
+        return context
+
+    def forms_are_valid(self, forms):
+        return all(f.is_valid() for f in forms.values())
+
+    def post(self, request, *args, **kwargs):
+        """
+        Handles POST requests, instantiating a form instance with the passed
+        POST variables and then checked for validity.
+        """
+        forms = self.get_forms()
+        if self.forms_are_valid(forms):
+            return self.form_valid(forms)
+        else:
+            return self.form_invalid(forms)
+
+
 ########################
 #                      #
 #  SAAS utility views  #
@@ -204,38 +242,57 @@ class HomeView(SaasTemplateView):
     template_name = "home.html"
 
 
-class SubscribeView(SaasTemplateView):
+class ThanksView(SaasTemplateView):
+    """Home Page"""
+
+    template_name = "thanks.html"
+
+
+class SubscribeView(SaasProcessFormViewMixin, SaasTemplateView):
     """Subscribe Page"""
+
+    form_classes = (
+        ("subscription_user_form", SubscriptionUserForm),
+        ("subscription_profile_form", SubscriptionProfileForm),
+        ("subscription_form", SubscriptionForm),
+    )
 
     template_name = "subscribe.html"
 
     def get_context_data(self, **kwargs):
         context = super(SubscribeView, self).get_context_data(**kwargs)
-
-        # if self.request.method == "POST":
-        #     # create a form instance and populate it with data from the request:
-        #     form = SubscriptionForm(self.request.POST)
-        #     # check whether it's valid:
-        #     if form.is_valid():
-        #         # process the data in form.cleaned_data as required
-        #         # ...
-        #         # redirect to a new URL:
-        #         return HttpResponseRedirect("/")
-        #
-        # # if a GET (or any other method) we'll create a blank form
-        # else:
-        #     form = SubscriptionForm()
-
-        subscription_form = SubscriptionForm(prefix="subscription")
-        subscription_user_form = SubscriptionUserForm(prefix="user")
-        subscription_profile_form = SubscriptionProfileForm(prefix="profile")
-
-        context["subscription_form"] = subscription_form
-        context["subscription_user_form"] = subscription_user_form
-        context["subscription_profile_form"] = subscription_profile_form
         context["modules"] = {m.id: m for m in Module.objects.all()}
-
         return context
+
+    def form_valid(self, forms):
+        import bpdb; bpdb.set_trace()
+        user_form = forms["subscription_user_form"]
+        user_password = user_form.cleaned_data.pop("password")
+        user_form.cleaned_data["username"] = user_form.cleaned_data["email"]
+        user = get_user_model()(**user_form.cleaned_data)
+        user.set_password(user_password)
+        user.save()
+
+        profile = forms["subscription_profile_form"].save(commit=False)
+        profile.user = user
+        profile.save()
+
+        subscription = forms["subscription_form"].save(commit=False)
+        subscription.owner = user
+        subscription.label = str(uuid4())
+        subscription.save()
+        for module in chain(Module.objects.filter(monthly_price=0),
+                            forms["subscription_form"].cleaned_data["modules"]):
+            subscription.modules.add(module)
+        subscription.save()
+
+        return HttpResponseRedirect(reverse("thanks"))
+
+    def form_invalid(self, form):
+        return self.render_to_response(self.get_context_data())
+
+
+
 
 #
 # Dashboard

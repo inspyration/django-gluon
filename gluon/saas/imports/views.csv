@@ -1,6 +1,7 @@
 "label","module__name","context__name","page_title","page_keywords__name","page_description","resources_config__name"
 "home","saas","showcase","Welcome to the Gluon project","python,django,gluon","The Gluon Project welcomes you!","showcase"
 "subscribe","saas","showcase","Subscribe to the Gluon project","python,django,gluon","Discover Gluon project true potential!","showcase"
+"thanks","saas","showcase","Thank you for subscribing to our services","python,django,gluon","Thank you page, subscription almost done!","showcase"
 "dashboard","saas","back-office","Dashboard","python,django,gluon","Welcome to your dashboard","saas"
 "subscriptions","saas","back-office","Subscriptions","management,subscription","Subscription list","saas"
 "subscription","saas","back-office","Subscription","","Subscription detail","saas"
