@@ -3,9 +3,13 @@ from uuid import uuid4
 
 from django.conf import settings
 
-from django.contrib.auth import get_user, get_user_model
-
-from django.db.models import Q
+from django.contrib.auth import (
+    get_user,
+    get_user_model,
+    authenticate,
+    login,
+    logout
+)
 
 from .models import (
     View as SaasView,
@@ -242,10 +246,45 @@ class HomeView(SaasTemplateView):
     template_name = "home.html"
 
 
-class ThanksView(SaasTemplateView):
+class LoginView(SaasTemplateView):
     """Home Page"""
 
-    template_name = "thanks.html"
+    template_name = "login.html"
+
+    def get(self, request, *args, **kwargs):
+        if request.user.is_authenticated():
+            HttpResponseRedirect(reverse("dashboard"))
+        return super(LoginView, self).get(request, *args, **kwargs)
+
+    def post(self, request, *args, **kwargs):
+        """
+        Check auth and do the log in.
+        """
+        username = request.POST.get("username")
+        password = request.POST.get("password")
+        user = authenticate(username=username, password=password)
+        if user is not None:
+            if user.is_active:
+                login(request, user)
+                next_uri = request.POST.get("next")
+                if next_uri:
+                    return HttpResponseRedirect(next_uri)
+                return HttpResponseRedirect(reverse("dashboard"))
+            else:
+                return HttpResponseRedirect(reverse("login"))
+        else:
+            return HttpResponseRedirect(reverse("login"))
+
+
+class LogoutView(SaasTemplateView):
+    """Home Page"""
+
+    template_name = "logout.html"
+
+    def get(self, request, *args, **kwargs):
+        if request.user.is_anonymous():
+            logout(request)
+        return super(LogoutView, self).get(request, *args, **kwargs)
 
 
 class SubscribeView(SaasProcessFormViewMixin, SaasTemplateView):
@@ -288,7 +327,7 @@ class SubscribeView(SaasProcessFormViewMixin, SaasTemplateView):
         account = AccessAccount(
             user=user,
             subscription=subscription,
-            role=AccessRole.objects.get(name="sass__manager"),
+            role=AccessRole.objects.get(name="SASS_management__manager"),
         )
 
         return HttpResponseRedirect(reverse("thanks"))
@@ -297,6 +336,16 @@ class SubscribeView(SaasProcessFormViewMixin, SaasTemplateView):
         return self.render_to_response(self.get_context_data())
 
 
+class ThanksView(SaasTemplateView):
+    """Home Page"""
+
+    template_name = "thanks.html"
+
+
+class SubscriptionValidationView(SaasTemplateView):
+    """Home Page"""
+
+    template_name = "thanks.html"
 
 
 #
