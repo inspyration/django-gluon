@@ -124,6 +124,7 @@ class Subscription(BaseMixin, StatusMixin):
     modules = ManyToManyField(
         verbose_name=_("modules"),
         help_text=_("List of module installed on the subscription"),
+        related_name="saas_subscription_set",
         to=Module,
     )
 
@@ -150,12 +151,23 @@ class Subscription(BaseMixin, StatusMixin):
 class AccessRole(BaseMixin):
     """A role, that comes with permissions through group management"""
 
+    module = ForeignKey(
+        verbose_name=_("module"),
+        help_text=_("Module creating the role"),
+        related_name="saas_access_role_set",
+        to=Module,
+    )
+
     groups = ManyToManyField(
         verbose_name=_("groups"),
         help_text=_("List of groups used by the role"),
         to=getattr(settings, "AUTH_USER_GROUP", "auth.Group"),
         blank=False,
     )
+
+    def _name_unique_model_path(self):
+        """The logical model path to get the current object in a unique way"""
+        return self.module, self
 
     @staticmethod
     def get_related_fields():

@@ -14,7 +14,7 @@ from .models import (
     Subscription,
     AccessAccount,
     Module,
-)
+    AccessRole)
 
 from .forms import (
     SubscriptionForm,
@@ -284,6 +284,12 @@ class SubscribeView(SaasProcessFormViewMixin, SaasTemplateView):
                             forms["subscription_form"].cleaned_data["modules"]):
             subscription.modules.add(module)
         subscription.save()
+
+        account = AccessAccount(
+            user=user,
+            subscription=subscription,
+            role=AccessRole.objects.get(name="sass__manager"),
+        )
 
         return HttpResponseRedirect(reverse("thanks"))
 
