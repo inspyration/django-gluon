@@ -180,6 +180,7 @@ class AccessAccount(BaseMixin, StatusMixin):
     subscription = ForeignKey(
         verbose_name=_("subscription"),
         help_text=_("Role linked to this account"),
+        related_name="saas_access_account_set",
         to=Subscription,
         blank=False,
     )
