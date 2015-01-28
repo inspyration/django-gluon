@@ -7,6 +7,7 @@ from django.db import migrations
 
 from ..models import (
     Country,
+    StateCategory,
     State,
     Locale,
     TimeZone,
@@ -16,7 +17,6 @@ from ..models import (
     Browser,
     HttpResource,
     Keyword,
-    HttpResourcesConfig,
 )
 
 from pathlib import Path
@@ -34,6 +34,11 @@ class Migration(migrations.Migration):
         migrations.RunPython(
             lambda apps, schema_editor: Country.import_data(
                 BASE_DIR / "util" / "imports" / "countries.csv"
+            )
+        ),
+        migrations.RunPython(
+            lambda apps, schema_editor: StateCategory.import_data(
+                BASE_DIR / "util" / "imports" / "state_categories.csv"
             )
         ),
         migrations.RunPython(

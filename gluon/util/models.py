@@ -104,13 +104,28 @@ class Country(BaseMixin):
         verbose_name_plural = _("countries")
 
 
+class StateCategory(BaseMixin):
+    """State"""
+
+    plural = CharField(
+        verbose_name=_("plural"),
+        help_text=_("Plural label"),
+        max_length=127,
+        blank=False,
+    )
+
+    class Meta:
+        verbose_name = _("state category")
+        verbose_name_plural = _("state categories")
+
+
 class State(BaseMixin):
     """State"""
 
     code = CharField(
         verbose_name=_("code"),
         help_text=_("Two letters code"),
-        max_length=2,
+        max_length=5,
         unique=True,
         blank=False,
     )
@@ -118,7 +133,16 @@ class State(BaseMixin):
     country = ForeignKey(
         verbose_name=_("country"),
         help_text=_("Related country"),
+        related_name="state_set",
         to=Country,
+        blank=False,
+    )
+
+    category = ForeignKey(
+        verbose_name=_("category"),
+        help_text=_("State, Province or District"),
+        related_name="registry_%(class)s_set",
+        to=StateCategory,
         blank=False,
     )
 
