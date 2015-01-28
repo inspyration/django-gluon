@@ -41,7 +41,7 @@ LOCAL_APPS = (
     "base",
     "util",
     "saas",
-#    "legal",
+    "legal",
 )
 
 if Path("apps.txt").is_file():
