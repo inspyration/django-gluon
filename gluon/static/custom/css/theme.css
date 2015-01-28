@@ -187,3 +187,46 @@ ul.errorlist li {
     vertical-align: top;
     width: 100%;
 }
+
+table caption {
+    padding: 0 15px;
+}
+
+table caption h4 {
+    text-align: left;
+}
+
+.panel-footer .form-inline .form-group {
+    margin: 0;
+}
+
+.panel-footer .form-inline .btn {
+    line-height: 32px;
+    padding: 0;
+}
+
+.panel-footer .form-inline .btn-label-left {
+    padding: 0 8px 0 0;
+    margin-right: 8px;
+}
+
+.panel-footer .form-inline .btn-label-left span {
+    left: 0;
+    margin-right: 8px;
+    padding: 0;
+}
+
+.panel-footer .form-inline .btn-label-right {
+    padding: 0 0 0 8px;
+    margin-left: 8px;
+}
+
+.panel-footer .form-inline .btn-label-right span {
+    right: 0;
+    margin-left: 8px;
+    padding: 0;
+}
+
+.value {
+    margin-bottom: 5px;
+}
