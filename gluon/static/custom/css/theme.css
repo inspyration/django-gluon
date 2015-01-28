@@ -230,3 +230,7 @@ table caption h4 {
 .value {
     margin-bottom: 5px;
 }
+
+#content {
+    z-index: 8;
+}
