@@ -60,12 +60,13 @@
                     </ul>
 
                     <!-- login form -->
-                    <form class="navbar-form navbar-right" role="form">
+                    <form class="navbar-form navbar-right" role="form" method="post" action="{% url 'login' %}">
+                        {% csrf_token %}
                         <div class="form-group">
-                            <input type="text" class="form-control" placeholder="Username">
-                            <input type="password" class="form-control" placeholder="Password">
+                            <input type="text" name="username" class="form-control" placeholder="Email">
+                            <input type="password" name="password" class="form-control" placeholder="Password">
+                            <button type="submit" class="btn btn-primary">Log in</button>
                         </div>
-                        <button type="submit" class="btn btn-primary">Submit</button>
                     </form>
                 </div><!-- /.navbar-collapse -->
             </div><!-- /.container -->
