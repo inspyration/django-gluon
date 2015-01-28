@@ -10,6 +10,8 @@ from django.contrib.auth import (
     login,
     logout
 )
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
 
 from .models import (
     View as SaasView,
@@ -228,6 +230,13 @@ class SaasProcessFormViewMixin:
             return self.form_invalid(forms)
 
 
+class ProtectedViewMixin():
+
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super(ProtectedViewMixin, self).dispatch(*args, **kwargs)
+
+
 ########################
 #                      #
 #  SAAS utility views  #
@@ -266,7 +275,7 @@ class LoginView(SaasTemplateView):
         if user is not None:
             if user.is_active:
                 login(request, user)
-                next_uri = request.POST.get("next")
+                next_uri = request.GET.get("next")
                 if next_uri:
                     return HttpResponseRedirect(next_uri)
                 return HttpResponseRedirect(reverse("dashboard"))
@@ -282,7 +291,7 @@ class LogoutView(SaasTemplateView):
     template_name = "logout.html"
 
     def get(self, request, *args, **kwargs):
-        if request.user.is_anonymous():
+        if request.user.is_authenticated():
             logout(request)
         return super(LogoutView, self).get(request, *args, **kwargs)
 
@@ -353,7 +362,7 @@ class SubscriptionValidationView(SaasTemplateView):
 #
 
 
-class DashboardView(SaasTemplateView):
+class DashboardView(ProtectedViewMixin, SaasTemplateView):
 
     template_name = "dashboard.html"
 
@@ -422,9 +431,23 @@ class AccountsView(SaasListView):
     template_name = "accounts.html"
 
 
-#
-# Module
-#
+class AccountView(SaasDetailView):
+
+    model = AccessAccount
+
+    template_name = "subscription.html"
+
+
+class AccountListJson(BaseDatatableView):
+
+    model = AccessAccount
+
+
+class ProfileView(SaasTemplateView):
+
+    model = AccessAccount
+
+    template_name = "subscription.html"
 
 
 class ModulesView(SaasListView):
