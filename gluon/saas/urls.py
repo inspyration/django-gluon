@@ -5,6 +5,7 @@ from .views import (
     AccountsView,
     AccountView,
     AccountListJson,
+    SendInvitationView,
     ProfileView,
     LoginView,
     LogoutView,
@@ -35,6 +36,8 @@ urlpatterns = patterns(
     url(r"^accounts/data/$", AccountView.as_view(), name="account_json"),
     url(r"^accounts/view/(?P<pk>[-_\w]+)/$", AccountListJson.as_view(),
         name="account"),
+    url(r"^accounts/send_invitation/$", SendInvitationView.as_view(),
+        name="send_invitation"),
     # Authentication
     url(r"^accounts/profile/$", ProfileView.as_view(), name="profile"),
     url(r"^accounts/login/$", LoginView.as_view(), name="login"),

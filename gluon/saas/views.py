@@ -36,7 +36,11 @@ from django_datatables_view.base_datatable_view import BaseDatatableView
 from django.core.urlresolvers import reverse
 
 from django.shortcuts import render
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, JsonResponse
+
+from django.core.mail import send_mail
+
+from django.utils.translation import ugettext_lazy as _
 
 from django.core.exceptions import ImproperlyConfigured
 
@@ -45,7 +49,6 @@ class SaasContextMixin(ContextMixin):
     """SAAS Context Mixin"""
 
     def get_context_data(self, **kwargs):
-        # TODO: Permissions, security
         context = super(SaasContextMixin, self).get_context_data(**kwargs)
 
         # Get current view
@@ -357,6 +360,36 @@ class SubscriptionValidationView(SaasTemplateView):  # TODO
     """Home Page"""
 
     template_name = "todo.html"
+
+
+class SendInvitationView(View):
+
+    def post(self, request, *args, **kwargs):
+        """
+        Check auth and do the log in.
+        """
+        email = request.POST.get("invitation-email")
+        if not email:
+            return JsonResponse({"success": False, "message": "Empty email"})
+
+        user = get_user_model().objects.filter(username=email).first()
+        if user is None:
+             pass # create user
+        # create account
+        # create notification
+
+        try:
+            send_mail(
+                _("You have been invited to join the Gluon project"),
+                _("Click here"),
+                "contact@inspyration.fr",
+                [email],
+                fail_silently=False)
+        except Exception as e:
+            return JsonResponse({"success": False, "message": "Email not sent"})
+
+        return JsonResponse(
+            {"success": True, "data": ["", email, "user", "created"]})
 
 
 #
