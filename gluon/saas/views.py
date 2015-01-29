@@ -208,10 +208,10 @@ class SaasProcessFormViewMixin:
     def get_forms(self):
         if self.request.method == "POST":
             return dict((k, v(self.request.POST, prefix=k))
-                         for k, v in self.form_classes)
+                        for k, v in self.form_classes)
         else:
             return dict((k, v(prefix=k))
-                         for k, v in self.form_classes)
+                        for k, v in self.form_classes)
 
     def get_context_data(self, **kwargs):
         context = super(SaasProcessFormViewMixin, self).get_context_data(**kwargs)
