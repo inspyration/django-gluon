@@ -23,9 +23,11 @@ from django.utils.translation import ugettext_lazy as _
 class SaasManager(BaseManager):
     """Model manager used by SaasMixin models"""
 
-    def get_queryset(self, subscription):
+    def get_queryset(self, subscription=None):
         queryset = super(SaasManager, self).get_queryset()
-        return queryset.filter(subscription=subscription)
+        if subscription is not None:
+            queryset = queryset.filter(subscription=subscription)
+        return queryset
 
 
 class SaasMixin(BaseMixin):
@@ -66,6 +68,7 @@ class SaasMixin(BaseMixin):
 # Time framed SAAS Mixin
 #
 
+
 class SaasTimeFramedManager(TimeFramedManager):
     """Model manager used by SAASTimeFramedMixin models"""
 
@@ -86,6 +89,8 @@ class SaasTimeFramedMixin(SaasMixin, TimeFramedMixin):
 #
 # Naive hierarchy SAAS Mixin
 #
+
+
 class SaasHierarchyManager(NaiveHierarchyManager):
     """Model manager used by SaasHierarchyMixin models"""
 
@@ -163,6 +168,7 @@ class PrivateMixin(BaseMixin):
 # Time framed private Mixin
 #
 
+
 class PrivateTimeFramedManager(TimeFramedManager):
     """Model manager used by PrivateTimeFramedMixin models"""
 
@@ -183,6 +189,8 @@ class PrivateTimeFramedMixin(PrivateMixin, TimeFramedMixin):
 #
 # Naive hierarchy private Mixin
 #
+
+
 class PrivateHierarchyManager(NaiveHierarchyManager):
     """Model manager used by PrivateHierarchyMixin models"""
 
