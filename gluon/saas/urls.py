@@ -33,7 +33,7 @@ urlpatterns = patterns(
     url(r"^$", HomeView.as_view(), name="home"),
     # SAAS Accounts management
     url(r"^accounts/$", AccountsView.as_view(), name="accounts"),
-    url(r"^accounts/data/$", AccountView.as_view(), name="account_json"),
+    url(r"^accounts/data/$", AccountView.as_view(), name="accounts_json"),
     url(r"^accounts/view/(?P<pk>[-_\w]+)/$", AccountListJson.as_view(),
         name="account"),
     url(r"^accounts/send_invitation/$", SendInvitationView.as_view(),
