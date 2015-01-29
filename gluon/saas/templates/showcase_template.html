@@ -60,6 +60,64 @@
                     </ul>
 
                     <!-- login form -->
+                    {% if is_authenticated %}
+                    <div class="panel-menu dropdown navbar-right">
+
+
+
+
+
+                                    <a href="#" class="dropdown-toggle account" data-toggle="dropdown" id="dropdown_profile">
+                                        <div class="avatar">
+                                            <img src="{{ current_user_avatar_uri }}" class="img-rounded" alt="avatar" />
+                                        </div>
+                                        <i class="fa fa-fw fa-angle-down pull-right"></i>
+                                        <div class="user-mini pull-right">
+                                            <span class="welcome">{{ welcome_message }}</span>
+                                            <span>{{ current_user_display_name }}</span>
+                                        </div>
+                                    </a>
+                                    <ul class="dropdown-menu" role="menu" aria-labelledby="dropdown_profile">
+                                        <li role="presentation">
+                                            <a role="menuitem" href="{% url 'profile' %}">
+                                                <i class="fa fa-fw fa-user"></i>
+                                                <span>Profile</span>
+                                            </a>
+                                        </li>
+                                        <li role="presentation">
+                                            <a role="menuitem" href="{% url 'settings' %}">
+                                                <i class="fa fa-fw fa-cog"></i>
+                                                <span>Settings</span>
+                                            </a>
+                                        </li>
+                                        <li role="presentation" class="divider"></li>
+                                        <li role="presentation">
+                                            <a role="menuitem" href="{% url 'contact' %}">
+                                                <i class="fa fa-fw fa-pencil"></i>
+                                                <span>Contact us</span>
+                                            </a>
+                                        </li>
+                                        <li role="presentation">
+                                            <a role="menuitem" href="{% url 'new_issue' %}">
+                                                <i class="fa fa-fw fa-bug"></i>
+                                                <span>Report an issue</span>
+                                            </a>
+                                        </li>
+                                        <li role="presentation" class="divider"></li>
+                                        <li role="presentation">
+                                            <a role="menuitem" href="{% url 'logout' %}">
+                                                <i class="fa fa-fw fa-sign-out"></i>
+                                                <span>Log out</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+
+
+</div>
+
+
+
+                    {% else %}
                     <form class="navbar-form navbar-right" role="form" method="post" action="{% url 'login' %}">
                         {% csrf_token %}
                         <div class="form-group">
@@ -68,6 +126,7 @@
                             <button type="submit" class="btn btn-primary">Log in</button>
                         </div>
                     </form>
+                    {% endif %}
                 </div><!-- /.navbar-collapse -->
             </div><!-- /.container -->
         </nav>

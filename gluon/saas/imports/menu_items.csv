@@ -3,7 +3,6 @@
 "Management","back-office","","1","","cubes",""
 "Subscriptions","back-office","Management","1","/subscriptions","ticket","subscriptions"
 "Accounts","back-office","Management","","/accounts","street-view","accounts"
-"Modules","back-office","Management","","/modules","puzzle-piece","modules"
 "Administration","back-office","","","/admin","cogs",""
 "Products","showcase","","1","","cubes",""
 "Team management","showcase","Products","1","/products/team","users","product_team"
