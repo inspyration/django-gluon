@@ -339,6 +339,8 @@ class SubscribeView(SaasProcessFormViewMixin, SaasTemplateView):
             role=AccessRole.objects.get(name="SASS_management__manager"),
         )
 
+        # TODO: Envoi de courriel avec une URL pour gérer la validation.
+
         return HttpResponseRedirect(reverse("thanks"))
 
     def form_invalid(self, form):
@@ -351,10 +353,10 @@ class ThanksView(SaasTemplateView):
     template_name = "thanks.html"
 
 
-class SubscriptionValidationView(SaasTemplateView):
+class SubscriptionValidationView(SaasTemplateView):  # TODO
     """Home Page"""
 
-    template_name = "thanks.html"
+    template_name = "todo.html"
 
 
 #
@@ -362,7 +364,7 @@ class SubscriptionValidationView(SaasTemplateView):
 #
 
 
-class DashboardView(ProtectedViewMixin, SaasTemplateView):
+class DashboardView(ProtectedViewMixin, SaasTemplateView):  # TODO
 
     template_name = "dashboard.html"
 
@@ -424,34 +426,93 @@ class SubscriptionView(SaasDetailView):
 #
 
 
-class AccountsView(SaasListView):
+class AccountsView(SaasListView):  # TODO
 
     model = AccessAccount
 
-    template_name = "accounts.html"
+    template_name = "todo.html"
 
 
-class AccountView(SaasDetailView):
-
-    model = AccessAccount
-
-    template_name = "subscription.html"
-
-
-class AccountListJson(BaseDatatableView):
+class AccountView(SaasDetailView):  # TODO
 
     model = AccessAccount
 
+    template_name = "todo.html"
 
-class ProfileView(SaasTemplateView):
+
+class AccountListJson(BaseDatatableView):  # TODO
 
     model = AccessAccount
 
-    template_name = "subscription.html"
+
+class ProfileView(SaasTemplateView):  # TODO
+
+    model = AccessAccount
+
+    template_name = "todo.html"
 
 
-class ModulesView(SaasListView):
+#
+# back-office
+#
 
-    model = Module
 
-    template_name = "modules.html"
+class SettingsView(SaasTemplateView):  # TODO
+    """Home Page"""
+
+    template_name = "todo.html"
+
+
+class NotificationsView(SaasListView):  # TODO
+
+    model = AccessAccount
+
+    template_name = "todo.html"
+
+
+class NotificationListJson(BaseDatatableView):  # TODO
+
+    model = AccessAccount
+
+
+class ContactView(SaasTemplateView):  # TODO
+    """Home Page"""
+
+    template_name = "todo.html"
+
+
+class IssuesView(SaasListView):  # TODO
+
+    model = AccessAccount
+
+    template_name = "todo.html"
+
+
+class IssueListJson(BaseDatatableView):  # TODO
+
+    model = AccessAccount
+
+
+class IssueView(SaasDetailView):  # TODO
+
+    model = Subscription
+
+    template_name = "todo.html"
+
+
+class IssueNewView(SaasTemplateView):  # TODO
+    """Home Page"""
+
+    template_name = "todo.html"
+
+
+class ContactUsView(SaasTemplateView):  # TODO
+    """Home Page"""
+
+    template_name = "todo.html"
+
+
+class AboutUsView(SaasTemplateView):  # TODO
+    """Home Page"""
+
+    template_name = "todo.html"
