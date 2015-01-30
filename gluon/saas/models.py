@@ -352,13 +352,6 @@ class MenuItem(BaseMixin, NaiveHierarchyMixin):
         default=False,
     )
 
-    path = CharField(
-        verbose_name=_("path"),
-        help_text=_("Menu item link"),
-        max_length=127,
-        blank=False,
-    )
-
     icon = CharField(
         verbose_name=_("icon"),
         help_text=_("Icon (font-awesome)"),
@@ -366,17 +359,23 @@ class MenuItem(BaseMixin, NaiveHierarchyMixin):
         blank=False,
     )
 
-    views = ManyToManyField(
+    view = ForeignKey(
         verbose_name=_("views"),
-        help_text=_("Views related to this menu item"),
+        help_text=_("View pointed by this menu item"),
         to=View,
-        related_name="menu_item_set",
+        related_name="menu_items_set",
         blank=True,
+        null=True,
     )
+
+    def get_reverse_url(self):
+        return ":".join((self.view.module.name, self.view.label))
 
     def view_names(self):
         # TODO: Optimization
-        result = [v.label for v in self.views.all()]
+        result = []
+        if self.view is not None:
+            result.append(self.view.label)
         for child in self.get_children():
             result.extend(child.view_names())
         return result

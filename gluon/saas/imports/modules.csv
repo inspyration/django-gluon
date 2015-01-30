@@ -2,6 +2,7 @@
 "base","Base module","","0","0","","saas_module__alpha"
 "util","Basic utilities","","0","0","base","saas_module__alpha"
 "saas","SASS management","","0","0","base,util","saas_module__alpha"
+"admin","Django administration interface","","0","0","saas","saas_module__alpha"
 "team","Team management","","5","50","saas","saas_module__alpha"
 "project","Project management","","12","120","saas","saas_module__alpha"
 "cmmi","CMMI","","18","180","saas","saas_module__alpha"

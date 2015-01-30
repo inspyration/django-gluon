@@ -166,6 +166,8 @@ class SaasContextMixin(ContextMixin):
             "confirms": [],  # TODO:
             "messages": [],  # TODO:
         })
+        print(menu)
+        import bpdb; bpdb.set_trace()
 
         return context
 
@@ -265,7 +267,7 @@ class LoginView(SaasTemplateView):
 
     def get(self, request, *args, **kwargs):
         if request.user.is_authenticated():
-            HttpResponseRedirect(reverse("dashboard"))
+            HttpResponseRedirect(reverse("saas:dashboard"))
         return super(LoginView, self).get(request, *args, **kwargs)
 
     def post(self, request, *args, **kwargs):
@@ -281,11 +283,11 @@ class LoginView(SaasTemplateView):
                 next_uri = request.GET.get("next")
                 if next_uri:
                     return HttpResponseRedirect(next_uri)
-                return HttpResponseRedirect(reverse("dashboard"))
+                return HttpResponseRedirect(reverse("saas:dashboard"))
             else:
-                return HttpResponseRedirect(reverse("login"))
+                return HttpResponseRedirect(reverse("saas:login"))
         else:
-            return HttpResponseRedirect(reverse("login"))
+            return HttpResponseRedirect(reverse("saas:login"))
 
 
 class LogoutView(SaasTemplateView):
@@ -344,7 +346,7 @@ class SubscribeView(SaasProcessFormViewMixin, SaasTemplateView):
 
         # TODO: Envoi de courriel avec une URL pour gérer la validation.
 
-        return HttpResponseRedirect(reverse("thanks"))
+        return HttpResponseRedirect(reverse("saas:subscribe_thanks"))
 
     def form_invalid(self, form):
         return self.render_to_response(self.get_context_data())

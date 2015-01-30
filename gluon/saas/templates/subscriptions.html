@@ -24,7 +24,7 @@
             var data_table = $(".datatable").dataTable({
                 "processing": true,
                 "serverSide": true,
-                "ajax": "{% url "subscriptions_json" %}",
+                "ajax": "{% url "saas:subscriptions_json" %}",
                 "stateSave": true,
                 "language": {
                     "sLengthMenu": "Display _MENU_ subscription by page",
@@ -92,10 +92,10 @@
             </div>
             <div class="box-icons">
                 <a class="collapse-link">
-                    <i class="fa fa-fw fa-chevron-up"></i>
+                    <i class="fa fa-chevron-up"></i>
                 </a>
                 <a class="expand-link">
-                    <i class="fa fa-fw fa-expand"></i>
+                    <i class="fa fa-expand"></i>
                 </a>
             </div>
             <div class="no-move"></div>

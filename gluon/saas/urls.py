@@ -50,9 +50,9 @@ urlpatterns = patterns(
         name="subscription"),
     # SAAS Subscription creation process
     url(r"^subscribe/$", SubscribeView.as_view(), name="subscribe"),
-    url(r"^/subscribe/thanks/$", ThanksView.as_view(), name="thanks"),
-    url(r"^/subscribe/validation/(?P<pk>[-_\w]+)/$",
-        SubscriptionValidationView.as_view(), name="validation"),
+    url(r"^subscribe/thanks/$", ThanksView.as_view(), name="subscribe_thanks"),
+    url(r"^subscribe/validation/(?P<pk>[-_\w]+)/$",
+        SubscriptionValidationView.as_view(), name="subscribe_validation"),
     # Back-office
     url(r"^dashboard/$", DashboardView.as_view(), name="dashboard"),
     url(r"^dashboard/settings/$", SettingsView.as_view(), name="settings"),
@@ -70,5 +70,4 @@ urlpatterns = patterns(
     # Showcase
     url(r"^contact_us/$", ContactUsView.as_view(), name="contact_us"),
     url(r"^about_us/$", AboutUsView.as_view(), name="about_us"),
-
 )
