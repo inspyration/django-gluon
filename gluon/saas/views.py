@@ -166,8 +166,6 @@ class SaasContextMixin(ContextMixin):
             "confirms": [],  # TODO:
             "messages": [],  # TODO:
         })
-        print(menu)
-        import bpdb; bpdb.set_trace()
 
         return context
 
