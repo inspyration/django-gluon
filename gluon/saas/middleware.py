@@ -1,7 +1,7 @@
 from django.db.models import signals
 from django.utils.functional import curry
 
-from base.fields import UserField
+from .fields import SubscriptionField
 
 from base.registration import FieldRegistry
 
@@ -15,10 +15,7 @@ class GluonSaasMiddleware(object):
 
         if hasattr(request, "user") and request.user.is_authenticated():
             user = request.user
-            if hasattr(request, "subscription"):
-                subscription = user.subscription  # TODO
-            else:
-                subscription = None
+            subscription = user.profile.subscription
         else:
             subscription = None
             user = None
@@ -33,11 +30,11 @@ class GluonSaasMiddleware(object):
         signals.post_save.disconnect(dispatch_uid=request)
         return response
 
-    def _update_base_mixin_fields(self, user, sender, subscription, created, **kw):
+    def _update_base_mixin_fields(self, subscription, sender, instance, created, **kw):
         # update last_modified_by and created_by
-        registry = FieldRegistry(UserField)
+        registry = FieldRegistry(SubscriptionField)
         if sender in registry:
             for field in registry.get_fields(sender):
-                if created and field.name == "owner":
-                    subscription.owner = user
+                if field.name == "subscription" and created:
+                    instance.subscription = subscription
 

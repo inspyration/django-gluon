@@ -205,7 +205,7 @@ class AccessAccount(BaseMixin, StatusMixin):
         blank=False,
     )
 
-    LABEL_FORMAT = "{self.user.label}@{self.subscription.label}:{self.role.label}"
+    LABEL_FORMAT = "{self.user.username}+{self.subscription.label}:{self.role.label}"
 
     def _name_unique_model_path(self):
         """The logical model path to get the current object in a unique way"""
@@ -253,6 +253,21 @@ class Profile(BaseMixin, AvatarMixin, SettingsMixin):
         to=Notification,
         blank=True,
     )
+
+    account_in_use = OneToOneField(
+        verbose_name=_("account in use"),
+        help_text=_("Account currently used"),
+        to=AccessAccount,
+        related_name="saas_access_account_set",
+        blank=True,
+        null=True,
+    )
+
+    def subscription(self):
+        if not self.account_in_use:
+            return None
+        else:
+            return self.account_in_use.subscription
 
 #    default_subscription = #TODO
 

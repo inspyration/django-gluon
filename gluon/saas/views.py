@@ -350,6 +350,9 @@ class SubscribeView(SaasProcessFormViewMixin, SaasTemplateView):
             subscription=subscription,
             role=AccessRole.objects.get(name="SASS_management__manager"),
         )
+        account.save()
+
+        profile.account_in_use = account
 
         # TODO: Envoi de courriel avec une URL pour gérer la validation.
 
