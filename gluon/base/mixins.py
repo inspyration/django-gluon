@@ -482,6 +482,7 @@ class BaseMixin(Model):
                 getattr(o, foreign_field_name): o
                 for o in foreign_model.objects.active()
             }
+            foreign_objects[import_field_name].setdefault("")
 
             if foreign_type == "ForeignKey":
                 functions[import_field_name] =\
