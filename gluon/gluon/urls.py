@@ -28,8 +28,8 @@ if Path("apps.txt").is_file():
 if modules:
     urlpatterns += patterns(
         "",
-        *(url(r"^modules/{0}/".format(module),
-              include("{0}.urls".format(module), module, module))
+        *tuple(url(r"^modules/{0}/".format(module),
+                   include("{0}.urls".format(module), module, module))
         for module in modules))
 
 if settings.DEBUG:
