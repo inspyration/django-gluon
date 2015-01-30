@@ -234,3 +234,7 @@ table caption h4 {
 #content {
     z-index: 8;
 }
+
+#ajax-content .expanded-padding, #content > article > .expanded-padding {
+    padding-top: 60px;
+}
