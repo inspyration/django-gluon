@@ -30,7 +30,7 @@ from .forms import (
 
 from django.views.generic.base import ContextMixin, TemplateResponseMixin, View
 from django.views.generic.edit import ProcessFormView
-from django.views.generic import ListView, DetailView, CreateView
+from django.views.generic import ListView, DetailView, CreateView, UpdateView
 from django_datatables_view.base_datatable_view import BaseDatatableView
 
 from django.core.urlresolvers import reverse
@@ -239,6 +239,15 @@ class SaasCreateView(CreateView, SaasContextMixin):
         data-filled form and errors.
         """
         return self.render_to_response(self.get_context_data(form=form))
+
+
+class SaasUpdateView(UpdateView, SaasContextMixin):
+
+    def get_context_data(self, **kwargs):
+        if not hasattr(self, 'object'):
+            self.object = None
+        context = super(SaasUpdateView, self).get_context_data(**kwargs)
+        return context
 
 
 class SaasProcessFormViewMixin:
