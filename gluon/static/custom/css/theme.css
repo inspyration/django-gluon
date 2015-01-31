@@ -43,13 +43,6 @@ table.dataTable tbody tr.even{color: #111;}
   left: 4px;
 }
 
-#content footer {
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-    z-index: 10000;
-}
-
 #content {
     padding-bottom: 32px;
 }
@@ -107,15 +100,24 @@ nav.navbar .dropdown-menu > li > a {
     color: #6aa6d6 !important;
 }
 
-body.showcase  > div > footer {
+body.showcase  > div > footer, div#content > footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 2000;
+    width: 100%;
+    margin: 0;
     background-color: white;
     color: #6aa6d6;
     box-shadow: 0 -2px 2px #272727;
-    left: 0;
-    position: fixed;
-    right: 0;
     transform: translate3d(0px, 0px, 0px);
-    z-index: 1030;
+}
+
+
+
+
+
 }
 
 body.showcase  > div.container > .row {
@@ -237,4 +239,22 @@ table caption h4 {
 
 #ajax-content .expanded-padding, #content > article > .expanded-padding {
     padding-top: 60px;
+}
+
+.panel-footer .sp-replacer {
+    margin: 0 0 5px;
+}
+
+// TIMELINE
+
+
+.dhx_second_scale_bar {
+    font-weight: bold;
+}
+
+.current_day, .current_week {
+    border-top: 2px solid #454544;
+    border-bottom: 2px solid #454544;
+    background-color: #f0ede7;
+    height: 28px;
 }
