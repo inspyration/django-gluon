@@ -44,6 +44,21 @@ from django.utils.translation import ugettext_lazy as _
 
 from django.core.exceptions import ImproperlyConfigured
 
+from django.dispatch import Signal
+
+#
+# Create a new signal for the middleware.
+#
+
+inject_subscription = Signal()
+
+
+########################
+#                      #
+#     SAAS Mixins      #
+#                      #
+########################
+
 
 class SaasContextMixin(ContextMixin):
     """SAAS Context Mixin"""
@@ -209,6 +224,22 @@ class SaasCreateView(CreateView, SaasContextMixin):
         context = super(SaasCreateView, self).get_context_data(**kwargs)
         return context
 
+    def form_valid(self, form):
+        """
+        If the form is valid, redirect to the supplied URL.
+        """
+        self.object = form.save(commit=False)
+        inject_subscription.send(type(self.object), instance=self.object)
+        self.object.save()
+        return HttpResponseRedirect(self.get_success_url())
+
+    def form_invalid(self, form):
+        """
+        If the form is invalid, re-render the context data with the
+        data-filled form and errors.
+        """
+        return self.render_to_response(self.get_context_data(form=form))
+
 
 class SaasProcessFormViewMixin:
     """Handle forms. form_classes are 2-tuples that contains key of forms
@@ -353,6 +384,7 @@ class SubscribeView(SaasProcessFormViewMixin, SaasTemplateView):
         account.save()
 
         profile.account_in_use = account
+        profile.save()
 
         # TODO: Envoi de courriel avec une URL pour gérer la validation.
 

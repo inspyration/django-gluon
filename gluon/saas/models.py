@@ -263,6 +263,7 @@ class Profile(BaseMixin, AvatarMixin, SettingsMixin):
         null=True,
     )
 
+    @property
     def subscription(self):
         if not self.account_in_use:
             return None
