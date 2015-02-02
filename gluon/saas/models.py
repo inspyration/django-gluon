@@ -270,6 +270,13 @@ class Profile(BaseMixin, AvatarMixin, SettingsMixin):
         else:
             return self.account_in_use.subscription
 
+    @property
+    def display_name(self):
+        if not self.label.strip():
+            return self.user.username
+        else:
+            return self.label
+
 #    default_subscription = #TODO
 
     LABEL_FORMAT = "{self.user.first_name} {self.user.last_name}"
