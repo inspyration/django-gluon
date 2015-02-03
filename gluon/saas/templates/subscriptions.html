@@ -2,6 +2,23 @@
 
 {% block javascript %}
     <script type="application/javascript">
+
+        function getCookie(name) {
+            var cookieValue = null;
+            if (document.cookie && document.cookie != '') {
+                var cookies = document.cookie.split(';');
+                for (var i = 0; i < cookies.length; i++) {
+                    var cookie = jQuery.trim(cookies[i]);
+                    // Does this cookie string begin with the name we want?
+                    if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+
         $(document).ready(function() {
             function AddAjaxContent(url){
                 $(".preloader").show();
@@ -10,7 +27,36 @@
                     url: url,
                     type: "GET",
                     success: function(data) {
-                        $("#ajax-content").html(data+$("#ajax-content").html());
+                        $("#ajax-content").html(data+$("#ajax-content").html()).ready(function () {
+                            $(".add_access_account").submit(function (event) {
+
+                                //$('[name=csrfmiddlewaretoken]') = getCookie('csrftoken');
+
+                                $form = $(this);
+
+                                event.preventDefault();
+
+                                $.ajax({
+                                    mimeType: "text/html; charset=utf-8",
+                                    url: $form.attr('action'),
+                                    type: "POST",
+                                    data: {
+                                        "csrfmiddlewaretoken": $form.find( "input[name='csrfmiddlewaretoken']" ).val(),
+                                        "invitation-subscription": $form.find( "input[name='invitation-subscription']" ).val(),
+                                        "invitation-email": $form.find( "input[name='invitation-email']" ).val(),
+                                    },
+                                    success: function(data) {
+                                        $form.parent().prev().children("tbody").append('<tr><td></td><td>' + $.parseJSON(data).data[1] + '</td><td>user</td><td><button type="button" class="btn btn-primary btn-label-left"><span><i class="fa fa-fw fa-sign-in"></i></span>Created</button></td></tr>');
+                                    },
+                                    error: function (jqXHR, textStatus, errorThrown) {
+                                        alert(errorThrown);
+                                    },
+                                    dataType: "html",
+                                    async: false
+                                });
+
+                            });
+                        });
                         $(".preloader").hide();
                     },
                     error: function (jqXHR, textStatus, errorThrown) {
@@ -78,6 +124,7 @@
             });
 
             $(".preloader").hide();
+
         });
     </script>
 {% endblock %}

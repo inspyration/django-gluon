@@ -121,15 +121,29 @@
                                     {% for account in subscription.saas_access_account_set.all %}
                                     <tr>
                                         <td>{{ account.user.profile.label }}</td>
-                                        <td>{{ account.user.email }} €</td>
-                                        <td>{{ account.role.label }} €</td>
-                                        <td>{{ account.status }} €</td>
+                                        <td>{{ account.user.username }}</td>
+                                        <td>{{ account.role.label }}</td>
+                                        <td>{% if account.status.label == "created" %}
+                                            <button type="button" class="btn btn-primary btn-label-left"><span><i class="fa fa-fw fa-sign-in"></i></span>Created</button>
+                                            {% elif account.status.label == "activated" %}
+                                            <button type="button" class="btn btn-info btn-label-left"><span><i class="fa fa-fw fa-asterisk"></i></span>Activated</button>
+                                            {% elif account.status.label == "ongoing" %}
+                                            <button type="button" class="btn btn-success btn-label-left"><span><i class="fa fa-fw fa-thumbs-o-up"></i></span>Ongoing</button>
+                                            {% elif account.status.label == "suspended" %}
+                                            <button type="button" class="btn btn-info btn-label-left"><span><i class="fa fa-fw fa-asterisk"></i></span>Suspended</button>
+                                            {% elif account.status.label == "terminated" %}
+                                            <button type="button" class="btn btn-danger btn-label-left"><span><i class="fa fa-fw fa-question"></i></span>Terminated</button>
+                                            {% else %}
+                                            <button type="button" class="btn btn-default btn-label-left"><span><i class="fa fa-fw fa-question"></i></span>{{ account.status }}</button>
+                                            {% endif %}
+                                        </td>
                                     </tr>
                                     {% endfor %}
                                 </tbody>
                             </table>
                             <div class="panel-footer">
-                                <form method="post" class="form-inline" role="form">
+                                <form method="post" class="form-inline add_access_account" role="form" action="{% url 'saas:send_invitation' %}"">
+                                    {% csrf_token %}
                                     <input type="hidden" name="invitation-subscription" value="{{ subscription.pk }}" />
                                     <div class="form-group">
                                         <label for="invitation-email">Email</label>

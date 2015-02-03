@@ -1,5 +1,7 @@
 from itertools import chain
 from uuid import uuid4
+import string
+from random import choice, shuffle
 
 from django.conf import settings
 
@@ -415,6 +417,19 @@ class SubscriptionValidationView(SaasTemplateView):  # TODO
     template_name = "todo.html"
 
 
+def generate_password(length=2):
+    pools = {string.ascii_lowercase,
+             string.ascii_uppercase,
+             string.digits,
+             "!#$()*+,-.:;<=>[]_{|}~"}
+    result = []
+    for pool in pools:
+        for _ in range(length):
+            result.append(choice(pool))
+    shuffle(result)
+    return "".join(result)
+
+
 class SendInvitationView(View):
 
     def post(self, request, *args, **kwargs):
@@ -422,14 +437,38 @@ class SendInvitationView(View):
         Check auth and do the log in.
         """
         email = request.POST.get("invitation-email")
+        subscription_id = request.POST.get("invitation-subscription")
         if not email:
             return JsonResponse({"success": False, "message": "Empty email"})
 
+        owner_profile = request.user.profile
+
         user = get_user_model().objects.filter(username=email).first()
         if user is None:
-             pass # create user
-        # create account
-        # create notification
+            user = get_user_model()(
+                username=email,
+                email=email,
+                password=generate_password()
+            )
+            user.save()
+
+        account = AccessAccount(
+            user=user,
+            subscription_id=subscription_id,
+            role=AccessRole.objects.get(name="SASS_management__user"),
+        )
+        account.save()
+
+        if not hasattr(user, "profile") or not user.profile:
+            profile = Profile(
+                user=user,
+                locale_id=owner_profile.locale_id,
+                timezone_id=owner_profile.timezone_id,
+                account_in_use=account,
+            )
+            profile.save()
+
+        # TODO create notification
 
         try:
             send_mail(
